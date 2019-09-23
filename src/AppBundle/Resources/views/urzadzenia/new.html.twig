@@ -1,0 +1,75 @@
+{% extends '@App/layout.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - New urzadzenium
+{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card col-md-12">
+                <div class="card-header">
+                    <h2>Nowe urządzenie <span class="glyphicon glyphicon-file" aria-hidden="true"></span></h2>
+                </div>
+
+            <div class="card-body">
+
+
+                <div class="row">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% for type, flashMessages in app.session.flashbag.all() %}
+                                {% for flashMessage in flashMessages %}
+                                    <div class="alert alert-{{ type }}">
+                                        {{ flashMessage|raw }}
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+
+                    {{ form_start(form) }}
+
+                    <div class="col-sm-6"> {{ form_row(form.producent) }}</div>
+                    <div class="col-sm-6"> {{ form_row(form.model) }}</div>
+                    <div class="col-sm-6"> {{ form_row(form.numerSeryjny) }}</div>
+                    <div class="col-sm-6"> {{ form_row(form.dataProdukcji) }}</div>
+                    <div class="col-sm-6"> {{ form_row(form.czynnikChlodniczy) }}</div>
+                    <div class="col-sm-6"> {{ form_row(form.masaCzynnika) }}</div>
+                    <div class="col-sm-6"> {{ form_row(form.kodKreskowy) }}</div>
+                    <div class="col-sm-6"> {{ form_widget(form.firmaKlient, {'attr': {'style': 'display:none'}}) }}</div>
+                    <div class="col-sm-6"> {{ form_widget(form.firmaOpiekun, {'attr': {'style': 'display:none'}}) }}</div>
+                    <div class="col-sm-6"> {{ form_widget(form.obiekt, {'attr': {'style': 'display:none'}}) }}</div>
+
+                    <div class="col-sm-12 mt-3">
+                    <p>
+                        <button type="submit" name="submit" value="save" class="btn btn-primary">
+                            Save <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                        </button>
+                        <button type="submit" name="submit" value="saveAndAdd" class="btn btn-info">
+                            Save and Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>
+                    </p>
+                    </div>
+
+                    {{ form_end(form) }}
+
+                    <hr/>
+
+                    <div class="form-group">
+                        <a class="btn btn-secondary" href="{{ path('urzadzenia') }}">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                            Back to list
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
