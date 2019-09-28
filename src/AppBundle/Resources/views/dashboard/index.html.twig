@@ -1,0 +1,86 @@
+{% extends '@App/layout.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Miłego dnia</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Dzień dobry</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>Zalogowałeś się jako</p>
+                            <p>Podsumowanie miesiąca</p>
+                            <p>Dział</p>
+                            <p>Urlop</p>
+                            <p>Umowa</p>
+                            <p>Specjalizacja</p>
+                        </div>
+                        <div class="col-sm-6 justify-content-center">
+                            <p>{{ app.user.fullName }}</p>
+                            <p><s>168 h</s></p>
+                            <p>{{ app.user.userTeams.division.name }}</p>
+                            <p><s>20 dni</s></p>
+                            <p>{{ app.user.agreementTime.agreement.name }} ({{ app.user.agreementTime.date | date("m/d/Y")  }})</p>
+                            <p>{{ app.user.specialization }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Postęp projektów</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-pie pt-4">
+                        <div class="chartjs-size-monitor">
+                            <div class="chartjs-size-monitor-expand">
+                                <div class=""></div>
+                            </div>
+                            <div class="chartjs-size-monitor-shrink">
+                                <div class=""></div>
+                            </div>
+                        </div>
+                        <canvas id="myPieChart" style="display: block; width: 464px; height: 253px;" width="464"
+                                height="253" class="chartjs-render-monitor"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Bieżący miesiąc</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-bar">
+                        <div class="chartjs-size-monitor">
+                            <div class="chartjs-size-monitor-expand">
+                                <div class=""></div>
+                            </div>
+                            <div class="chartjs-size-monitor-shrink">
+                                <div class=""></div>
+                            </div>
+                        </div>
+                        <canvas id="myBarChart" style="display: block; width: 994px; height: 320px;" width="994"
+                                height="320"
+                                class="chartjs-render-monitor"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

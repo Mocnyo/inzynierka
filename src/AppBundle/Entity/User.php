@@ -18,9 +18,97 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="full_name", type="string", length=255)
+     */
+    protected $fullName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="specialization", type="string", length=255)
+     */
+    protected $specialization;
+
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\AgreementTime", mappedBy="user")
+     */
+    protected $agreementTime;
+
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\UserTeams", mappedBy="user")
+     */
+    protected $userTeams;
+
     public function __construct()
     {
         parent::__construct();
         // your own logic
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
+
+    /**
+     * @param string $fullName
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSpecialization()
+    {
+        return $this->specialization;
+    }
+
+    /**
+     * @param string $specialization
+     */
+    public function setSpecialization($specialization)
+    {
+        $this->specialization = $specialization;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAgreementTime()
+    {
+        return $this->agreementTime;
+    }
+
+    /**
+     * @param mixed $agreementTime
+     */
+    public function setAgreementTime($agreementTime)
+    {
+        $this->agreementTime = $agreementTime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserTeams()
+    {
+        return $this->userTeams;
+    }
+
+    /**
+     * @param mixed $userTeams
+     */
+    public function setUserTeams($userTeams)
+    {
+        $this->userTeams = $userTeams;
     }
 }

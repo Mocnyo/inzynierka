@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{% block title %} ALS {% endblock %}</title>
+    <title>{% block title %} WTRS {% endblock %}</title>
 
 
     <!-- Custom fonts for this template-->
@@ -18,7 +18,7 @@
           rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <link href="{{ asset('bootstrap_theme/css/style.css') }}" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="{{ asset('bootstrap_theme/css/sb-admin-2.css') }}" rel="stylesheet">
 </head>
@@ -33,7 +33,9 @@
 
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-            <img src="{{ asset('bootstrap_theme/img/logo.jpg') }}" width="200px" height="60px"/>
+            <h3><strong style="color:brown;">Wtrs </strong>
+                <div class="fa fa-history"></div>
+            </h3>
         </a>
 
         <!-- Divider -->
@@ -51,14 +53,14 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Serwis
+            Menu
         </div>
 
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('serwisant') }}">
-                <i class="fas fa-fw fa-wrench"></i>
-                <span>Serwisant</span>
+            <a class="nav-link" href="{{ path('homepage') }}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Tablica</span>
             </a>
         </li>
 
@@ -66,20 +68,20 @@
         <hr class="sidebar-divider">
         <!-- Heading -->
         <div class="sidebar-heading">
-            Firma
+            Pracownik
         </div>
 
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('firmaopiekun') }}">
-                <i class="fas fa-fw fa-building"></i>
-                <span>Frima - opiekun</span>
+            <a class="nav-link" href="">
+                <i class="fas fa-fw fa-clock"></i>
+                <span>Czasomierz</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('firmaklient') }}">
-                <i class="far fa-fw fa-building"></i>
-                <span>Firma - klient</span>
+            <a class="nav-link" href="">
+                <i class="fas fa-fw fa-tasks"></i>
+                <span>Projekty</span>
             </a>
         </li>
         <hr class="sidebar-divider">
@@ -109,34 +111,50 @@
         {#            </div>#}
         {#        </li>#}
         <div class="sidebar-heading">
-            Urzadzenia
+            Firma
         </div>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('urzadzenia') }}">
-                <i class="fas fa-fw fa-desktop"></i>
-                <span>Urzadzenia</span>
+            <a class="nav-link" href="">
+                <i class="fas fa-fw fa-address-card"></i>
+                <span>Pracownicy</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="">
+                <i class="far fa-fw fa-calendar-alt"></i>
+                <span>Urlopy</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="">
+                <i class="fab fa-fw fa-wikipedia-w"></i>
+                <span>WTRS - Wiki</span>
             </a>
         </li>
         <hr class="sidebar-divider">
 
         <div class="sidebar-heading">
-            Czynniki i Czynności
+            Menagment
         </div>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('czynnosci') }}">
-                <i class="fas fa-fw fa-charging-station"></i>
-                <span>Czynności</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path('czynnik') }}">
-                <i class="fas fa-fw fa-puzzle-piece"></i>
-                <span>Czynniki</span>
+            <a class="nav-link" href="">
+                <i class="fas fa-fw fa-user-cog"></i>
+                <span>Manager</span>
             </a>
         </li>
 
+        <div class="sidebar-heading">
+            Administrator
+        </div>
+
+        <li class="nav-item">
+            <a class="nav-link" href="">
+                <i class="fas fa-fw fa-tools"></i>
+                <span>Administrator</span>
+            </a>
+        </li>
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
@@ -155,44 +173,44 @@
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
+                <input type="text" class="myinput" placeholder="Nad czym będziesz pracować?"/>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent-4"
+                        aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
-
-                <!-- Topbar Navbar -->
-                <ul class="navbar-nav ml-auto">
-                    <!-- Nav Item - User Information -->
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                                {{ app.user.email }}
-                            </span>
-                        </a>
-                        <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{ path('fos_user_profile_show') }}">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}" data-toggle="modal"
-                               data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
-                            </a>
-                        </div>
-                    </li>
-
-                </ul>
-
+                <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                                <span class="nav-link">
+                                    <i class="fas fa-box nav-color"></i>
+                                </span>
+                        </li>
+                        <li class="nav-item">
+                            <span class="nav-link nav-color timer">00:00:00</span>
+                        </li>
+                        <li class="nav-item">
+                                <span class="nav-link">
+                                    <i class="fas fa-play-circle timeButton nav-color"></i>
+                                </span>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle nav-color" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                {{ app.user.fullName }} </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-info"
+                                 aria-labelledby="navbarDropdownMenuLink-4">
+                                <a class="dropdown-item" href="#">My account</a>
+                                <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">Log out</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </nav>
-            {% block body %}
-            {% endblock %}
-
+            <div class="container-fluid">
+                {% block body %}
+                {% endblock %}
+            </div>
         </div>
     </div>
 </div>
@@ -223,6 +241,7 @@
     </div>
 </div>
 {% block javascript %}
+
 <script src="{{ asset('bundles/petkoparacrudgenerator/js/jquery.min.js') }}"></script>
 <script src="{{ asset('bundles/petkoparacrudgenerator/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('bundles/petkoparacrudgenerator/js/petkopara-crud-generator.js') }}"></script>
@@ -242,6 +261,8 @@
 <!-- Page level custom scripts -->
 <script src="{{ asset('bootstrap_theme/js/demo/chart-area-demo.js') }}"></script>
 <script src="{{ asset('bootstrap_theme/js/demo/chart-pie-demo.js') }}"></script>
+<script src="{{ asset('bootstrap_theme/js/demo/chart-bar-demo.js') }}"></script>
+
 {% endblock %}
 </body>
 

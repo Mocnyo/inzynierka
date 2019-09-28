@@ -1,0 +1,7 @@
+homepage:
+  path: /
+  defaults: { _controller: AppBundle:Default:index }
+
+timer:
+  path: /czasomierz
+  defaults: { _controller: AppBundle:Timer:index }
