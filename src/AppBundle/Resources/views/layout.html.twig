@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{% block title %} WTRS {% endblock %}</title>
+    <title>{% block title %}WTRS {% endblock %}</title>
 
 
     <!-- Custom fonts for this template-->
@@ -172,27 +172,29 @@
         <div id="content">
 
             <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" id="navbar">
                 <input type="text" class="myinput" placeholder="Nad czym będziesz pracować?"/>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent-4"
                         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                                <span class="nav-link">
-                                    <i class="fas fa-box nav-color"></i>
-                                </span>
+                            <span class="nav-link">
+                                <i class="fas fa-box nav-color"></i>
+                            </span>
                         </li>
                         <li class="nav-item">
-                            <span class="nav-link nav-color timer">00:00:00</span>
+                            <span class="nav-link nav-color timer" v-html="time" v-model="state">00:00:00</span>
                         </li>
                         <li class="nav-item">
-                                <span class="nav-link">
-                                    <i class="fas fa-play-circle timeButton nav-color"></i>
-                                </span>
+                            <span class="nav-link">
+                                <i class="fas fa-play-circle timeButton nav-color" @click="reset"  v-if="state == 'paused'"></i>
+                                <i class="fas fa-stop-circle timeButton nav-color" @click="pause" v-else></i>
+                            </span>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle nav-color" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
@@ -241,7 +243,8 @@
     </div>
 </div>
 {% block javascript %}
-
+<script src="{{ asset('dist/js/vendors~._node_modules_p.bundle.js') }}"></script>
+<script src="{{ asset('dist/js/bundle.js') }}"></script>
 <script src="{{ asset('bundles/petkoparacrudgenerator/js/jquery.min.js') }}"></script>
 <script src="{{ asset('bundles/petkoparacrudgenerator/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('bundles/petkoparacrudgenerator/js/petkopara-crud-generator.js') }}"></script>
