@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import axios from 'axios';
 
 var navbar = new Vue({
     el: "#navbar",
@@ -8,6 +9,7 @@ var navbar = new Vue({
             startTime: Date.now(),
             currentTime: Date.now(),
             interval: null,
+            description: ""
         }
     },
     mounted: function () {
@@ -50,10 +52,13 @@ var navbar = new Vue({
             this.$data.state = "started";
             this.$data.startTime = Date.now();
             this.$data.currentTime = Date.now();
+            console.log('test1');
         },
         pause: function () {
             this.$data.state = "paused";
+            this.postPost();
             localStorage.clear();
+            console.log('test2');
         },
         resume: function () {
             this.$data.state = "started";
@@ -62,6 +67,43 @@ var navbar = new Vue({
             if (this.$data.state === "started") {
                 this.currentTime = Date.now();
             }
+        },
+        postPost: function () {
+            console.log('testval');
+            console.log(this.description);
+            axios.post('app_dev.php/api/time/timers', {
+                Timer: {
+                    descriptionTask: this.description,
+                    startTime: {
+                        date: {
+                            year: "2019",
+                            month: "5",
+                            day: "12"
+                        },
+                        time: {
+                            hour: "21",
+                            minute: "15"
+                        }
+                    },
+                    stopTime:{
+                        date: {
+                            year: "2019",
+                            month: "5",
+                            day: "12"
+                        },
+                        time: {
+                            hour: "21",
+                            minute: "46"
+                        }
+                    }
+                }
+            })
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
     },
     watch: {

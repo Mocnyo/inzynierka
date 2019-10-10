@@ -21,14 +21,14 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="full_name", type="string", length=255)
+     * @ORM\Column(name="full_name", type="string", length=255, nullable=true)
      */
     protected $fullName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="specialization", type="string", length=255)
+     * @ORM\Column(name="specialization", type="string", length=255, nullable=true)
      */
     protected $specialization;
 
@@ -41,6 +41,12 @@ class User extends BaseUser
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\UserTeams", mappedBy="user")
      */
     protected $userTeams;
+
+    /**
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Timer", mappedBy="user")
+     */
+    protected $timer;
 
     public function __construct()
     {
@@ -110,5 +116,21 @@ class User extends BaseUser
     public function setUserTeams($userTeams)
     {
         $this->userTeams = $userTeams;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTimer()
+    {
+        return $this->timer;
+    }
+
+    /**
+     * @param mixed $timer
+     */
+    public function setTimer($timer)
+    {
+        $this->timer = $timer;
     }
 }

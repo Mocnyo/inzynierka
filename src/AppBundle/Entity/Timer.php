@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * timer
+ * Timer
  *
  * @ORM\Table(name="timer")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TimerRepository")
@@ -14,7 +14,6 @@ class Timer
 {
     /**
      * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -23,37 +22,42 @@ class Timer
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="DescriptionTask", type="string", length=255)
+     * @ORM\Column(name="description_task", type="string", length=255, nullable=true)
      */
     private $descriptionTask;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="startTime", type="datetime")
+     * @ORM\Column(name="start_time", type="datetime")
      */
     private $startTime;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="stopTime", type="datetime")
+     * @ORM\Column(name="stop_time", type="datetime")
      */
     private $stopTime;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="time", type="time")
+     * @var string
+     * @ORM\Column(name="time", type="string", length=22)
      */
     private $time;
 
-
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="timer")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
     private $user;
 
 //    private $project;
 
+    public function __construct()
+    {
+        $this->setStopTime(new \DateTime());
+        $this->setStopTime(new \DateTime());
+    }
 
     /**
      * Get id
@@ -140,7 +144,7 @@ class Timer
     /**
      * Set time
      *
-     * @param \DateTime $time
+     * @param string $time
      *
      * @return timer
      */
@@ -154,11 +158,26 @@ class Timer
     /**
      * Get time
      *
-     * @return \DateTime
+     * @return string
      */
     public function getTime()
     {
         return $this->time;
     }
-}
 
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+}

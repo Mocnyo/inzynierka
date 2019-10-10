@@ -5,3 +5,12 @@ homepage:
 timer:
   path: /czasomierz
   defaults: { _controller: AppBundle:Timer:index }
+
+NelmioApiDocBundle:
+  resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+  prefix:   /api/doc
+
+api_backend:
+  resource: "routing_api.yml"
+  type: rest
+  prefix: /api

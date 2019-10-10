@@ -30,6 +30,7 @@ framework:
     assets: ~
     php_errors:
         log: true
+    serializer: true
 
 # Twig Configuration
 twig:
@@ -81,3 +82,18 @@ knp_snappy:
         enabled:    true
         binary:     /usr/local/bin/wkhtmltopdf
         options:    []
+
+nelmio_api_doc: ~
+
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener:
+        enabled: true
+        rules:
+            - { path: '^/api/*', priorities: ['json', 'xml'], fallback_format: 'html' }
+            - { path: '^/', stop: true }
+
+    versioning: true
+    view:
+        view_response_listener: 'force'
