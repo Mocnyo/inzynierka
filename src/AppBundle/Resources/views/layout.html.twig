@@ -127,7 +127,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{ path('post') }}">
                 <i class="fab fa-fw fa-wikipedia-w"></i>
                 <span>WTRS - Wiki</span>
             </a>
@@ -139,10 +139,18 @@
         </div>
 
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePagesForManagment"
+            aria-expanded="true" aria-controls="collapsePages">
                 <i class="fas fa-fw fa-user-cog"></i>
                 <span>Manager</span>
             </a>
+            <div id="collapsePagesForManagment" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="#">Projekty</a>
+                    <div class="collapse-divider"></div>
+                    <a class="collapse-item" href="#">Raporty</a>
+                </div>
+            </div>
         </li>
 
         <div class="sidebar-heading">
@@ -150,10 +158,20 @@
         </div>
 
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePagesForAdministration"
+               aria-expanded="true" aria-controls="collapsePages">
                 <i class="fas fa-fw fa-tools"></i>
                 <span>Administrator</span>
             </a>
+            <div id="collapsePagesForAdministration" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Użytkownicy:</h6>
+                    <a class="collapse-item" href="#">Pracownicy</a>
+                    <div class="collapse-divider"></div>
+                    <h6 class="collapse-header">System:</h6>
+                    <a class="collapse-item" href="{{ path('administration_config') }}">Konfiguracja systemu</a>
+                </div>
+            </div>
         </li>
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
