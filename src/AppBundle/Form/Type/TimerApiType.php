@@ -2,11 +2,10 @@
 
 namespace AppBundle\Form\Type;
 
-use AppBundle\Entity\Timer;
+use AppBundle\Entity\Times;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,10 +15,12 @@ class TimerApiType extends AbstractType
     {
         $builder
             ->add('descriptionTask', TextType::class)
-            ->add('startTime', DateTimeType::class)
-            ->add('stopTime', DateTimeType::class)
-//            ->add('time', TimeType::class)
-//            ->add('user', TextType::class, ['mapped' => false])
+            ->add('startTime', DateTimeType::class, [
+                'with_seconds' => true
+            ])
+            ->add('stopTime', DateTimeType::class, [
+                'with_seconds' => true
+            ])
         ;
     }
 
@@ -27,7 +28,7 @@ class TimerApiType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => Timer::class,
+                'data_class' => Times::class,
                 'csrf_protection' => false
             ]
         );

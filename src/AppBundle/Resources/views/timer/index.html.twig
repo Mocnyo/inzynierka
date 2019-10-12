@@ -4,26 +4,29 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card shadow mb-4">
+                {% for time in times %}
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-3">
-                            asdasdasdasdasd
+                        <div class="col-sm-8">
+                            {{ time.descriptionTask }}
                         </div>
-                        <div class="col-sm-4">
-                            asdasd
+                        <div class="col-sm-1">
+                            project
                         </div>
-                        <div class="col-sm-2 text-right">
-                            03:20:12
-                        </div>
-                        <div class="col-sm-2 text-right">
-                            13:30 - 16:40
+                        <div class="col-sm-1 text-right float-sm-right">
+                            {{ time.startTime|date("H:i:s") }}
                         </div>
                         <div class="col-sm-1 text-right">
-                            sad
+                            {{ time.stopTime|date("H:i:s")  }}
+                        </div>
+                        <div class="col-sm-1 text-right">
+                            {{ time.time }}
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
+
         </div>
     </div>
 {% endblock %}

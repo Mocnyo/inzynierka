@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Agreement
+ * Agreement types
  *
  * @ORM\Table(name="agreement")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AgreementRepository")

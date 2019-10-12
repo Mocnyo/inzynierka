@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Timer
+ * Times
  *
- * @ORM\Table(name="timer")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\TimerRepository")
+ * @ORM\Table(name="times")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TimesRepository")
  */
-class Timer
+class Times
 {
     /**
      * @var int
@@ -46,7 +46,7 @@ class Timer
     private $time;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="timer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="times")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;

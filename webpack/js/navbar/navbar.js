@@ -9,7 +9,7 @@ var navbar = new Vue({
             startTime: Date.now(),
             currentTime: Date.now(),
             interval: null,
-            description: ""
+            description: "",
         }
     },
     mounted: function () {
@@ -52,13 +52,11 @@ var navbar = new Vue({
             this.$data.state = "started";
             this.$data.startTime = Date.now();
             this.$data.currentTime = Date.now();
-            console.log('test1');
         },
         pause: function () {
             this.$data.state = "paused";
             this.postPost();
             localStorage.clear();
-            console.log('test2');
         },
         resume: function () {
             this.$data.state = "started";
@@ -69,31 +67,33 @@ var navbar = new Vue({
             }
         },
         postPost: function () {
-            console.log('testval');
-            console.log(this.description);
+            var startDate = new Date(parseInt(this.startTime));
+            var stopDate = new Date(this.currentTime);
             axios.post('app_dev.php/api/time/timers', {
                 Timer: {
                     descriptionTask: this.description,
                     startTime: {
                         date: {
-                            year: "2019",
-                            month: "5",
-                            day: "12"
+                            year: startDate.getFullYear(),
+                            month: startDate.getMonth(),
+                            day: startDate.getDay()
                         },
                         time: {
-                            hour: "21",
-                            minute: "15"
+                            hour: startDate.getHours(),
+                            minute: startDate.getMinutes(),
+                            second: startDate.getSeconds()
                         }
                     },
                     stopTime:{
                         date: {
-                            year: "2019",
-                            month: "5",
-                            day: "12"
+                            year: stopDate.getFullYear(),
+                            month: stopDate.getMonth(),
+                            day: stopDate.getDay()
                         },
                         time: {
-                            hour: "21",
-                            minute: "46"
+                            hour: stopDate.getHours(),
+                            minute: stopDate.getMinutes(),
+                            second: stopDate.getSeconds()
                         }
                     }
                 }

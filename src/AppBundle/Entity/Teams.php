@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Division
+ * Teams types
  *
- * @ORM\Table(name="division")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\DivisionRepository")
+ * @ORM\Table(name="teams")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TeamsRepository")
  */
-class Division
+class Teams
 {
     /**
      * @var int
@@ -30,7 +30,7 @@ class Division
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserTeams", mappedBy="division")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserTeams", mappedBy="teams")
      */
     private $userTeams;
 
@@ -49,7 +49,7 @@ class Division
      *
      * @param string $name
      *
-     * @return Division
+     * @return Teams
      */
     public function setName($name)
     {

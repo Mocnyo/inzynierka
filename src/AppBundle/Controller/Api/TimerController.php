@@ -2,16 +2,15 @@
 
 namespace AppBundle\Controller\Api;
 
-use AppBundle\Entity\Timer;
+use AppBundle\Entity\Times;
 use AppBundle\Form\Type\TimerApiType;
-use AppBundle\Repository\TimerRepository;
+use AppBundle\Repository\TimesRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints\Time;
 
 /**
  * Class TimerController
@@ -22,14 +21,15 @@ use Symfony\Component\Validator\Constraints\Time;
 class TimerController extends FOSRestController
 {
     /**
-     * @return ObjectRepository|TimerRepository
+     * @return ObjectRepository|TimesRepository
      */
     protected function getRepository(): ObjectRepository
     {
-        return $this->getDoctrine()->getRepository(Timer::class);
+        return $this->getDoctrine()->getRepository(Times::class);
     }
 
     /**
+     * Send time
      * @ApiDoc  (
      *   description="Create a new Object",
      *   section="Timer",
@@ -46,15 +46,8 @@ class TimerController extends FOSRestController
      */
     public function postAction(Request $request)
     {
-        $entity = new Timer();
+        $entity = new Times();
         $form = $this->createForm(TimerApiType::class, $entity)->handleRequest($request);
-
-        $test = 10;
-
-//        var_dump($form->isSubmitted());
-//        var_dump($form->isValid());
-//        var_dump($form->getData());
-//        die();
 
         if(!$form->isValid() || !$form->isSubmitted()) {
             return $this->handleView($this->view($form->getErrors(true), 400));
@@ -110,7 +103,7 @@ class TimerController extends FOSRestController
      * )
      * @return Response
      */
-    public function getAction(Request $request, Timer $entity)
+    public function getAction(Request $request, Times $entity)
     {
         return $this->handleView($this->view($entity, 200));
     }

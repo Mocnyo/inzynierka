@@ -21,7 +21,6 @@ class ProjectsUserAssignment
      */
     private $id;
 
-
     /**
      * Get id
      *

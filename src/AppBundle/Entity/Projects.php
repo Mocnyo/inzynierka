@@ -24,17 +24,16 @@ class Projects
     /**
      * @var string
      *
-     * @ORM\Column(name="Name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ShortName", type="string", length=255)
+     * @ORM\Column(name="short_name", type="string", length=255)
      */
     private $shortName;
-
 
     /**
      * Get id

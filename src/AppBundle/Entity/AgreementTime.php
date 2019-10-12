@@ -31,7 +31,7 @@ class AgreementTime
     /**
      * @var bool
      *
-     * @ORM\Column(name="isIndefinite", type="boolean")
+     * @ORM\Column(name="is_indefinite", type="boolean")
      */
     private $isIndefinite;
 

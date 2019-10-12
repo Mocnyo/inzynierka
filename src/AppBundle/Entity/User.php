@@ -44,9 +44,9 @@ class User extends BaseUser
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Timer", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Times", mappedBy="user")
      */
-    protected $timer;
+    protected $times;
 
     public function __construct()
     {
@@ -121,16 +121,16 @@ class User extends BaseUser
     /**
      * @return mixed
      */
-    public function getTimer()
+    public function getTimes()
     {
-        return $this->timer;
+        return $this->times;
     }
 
     /**
-     * @param mixed $timer
+     * @param mixed $times
      */
-    public function setTimer($timer)
+    public function setTimes($times): void
     {
-        $this->timer = $timer;
+        $this->times = $times;
     }
 }

@@ -28,10 +28,10 @@ class UserTeams
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Division", inversedBy="userTeams")
-     * @ORM\JoinColumn(name="division_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Teams", inversedBy="userTeams")
+     * @ORM\JoinColumn(name="teams_id", referencedColumnName="id")
      */
-    private $division;
+    private $teams;
 
     /**
      * Get id
@@ -62,17 +62,17 @@ class UserTeams
     /**
      * @return mixed
      */
-    public function getDivision()
+    public function getTeams()
     {
-        return $this->division;
+        return $this->teams;
     }
 
     /**
-     * @param mixed $division
+     * @param mixed $teams
      */
-    public function setDivision($division)
+    public function setTeams($teams): void
     {
-        $this->division = $division;
+        $this->teams = $teams;
     }
 }
 
