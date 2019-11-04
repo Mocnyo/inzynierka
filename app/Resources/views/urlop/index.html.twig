@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Urlops list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Beginat</th>
+                <th>Endat</th>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for urlop in urlops %}
+            <tr>
+                <td><a href="{{ path('urlop_show', { 'id': urlop.id }) }}">{{ urlop.id }}</a></td>
+                <td>{% if urlop.beginAt %}{{ urlop.beginAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if urlop.endAt %}{{ urlop.endAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ urlop.title }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('urlop_show', { 'id': urlop.id }) }}">show</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}

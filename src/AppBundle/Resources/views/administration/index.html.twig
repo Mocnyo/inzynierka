@@ -1,0 +1,141 @@
+{% extends '@App/layout.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">System</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            System
+                        </div>
+                        <div class="col-sm-8">
+                            {{ system }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Główna konfiguracja</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            Wersja PHP
+                        </div>
+                        <div class="col-sm-6">
+                            {{ php }}
+                        </div>
+                        <div class="col-sm-6">
+                            Oprogramowanie serwera
+                        </div>
+                        <div class="col-sm-6">
+                            {{ serverInfo['SERVER_SOFTWARE'] }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            Ścieżka projektu
+                        </div>
+                        <div class="col-sm-6">
+                            {{ serverInfo['DOCUMENT_ROOT'] }}
+                        </div>
+                        <div class="col-sm-6">
+                            Host
+                        </div>
+                        <div class="col-sm-6">
+                            {{ serverInfo['HTTP_HOST'] }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Zmienne ini</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            display_errors
+                        </div>
+                        <div class="col-sm-3">
+                            {{ info['display_errors'].local_value }}
+                        </div>
+                        <div class="col-sm-3">
+                            error_log
+                        </div>
+                        <div class="col-sm-3">
+                            {{ info['error_log'].local_value }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            include_path
+                        </div>
+                        <div class="col-sm-3">
+                            {{ info['include_path'].local_value }}
+                        </div>
+                        <div class="col-sm-3">
+                            error_reporting
+                        </div>
+                        <div class="col-sm-3">
+                            {{ info['error_reporting'].local_value }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            memory_limit
+                        </div>
+                        <div class="col-sm-3">
+                            {{ info['memory_limit'].local_value }}
+                        </div>
+                        <div class="col-sm-3">
+                            post_max_size
+                        </div>
+                        <div class="col-sm-3">
+                            {{ info['post_max_size'].local_value }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            upload_max_filesize
+                        </div>
+                        <div class="col-sm-3">
+                            {{ info['upload_max_filesize'].local_value }}
+                        </div>
+                        <div class="col-sm-3">
+                            max_input_vars
+                        </div>
+                        <div class="col-sm-3">
+                            {{ info['max_input_vars'].local_value }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            xdebug.default_enable
+                        </div>
+                        <div class="col-sm-3">
+                            {{ info['xdebug.default_enable'].local_value }}
+                        </div>
+                        <div class="col-sm-3">
+                            file_uploads
+                        </div>
+                        <div class="col-sm-3">
+                            {{ info['file_uploads'].local_value }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

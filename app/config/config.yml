@@ -36,6 +36,9 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes:
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+
 
 # Doctrine Configuration
 doctrine:
@@ -93,7 +96,9 @@ fos_rest:
         rules:
             - { path: '^/api/*', priorities: ['json', 'xml'], fallback_format: 'html' }
             - { path: '^/', stop: true }
-
     versioning: true
     view:
         view_response_listener: 'force'
+
+fos_ck_editor:
+    autoload: false

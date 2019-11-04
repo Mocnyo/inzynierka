@@ -3,7 +3,8 @@
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Times;
-use AppBundle\Form\Type\TimerApiType;
+use AppBundle\Entity\User;
+use AppBundle\Form\TimerApiType;
 use AppBundle\Repository\TimesRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -53,7 +54,7 @@ class TimerController extends FOSRestController
             return $this->handleView($this->view($form->getErrors(true), 400));
         }
 
-        /** @var Timer $data */
+        /** @var Times $data */
         $data = $form->getData();
         $dateDiff = $data->getStopTime()->diff($data->getStartTime(), true);
 
@@ -83,8 +84,9 @@ class TimerController extends FOSRestController
      */
     public function cgetAction(Request $request)
     {
-        $times = $this->getRepository()->findBy(['user' => 1]);
-
+        $userID = 1;
+        $times = $this->getRepository()->findBy(['user' => $userID]);
+        $test = 10;
         return $this->handleView($this->view($times, 200));
     }
 
@@ -101,10 +103,48 @@ class TimerController extends FOSRestController
      *     404 = "Returned when the page is not found"
      *   }
      * )
+     * @param Request $request
+     * @param Times $entity
      * @return Response
      */
     public function getAction(Request $request, Times $entity)
     {
         return $this->handleView($this->view($entity, 200));
+    }
+
+    /**
+     * Put time
+     * @ApiDoc  (
+     *   description="Get one time item",
+     *   section="Timer",
+     *   resource = true,
+     *   description = "Gets a Type for a given id",
+     *   output = "",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the page is not found"
+     *   }
+     * )
+     * @param Request $request
+     * @param Times $entity
+     * @return Response
+     */
+    public function putAction(Request $request, Times $entity) {
+
+        $form = $this->createForm(TimerApiType::class, $entity)->handleRequest($request);
+
+        if(!$form->isValid() || !$form->isSubmitted()) {
+            return $this->handleView($this->view($form->getErrors(true), 400));
+        }
+
+        $data = $form->getData();
+        $dateDiff = $data->getStopTime()->diff($data->getStartTime(), true);
+
+        $entity->setTime($dateDiff->format("%H:%I:%S"));
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($data);
+        $em->flush();
+
+        return $this->handleView($this->view($form, 200));
     }
 }

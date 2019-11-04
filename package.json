@@ -67,6 +67,7 @@
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.19",
+    "ckeditor": "^4.12.1",
     "datatables.net": "^1.10.19",
     "es6-promise": "^4.2.5",
     "fullcalendar": "^3.10.0",

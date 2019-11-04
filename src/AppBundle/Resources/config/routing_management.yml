@@ -1,0 +1,3 @@
+index:
+  path: /projekty
+  defaults: { _controller: AppBundle:Project:indexManagement }

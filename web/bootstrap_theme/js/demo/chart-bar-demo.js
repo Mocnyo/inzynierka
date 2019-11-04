@@ -27,12 +27,13 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
+
 // Bar Chart Example
 var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: getDaysArray,
     datasets: [{
       label: "Revenue",
       backgroundColor: "#4e73df",
@@ -68,12 +69,12 @@ var myBarChart = new Chart(ctx, {
       yAxes: [{
         ticks: {
           min: 0,
-          max: 15000,
-          maxTicksLimit: 5,
-          padding: 10,
+          max: 12,
+          maxTicksLimit: 7,
+          padding: 7,
           // Include a dollar sign in the ticks
           callback: function(value, index, values) {
-            return '$' + number_format(value);
+            return number_format(value) + 'h';
           }
         },
         gridLines: {

@@ -7,6 +7,10 @@ api_backend:
   type: rest
   prefix: /api
 
+management:
+  resource: "routing_management.yml"
+  prefix: /kierownik
+
 homepage:
   path: /
   defaults: { _controller: AppBundle:Default:index }
@@ -18,3 +22,12 @@ timer:
 administration_config:
   path: /config
   defaults: { _controller: AppBundle:Administration:index }
+
+employee:
+  path: /pracownicy
+  defaults: { _controller: AppBundle:Employee:index }
+
+projects:
+  path: /projekty
+  defaults: { _controller: AppBundle:Project:index }
+

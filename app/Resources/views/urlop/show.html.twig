@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Urlop</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ urlop.id }}</td>
+            </tr>
+            <tr>
+                <th>Beginat</th>
+                <td>{% if urlop.beginAt %}{{ urlop.beginAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Endat</th>
+                <td>{% if urlop.endAt %}{{ urlop.endAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ urlop.title }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('urlop_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

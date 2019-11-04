@@ -9,6 +9,17 @@
     border-color: brown;
 }
 
+.displayInput {
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: white;
+    width: 100%;
+}
+
+.displayInput:focus {
+    border-color: brown;
+}
+
 .timeButton {
     font-size: 42px;
     cursor: pointer;

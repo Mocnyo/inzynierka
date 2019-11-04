@@ -3,30 +3,26 @@
 {% block body %}
     <div class="row">
         <div class="col-sm-12">
-            <div class="card shadow mb-4">
-                {% for time in times %}
+            <div class="card shadow mb-4" id="times">
                 <div class="card-body">
                     <div class="row">
+                        <template v-for="item in data">
                         <div class="col-sm-8">
-                            {{ time.descriptionTask }}
+                                <p>${ item.description_task }</p>
                         </div>
                         <div class="col-sm-1">
-                            project
+                            <p>${ item.project } test</p>
                         </div>
-                        <div class="col-sm-1 text-right float-sm-right">
-                            {{ time.startTime|date("H:i:s") }}
+                        <div class="col-sm-2">
+                            <p>${ item.start_time } - ${ item.stop_time }</p>
                         </div>
-                        <div class="col-sm-1 text-right">
-                            {{ time.stopTime|date("H:i:s")  }}
+                        <div class="col-sm-1">
+                            <p>${ item.time }</p>
                         </div>
-                        <div class="col-sm-1 text-right">
-                            {{ time.time }}
-                        </div>
+                        </template>
                     </div>
                 </div>
-                {% endfor %}
             </div>
-
         </div>
     </div>
 {% endblock %}

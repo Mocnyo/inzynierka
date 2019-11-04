@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -48,10 +49,16 @@ class User extends BaseUser
      */
     protected $times;
 
+    /**
+     * One product has many features. This is the inverse side.
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Projects", inversedBy="user")
+     * @var Collection
+     */
+    protected $project;
+
     public function __construct()
     {
         parent::__construct();
-        // your own logic
     }
 
     /**
@@ -132,5 +139,21 @@ class User extends BaseUser
     public function setTimes($times): void
     {
         $this->times = $times;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getProject(): Collection
+    {
+        return $this->project;
+    }
+
+    /**
+     * @param Collection $project
+     */
+    public function setProject(Collection $project): void
+    {
+        $this->project = $project;
     }
 }

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Times
@@ -48,6 +49,7 @@ class Times
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="times")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @JMS\Exclude()
      */
     private $user;
 
@@ -60,109 +62,83 @@ class Times
     }
 
     /**
-     * Get id
-     *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set descriptionTask
-     *
-     * @param string $descriptionTask
-     *
-     * @return timer
+     * @param int $id
      */
-    public function setDescriptionTask($descriptionTask)
+    public function setId(int $id): void
     {
-        $this->descriptionTask = $descriptionTask;
-
-        return $this;
+        $this->id = $id;
     }
 
     /**
-     * Get descriptionTask
-     *
      * @return string
      */
-    public function getDescriptionTask()
+    public function getDescriptionTask(): ?string
     {
         return $this->descriptionTask;
     }
 
     /**
-     * Set startTime
-     *
-     * @param \DateTime $startTime
-     *
-     * @return timer
+     * @param string $descriptionTask
      */
-    public function setStartTime($startTime)
+    public function setDescriptionTask(string $descriptionTask): void
     {
-        $this->startTime = $startTime;
-
-        return $this;
+        $this->descriptionTask = $descriptionTask;
     }
 
     /**
-     * Get startTime
-     *
      * @return \DateTime
      */
-    public function getStartTime()
+    public function getStartTime(): ?\DateTime
     {
         return $this->startTime;
     }
 
     /**
-     * Set stopTime
-     *
-     * @param \DateTime $stopTime
-     *
-     * @return timer
+     * @param \DateTime $startTime
      */
-    public function setStopTime($stopTime)
+    public function setStartTime(\DateTime $startTime): void
     {
-        $this->stopTime = $stopTime;
-
-        return $this;
+        $this->startTime = $startTime;
     }
 
     /**
-     * Get stopTime
-     *
      * @return \DateTime
      */
-    public function getStopTime()
+    public function getStopTime(): \DateTime
     {
         return $this->stopTime;
     }
 
     /**
-     * Set time
-     *
-     * @param string $time
-     *
-     * @return timer
+     * @param \DateTime $stopTime
      */
-    public function setTime($time)
+    public function setStopTime(\DateTime $stopTime): void
     {
-        $this->time = $time;
-
-        return $this;
+        $this->stopTime = $stopTime;
     }
 
     /**
-     * Get time
-     *
      * @return string
      */
-    public function getTime()
+    public function getTime(): string
     {
         return $this->time;
+    }
+
+    /**
+     * @param string $time
+     */
+    public function setTime(string $time): void
+    {
+        $this->time = $time;
     }
 
     /**
@@ -176,7 +152,7 @@ class Times
     /**
      * @param mixed $user
      */
-    public function setUser($user)
+    public function setUser($user): void
     {
         $this->user = $user;
     }

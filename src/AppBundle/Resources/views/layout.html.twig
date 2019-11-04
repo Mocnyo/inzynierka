@@ -79,7 +79,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{ path('projects') }}">
                 <i class="fas fa-fw fa-tasks"></i>
                 <span>Projekty</span>
             </a>
@@ -115,7 +115,7 @@
         </div>
 
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{ path('employee') }}">
                 <i class="fas fa-fw fa-address-card"></i>
                 <span>Pracownicy</span>
             </a>
@@ -259,9 +259,11 @@
     </div>
 </div>
 {% block javascript %}
+<!-- dist -->
 <script src="{{ asset('dist/js/vendors~._node_modules_a.bundle.js') }}"></script>
 <script src="{{ asset('dist/js/vendors~._node_modules_p.bundle.js') }}"></script>
 <script src="{{ asset('dist/js/bundle.js') }}"></script>
+
 <script src="{{ asset('bundles/petkoparacrudgenerator/js/jquery.min.js') }}"></script>
 <script src="{{ asset('bundles/petkoparacrudgenerator/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('bundles/petkoparacrudgenerator/js/petkopara-crud-generator.js') }}"></script>

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace AppBundle\Form;
 
 use AppBundle\Entity\Times;
 use Symfony\Component\Form\AbstractType;
