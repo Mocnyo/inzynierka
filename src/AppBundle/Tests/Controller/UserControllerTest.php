@@ -4,7 +4,7 @@ namespace AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class UrlopControllerTest extends WebTestCase
+class UserControllerTest extends WebTestCase
 {
     /*
     public function testCompleteScenario()
@@ -13,13 +13,13 @@ class UrlopControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/urlop/');
+        $crawler = $client->request('GET', '/user/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET //");
         $crawler = $client->click($crawler->selectLink('New')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Save')->form(array(
-            'urlop[field_name]'  => 'Test',
+            'user[field_name]'  => 'Test',
             // ... other fields to fill
         ));
 
@@ -33,7 +33,7 @@ class UrlopControllerTest extends WebTestCase
         $crawler = $client->click($crawler->filter('a[title="Edit"]')->link());
 
         $form = $crawler->selectButton('Update')->form(array(
-            'urlop[field_name]'  => 'Foo',
+            'user[field_name]'  => 'Foo',
             // ... other fields to fill
         ));
 

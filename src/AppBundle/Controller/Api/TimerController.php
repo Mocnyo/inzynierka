@@ -3,7 +3,6 @@
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Times;
-use AppBundle\Entity\User;
 use AppBundle\Form\TimerApiType;
 use AppBundle\Repository\TimesRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
@@ -84,9 +83,9 @@ class TimerController extends FOSRestController
      */
     public function cgetAction(Request $request)
     {
+//        $userID = $this->getUser()->getId();
         $userID = 1;
         $times = $this->getRepository()->findBy(['user' => $userID]);
-        $test = 10;
         return $this->handleView($this->view($times, 200));
     }
 

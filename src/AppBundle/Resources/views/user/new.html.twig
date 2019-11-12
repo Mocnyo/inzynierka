@@ -1,7 +1,7 @@
 {% extends '@App/layout.html.twig' %}
 
 {% block title %}
-    {{ parent() }} - New post
+    {{ parent() }} - Nowy użytkownik
 {% endblock %}
 
 {% block body %}
@@ -22,24 +22,31 @@
         <div class="col-sm-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h4 class="m-0 font-weight-bold float-left text-primary">Dodaj nowy post</h4>
+                    <h4 class="m-0 font-weight-bold float-left text-primary">Dodaj nowego użytkownika</h4>
                     <div class="form-group float-right">
-                        <a class="btn btn-secondary btn-sm" href="{{ path('post') }}">
+                        <a class="btn btn-secondary" href="{{ path('user') }}">
                             <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                            Back to list
+                            Wróć
                         </a>
                     </div>
                 </div>
-
-
                 <div class="card-body">
+                    <div class="row justify-content-center">
+                        <div class="col-sm-8">
+                            {{ form_start(form) }}
+                            {{ form_row(form.username) }}
+                            {{ form_row(form.fullName) }}
+                            {{ form_row(form.email) }}
+                            {{ form_row(form.plainPassword.first) }}
+                            {{ form_row(form.plainPassword.second) }}
+                            {{ form_row(form.specialization) }}
+                            {{ form_row(form.enabled) }}
+{#                            {{ form_row(form.userTeams) }}#}
+{#                            {{ form_row(form.agreementTime) }}#}
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-sm-12">
-
-                            {{ form_start(form) }}
-                            {{ form_widget(form.name) }}
-                            {{ form_widget(form.description) }}
-
                             <hr/>
                             <p>
                                 <button type="submit" name="submit" value="save" class="btn btn-primary float-right">
@@ -53,6 +60,7 @@
             </div>
         </div>
     </div>
+
 
 {% endblock %}
 

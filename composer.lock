@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9551bab229a85a462902367270420dfc",
+    "content-hash": "a53d46b54957312f7b5fd878fe062d02",
     "packages": [
         {
             "name": "codeitnowin/barcode",
@@ -320,16 +320,16 @@
         },
         {
             "name": "doctrine/common",
-            "version": "v2.6.2",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "7bce00698899aa2c06fe7365c76e4d78ddb15fa3"
+                "reference": "5954c297e9d93ff84554906c2fbbc2a133c43941"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/7bce00698899aa2c06fe7365c76e4d78ddb15fa3",
-                "reference": "7bce00698899aa2c06fe7365c76e4d78ddb15fa3",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/5954c297e9d93ff84554906c2fbbc2a133c43941",
+                "reference": "5954c297e9d93ff84554906c2fbbc2a133c43941",
                 "shasum": ""
             },
             "require": {
@@ -338,10 +338,10 @@
                 "doctrine/collections": "1.*",
                 "doctrine/inflector": "1.*",
                 "doctrine/lexer": "1.*",
-                "php": "~5.5|~7.0"
+                "php": "~5.6|~7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.8|~5.0"
+                "phpunit/phpunit": "^5.4.6"
             },
             "type": "library",
             "extra": {
@@ -389,7 +389,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2016-11-30T16:50:46+00:00"
+            "time": "2016-12-03T08:15:01+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -3465,16 +3465,16 @@
         },
         {
             "name": "tattali/calendar-bundle",
-            "version": "v1.1.5",
+            "version": "v1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tattali/CalendarBundle.git",
-                "reference": "b858c7a4209ad3c0107a92ae826b203d377ddf34"
+                "reference": "a4378ad9d90e9e562c891729a8e2d70e81b0caaa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tattali/CalendarBundle/zipball/b858c7a4209ad3c0107a92ae826b203d377ddf34",
-                "reference": "b858c7a4209ad3c0107a92ae826b203d377ddf34",
+                "url": "https://api.github.com/repos/tattali/CalendarBundle/zipball/a4378ad9d90e9e562c891729a8e2d70e81b0caaa",
+                "reference": "a4378ad9d90e9e562c891729a8e2d70e81b0caaa",
                 "shasum": ""
             },
             "require": {
@@ -3519,7 +3519,7 @@
                 "symfony",
                 "symfony calendar"
             ],
-            "time": "2019-07-30T20:00:51+00:00"
+            "time": "2019-10-20T22:33:11+00:00"
         },
         {
             "name": "twig/twig",
@@ -3745,7 +3745,14 @@
             "time": "2017-12-14T19:40:10+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "2.6.99",
+            "alias_normalized": "2.6.99.0",
+            "version": "2.7.1.0",
+            "package": "doctrine/common"
+        }
+    ],
     "minimum-stability": "stable",
     "stability-flags": [],
     "prefer-stable": false,

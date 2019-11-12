@@ -11,16 +11,15 @@
 
     <title>{% block title %}WTRS {% endblock %}</title>
 
-
     <!-- Custom fonts for this template-->
     <link href="{{ asset('bootstrap_theme/vendor/fontawesome-free/css/all.css') }}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-          rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="{{ asset('bootstrap_theme/css/style.css') }}" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="{{ asset('bootstrap_theme/css/sb-admin-2.css') }}" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+    {% block stylesheets %}{% endblock %}
 </head>
 
 <body id="page-top">
@@ -121,7 +120,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{ path('urlop_calendar') }}">
                 <i class="far fa-fw fa-calendar-alt"></i>
                 <span>Urlopy</span>
             </a>
@@ -166,7 +165,7 @@
             <div id="collapsePagesForAdministration" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Użytkownicy:</h6>
-                    <a class="collapse-item" href="#">Pracownicy</a>
+                    <a class="collapse-item" href="{{ path('index') }}">Pracownicy</a>
                     <div class="collapse-divider"></div>
                     <h6 class="collapse-header">System:</h6>
                     <a class="collapse-item" href="{{ path('administration_config') }}">Konfiguracja systemu</a>
@@ -271,7 +270,7 @@
 <script src="{{ asset('bootstrap_theme/vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('bootstrap_theme/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-<!-- Core plugin JavaScript-->
+<!-- Corxe plugin JavaScript-->
 <script src="{{ asset('bootstrap_theme/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
 <!-- Custom scripts for all pages-->
@@ -284,8 +283,8 @@
 <script src="{{ asset('bootstrap_theme/js/demo/chart-area-demo.js') }}"></script>
 <script src="{{ asset('bootstrap_theme/js/demo/chart-pie-demo.js') }}"></script>
 <script src="{{ asset('bootstrap_theme/js/demo/chart-bar-demo.js') }}"></script>
-
 {% endblock %}
+{% block javascripts %}{% endblock %}
 </body>
 
 </html>

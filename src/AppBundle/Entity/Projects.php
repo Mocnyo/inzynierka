@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,23 +23,20 @@ class Projects
 
     /**
      * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
      * @var string
-     *
      * @ORM\Column(name="short_name", type="string", length=255)
      */
     private $shortName;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="project")
-     * @var Collection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProjectsUserAssignment", mappedBy="project")
      */
-    private $user;
+    private $userAssignment;
 
     /**
      * @var string
@@ -107,9 +103,25 @@ class Projects
     }
 
     /**
+     * @return mixed
+     */
+    public function getUserAssignment()
+    {
+        return $this->userAssignment;
+    }
+
+    /**
+     * @param mixed $userAssignment
+     */
+    public function setUserAssignment($userAssignment): void
+    {
+        $this->userAssignment = $userAssignment;
+    }
+
+    /**
      * @return string
      */
-    public function getTime(): ?string
+    public function getTime(): string
     {
         return $this->time;
     }
@@ -120,22 +132,6 @@ class Projects
     public function setTime(string $time): void
     {
         $this->time = $time;
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getUser(): Collection
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param Collection $user
-     */
-    public function setUser(Collection $user): void
-    {
-        $this->user = $user;
     }
 }
 

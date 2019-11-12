@@ -11,14 +11,14 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CalendarSubscriber implements EventSubscriberInterface
 {
-    private $bookingRepository;
+    private $urlopRepository;
     private $router;
 
     public function __construct(
-        UrlopRepository $bookingRepository,
+        UrlopRepository $urlopRepository,
         UrlGeneratorInterface $router
     ) {
-        $this->bookingRepository = $bookingRepository;
+        $this->urlopRepository = $urlopRepository;
         $this->router = $router;
     }
 
@@ -37,21 +37,21 @@ class CalendarSubscriber implements EventSubscriberInterface
 
         // Modify the query to fit to your entity and needs
         // Change booking.beginAt by your start date property
-        $bookings = $this->bookingRepository
-            ->createQueryBuilder('booking')
-            ->where('booking.beginAt BETWEEN :start and :end OR booking.endAt BETWEEN :start and :end')
+        $items = $this->urlopRepository
+            ->createQueryBuilder('u')
+            ->where('u.beginAt BETWEEN :start and :end OR u.endAt BETWEEN :start and :end')
             ->setParameter('start', $start->format('Y-m-d H:i:s'))
             ->setParameter('end', $end->format('Y-m-d H:i:s'))
             ->getQuery()
             ->getResult()
         ;
 
-        foreach ($bookings as $booking) {
+        foreach ($items as $item) {
             // this create the events with your data (here booking data) to fill calendar
-            $bookingEvent = new Event(
-                $booking->getTitle(),
-                $booking->getBeginAt(),
-                $booking->getEndAt() // If the end date is null or not defined, a all day event is created.
+            $urlopEvent = new Event(
+                $item->getTitle(),
+                $item->getBeginAt(),
+                $item->getEndAt() // If the end date is null or not defined, a all day event is created.
             );
 
             /*
@@ -61,19 +61,19 @@ class CalendarSubscriber implements EventSubscriberInterface
              * and: https://github.com/fullcalendar/fullcalendar/blob/master/src/core/options.ts
              */
 
-            $bookingEvent->setOptions([
+            $urlopEvent->setOptions([
                 'backgroundColor' => 'red',
                 'borderColor' => 'red',
             ]);
-            $bookingEvent->addOption(
+            $urlopEvent->addOption(
                 'url',
                 $this->router->generate('booking_show', [
-                    'id' => $booking->getId(),
+                    'id' => $item->getId(),
                 ])
             );
 
             // finally, add the event to the CalendarEvent to fill the calendar
-            $calendar->addEvent($bookingEvent);
+            $calendar->addEvent($urlopEvent);
         }
     }
 }

@@ -8,6 +8,5 @@ fos_user:
 wstr:
     resource: '@AppBundle/Resources/config/routing.yml'
 
-# config/routes/calendar.yaml
 calendar:
     resource: "@CalendarBundle/Resources/config/routing.yaml"

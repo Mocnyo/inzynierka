@@ -34,6 +34,11 @@ class Teams
      */
     private $userTeams;
 
+    public function __toString()
+    {
+        return (string) $this->getName();
+    }
+
     /**
      * Get id
      *

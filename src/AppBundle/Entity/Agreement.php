@@ -33,6 +33,12 @@ class Agreement
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\AgreementTime", mappedBy="agreement")
      */
     private $agreementTime;
+
+    public function __toString()
+    {
+        return (string) $this->getName();
+    }
+
     /**
      * Get id
      *

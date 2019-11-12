@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -44,21 +43,19 @@ class User extends BaseUser
     protected $userTeams;
 
     /**
-     * One product has many features. This is the inverse side.
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Times", mappedBy="user")
      */
     protected $times;
 
     /**
-     * One product has many features. This is the inverse side.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Projects", inversedBy="user")
-     * @var Collection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProjectsUserAssignment", mappedBy="user")
      */
-    protected $project;
+    protected $userAssignment;
 
     public function __construct()
     {
         parent::__construct();
+        // your own logic
     }
 
     /**
@@ -142,18 +139,18 @@ class User extends BaseUser
     }
 
     /**
-     * @return Collection
+     * @return mixed
      */
-    public function getProject(): Collection
+    public function getUserAssignment()
     {
-        return $this->project;
+        return $this->userAssignment;
     }
 
     /**
-     * @param Collection $project
+     * @param mixed $userAssignment
      */
-    public function setProject(Collection $project): void
+    public function setUserAssignment($userAssignment): void
     {
-        $this->project = $project;
+        $this->userAssignment = $userAssignment;
     }
 }

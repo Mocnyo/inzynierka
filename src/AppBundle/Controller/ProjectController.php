@@ -22,7 +22,7 @@ class ProjectController extends Controller
     {
         /**  @var User $user **/
         $user = $this->getUser();
-        $projects = $user->getProject();
+        $projects = $user->getUserAssignment();
 
         $test = 10;
         return $this->render('@App/project/index.html.twig', [

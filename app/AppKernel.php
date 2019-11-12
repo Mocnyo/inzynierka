@@ -27,7 +27,7 @@ class AppKernel extends Kernel
             new Petkopara\CrudGeneratorBundle\PetkoparaCrudGeneratorBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new FOS\CKEditorBundle\FOSCKEditorBundle(),
-            new CalendarBundle(),
+            new CalendarBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

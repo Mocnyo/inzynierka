@@ -1,4 +1,9 @@
-typo_script_backend_typoscript_type:
+api_timer:
   resource: "@AppBundle/Controller/Api/TimerController.php"
   type: rest
   prefix: /time
+
+api_worker:
+  resource: "@AppBundle/Controller/Api/UserController.php"
+  type: rest
+  prefix: /user

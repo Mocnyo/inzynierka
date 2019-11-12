@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -10,43 +9,34 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\View\TwitterBootstrap3View;
-use AppBundle\Entity\Urlop;
-use Symfony\Component\HttpFoundation\Response;
+
+use AppBundle\Entity\User;
 
 /**
- * Urlop controller.
+ * User controller.
  *
- * @Route("/urlop")
+ * @Route("/user")
  */
-class UrlopController extends AbstractController
+class UserController extends Controller
 {
-
     /**
-     * @Route("/kalendarz", name="urlop_calendar", methods={"GET"})
-     */
-    public function calendar(): Response
-    {
-        return $this->render('@App/urlop/index.html.twig');
-    }
-
-    /**
-     * Lists all Urlop entities.
+     * Lists all User entities.
      *
-     * @Route("/", name="urlop")
+     * @Route("/", name="user")
      * @Method("GET")
      */
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $queryBuilder = $em->getRepository('AppBundle:Urlop')->createQueryBuilder('e');
+        $queryBuilder = $em->getRepository('AppBundle:User')->createQueryBuilder('e');
 
         list($filterForm, $queryBuilder) = $this->filter($queryBuilder, $request);
-        list($urlops, $pagerHtml) = $this->paginator($queryBuilder, $request);
-        
+        list($users, $pagerHtml) = $this->paginator($queryBuilder, $request);
+
         $totalOfRecordsString = $this->getTotalOfRecordsString($queryBuilder, $request);
 
-        return $this->render('urlop/index.html.twig', array(
-            'urlops' => $urlops,
+        return $this->render('@App/user/index.html.twig', array(
+            'users' => $users,
             'pagerHtml' => $pagerHtml,
             'filterForm' => $filterForm->createView(),
             'totalOfRecordsString' => $totalOfRecordsString,
@@ -61,11 +51,11 @@ class UrlopController extends AbstractController
     protected function filter($queryBuilder, Request $request)
     {
         $session = $request->getSession();
-        $filterForm = $this->createForm('AppBundle\Form\UrlopFilterType');
+        $filterForm = $this->createForm('AppBundle\Form\UserFilterType');
 
         // Reset filter
         if ($request->get('filter_action') == 'reset') {
-            $session->remove('UrlopControllerFilter');
+            $session->remove('UserControllerFilter');
         }
 
         // Filter action
@@ -78,12 +68,12 @@ class UrlopController extends AbstractController
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
                 // Save filter to session
                 $filterData = $filterForm->getData();
-                $session->set('UrlopControllerFilter', $filterData);
+                $session->set('UserControllerFilter', $filterData);
             }
         } else {
             // Get filter from session
-            if ($session->has('UrlopControllerFilter')) {
-                $filterData = $session->get('UrlopControllerFilter');
+            if ($session->has('UserControllerFilter')) {
+                $filterData = $session->get('UserControllerFilter');
                 
                 foreach ($filterData as $key => $filter) { //fix for entityFilterType that is loaded from session
                     if (is_object($filter)) {
@@ -91,7 +81,7 @@ class UrlopController extends AbstractController
                     }
                 }
                 
-                $filterForm = $this->createForm('AppBundle\Form\UrlopFilterType', $filterData);
+                $filterForm = $this->createForm('AppBundle\Form\UserFilterType', $filterData);
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
             }
         }
@@ -128,7 +118,7 @@ class UrlopController extends AbstractController
         {
             $requestParams = $request->query->all();
             $requestParams['pcg_page'] = $page;
-            return $me->generateUrl('urlop', $requestParams);
+            return $me->generateUrl('user', $requestParams);
         };
 
         // Paginator - view
@@ -164,47 +154,47 @@ class UrlopController extends AbstractController
     
 
     /**
-     * Displays a form to create a new Urlop entity.
+     * Displays a form to create a new User entity.
      *
-     * @Route("/new", name="urlop_new")
+     * @Route("/new", name="user_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
     {
     
-        $urlop = new Urlop();
-        $form   = $this->createForm('AppBundle\Form\UrlopType', $urlop);
+        $user = new User();
+        $form   = $this->createForm('AppBundle\Form\UserType', $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($urlop);
+            $em->persist($user);
             $em->flush();
             
-            $editLink = $this->generateUrl('urlop_edit', array('id' => $urlop->getId()));
-            $this->get('session')->getFlashBag()->add('success', "<a href='$editLink'>New urlop was created successfully.</a>" );
+            $editLink = $this->generateUrl('user_edit', array('id' => $user->getId()));
+            $this->get('session')->getFlashBag()->add('success', "<a href='$editLink'>New user was created successfully.</a>" );
             
-            $nextAction=  $request->get('submit') == 'save' ? 'urlop' : 'urlop_new';
+            $nextAction=  $request->get('submit') == 'save' ? 'user' : 'user_new';
             return $this->redirectToRoute($nextAction);
         }
-        return $this->render('urlop/new.html.twig', array(
-            'urlop' => $urlop,
+        return $this->render('@App/user/new.html.twig', array(
+            'user' => $user,
             'form'   => $form->createView(),
         ));
     }
     
 
     /**
-     * Finds and displays a Urlop entity.
+     * Finds and displays a User entity.
      *
-     * @Route("/{id}", name="urlop_show")
+     * @Route("/{id}", name="user_show")
      * @Method("GET")
      */
-    public function showAction(Urlop $urlop)
+    public function showAction(User $user)
     {
-        $deleteForm = $this->createDeleteForm($urlop);
-        return $this->render('urlop/show.html.twig', array(
-            'urlop' => $urlop,
+        $deleteForm = $this->createDeleteForm($user);
+        return $this->render('@App/user/show.html.twig', array(
+            'user' => $user,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -212,27 +202,27 @@ class UrlopController extends AbstractController
     
 
     /**
-     * Displays a form to edit an existing Urlop entity.
+     * Displays a form to edit an existing User entity.
      *
-     * @Route("/{id}/edit", name="urlop_edit")
+     * @Route("/{id}/edit", name="user_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Urlop $urlop)
+    public function editAction(Request $request, User $user)
     {
-        $deleteForm = $this->createDeleteForm($urlop);
-        $editForm = $this->createForm('AppBundle\Form\UrlopType', $urlop);
+        $deleteForm = $this->createDeleteForm($user);
+        $editForm = $this->createForm('AppBundle\Form\UserType', $user);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($urlop);
+            $em->persist($user);
             $em->flush();
             
             $this->get('session')->getFlashBag()->add('success', 'Edited Successfully!');
-            return $this->redirectToRoute('urlop_edit', array('id' => $urlop->getId()));
+            return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
         }
-        return $this->render('urlop/edit.html.twig', array(
-            'urlop' => $urlop,
+        return $this->render('@App/user/edit.html.twig', array(
+            'user' => $user,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
@@ -241,70 +231,70 @@ class UrlopController extends AbstractController
     
 
     /**
-     * Deletes a Urlop entity.
+     * Deletes a User entity.
      *
-     * @Route("/{id}", name="urlop_delete")
+     * @Route("/{id}", name="user_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Urlop $urlop)
+    public function deleteAction(Request $request, User $user)
     {
     
-        $form = $this->createDeleteForm($urlop);
+        $form = $this->createDeleteForm($user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($urlop);
+            $em->remove($user);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'The Urlop was deleted successfully');
+            $this->get('session')->getFlashBag()->add('success', 'The User was deleted successfully');
         } else {
-            $this->get('session')->getFlashBag()->add('error', 'Problem with deletion of the Urlop');
+            $this->get('session')->getFlashBag()->add('error', 'Problem with deletion of the User');
         }
         
-        return $this->redirectToRoute('urlop');
+        return $this->redirectToRoute('user');
     }
     
     /**
-     * Creates a form to delete a Urlop entity.
+     * Creates a form to delete a User entity.
      *
-     * @param Urlop $urlop The Urlop entity
+     * @param User $user The User entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Urlop $urlop)
+    private function createDeleteForm(User $user)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('urlop_delete', array('id' => $urlop->getId())))
+            ->setAction($this->generateUrl('user_delete', array('id' => $user->getId())))
             ->setMethod('DELETE')
             ->getForm()
         ;
     }
     
     /**
-     * Delete Urlop by id
+     * Delete User by id
      *
-     * @Route("/delete/{id}", name="urlop_by_id_delete")
+     * @Route("/delete/{id}", name="user_by_id_delete")
      * @Method("GET")
      */
-    public function deleteByIdAction(Urlop $urlop){
+    public function deleteByIdAction(User $user){
         $em = $this->getDoctrine()->getManager();
         
         try {
-            $em->remove($urlop);
+            $em->remove($user);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'The Urlop was deleted successfully');
+            $this->get('session')->getFlashBag()->add('success', 'The User was deleted successfully');
         } catch (Exception $ex) {
-            $this->get('session')->getFlashBag()->add('error', 'Problem with deletion of the Urlop');
+            $this->get('session')->getFlashBag()->add('error', 'Problem with deletion of the User');
         }
 
-        return $this->redirect($this->generateUrl('urlop'));
+        return $this->redirect($this->generateUrl('user'));
 
     }
     
 
     /**
     * Bulk Action
-    * @Route("/bulk-action/", name="urlop_bulk_action")
+    * @Route("/bulk-action/", name="user_bulk_action")
     * @Method("POST")
     */
     public function bulkAction(Request $request)
@@ -315,22 +305,22 @@ class UrlopController extends AbstractController
         if ($action == "delete") {
             try {
                 $em = $this->getDoctrine()->getManager();
-                $repository = $em->getRepository('AppBundle:Urlop');
+                $repository = $em->getRepository('AppBundle:User');
 
                 foreach ($ids as $id) {
-                    $urlop = $repository->find($id);
-                    $em->remove($urlop);
+                    $user = $repository->find($id);
+                    $em->remove($user);
                     $em->flush();
                 }
 
-                $this->get('session')->getFlashBag()->add('success', 'urlops was deleted successfully!');
+                $this->get('session')->getFlashBag()->add('success', 'users was deleted successfully!');
 
             } catch (Exception $ex) {
-                $this->get('session')->getFlashBag()->add('error', 'Problem with deletion of the urlops ');
+                $this->get('session')->getFlashBag()->add('error', 'Problem with deletion of the users ');
             }
         }
 
-        return $this->redirect($this->generateUrl('urlop'));
+        return $this->redirect($this->generateUrl('user'));
     }
     
 

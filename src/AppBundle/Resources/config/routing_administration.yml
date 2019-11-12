@@ -1,0 +1,3 @@
+index:
+  path: /użytkownicy
+  defaults: { _controller: AppBundle:User:index }
