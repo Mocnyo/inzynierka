@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Teams types
@@ -31,6 +32,7 @@ class Teams
     /**
      * One product has many features. This is the inverse side.
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserTeams", mappedBy="teams")
+     * @JMS\Exclude()
      */
     private $userTeams;
 

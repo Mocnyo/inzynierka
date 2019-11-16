@@ -2,8 +2,7 @@
 
 namespace AppBundle\Controller\Api;
 
-use AppBundle\Entity\User;
-use AppBundle\Entity\UserTeams;
+use AppBundle\Entity\Teams;
 use Doctrine\Common\Persistence\ObjectRepository;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -14,21 +13,21 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class UserController
  *
- * @Rest\RouteResource("user")
- * @Rest\NamePrefix("wtrs_api_user_")
+ * @Rest\RouteResource("team")
+ * @Rest\NamePrefix("wtrs_api_team_")
  */
-class UserController extends FOSRestController
+class TeamController extends FOSRestController
 {
     /**
      * @return ObjectRepository
      */
     protected function getRepository(): ObjectRepository
     {
-        return $this->getDoctrine()->getRepository(User::class);
+        return $this->getDoctrine()->getRepository(Teams::class);
     }
 
     /**
-     * Get users
+     * Get teams
      * @ApiDoc  (
      *   description="Get all times for user",
      *   section="Users",
@@ -44,8 +43,8 @@ class UserController extends FOSRestController
      */
     public function cgetAction(Request $request)
     {
-        $users = $this->getRepository()->findAll();
-        return $this->handleView($this->view($users, 200));
+        $teams = $this->getRepository()->findAll();
+        return $this->handleView($this->view($teams, 200));
     }
 
     /**
@@ -62,10 +61,10 @@ class UserController extends FOSRestController
      *   }
      * )
      * @param Request $request
-     * @param User $entity
+     * @param Teams $entity
      * @return Response
      */
-    public function getAction(Request $request, User $entity)
+    public function getAction(Request $request, Teams $entity)
     {
         return $this->handleView($this->view($entity, 200));
     }

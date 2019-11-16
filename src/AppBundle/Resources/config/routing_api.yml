@@ -7,3 +7,13 @@ api_worker:
   resource: "@AppBundle/Controller/Api/UserController.php"
   type: rest
   prefix: /user
+
+api_team:
+  resource: "@AppBundle/Controller/Api/TeamController.php"
+  type: rest
+  prefix: /team
+
+api_user_team:
+  resource: "@AppBundle/Controller/Api/UserTeamController.php"
+  type: rest
+  prefix: /user/team

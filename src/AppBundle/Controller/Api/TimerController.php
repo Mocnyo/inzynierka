@@ -83,8 +83,7 @@ class TimerController extends FOSRestController
      */
     public function cgetAction(Request $request)
     {
-//        $userID = $this->getUser()->getId();
-        $userID = 1;
+        $userID = $this->getUser()->getId();
         $times = $this->getRepository()->findBy(['user' => $userID]);
         return $this->handleView($this->view($times, 200));
     }

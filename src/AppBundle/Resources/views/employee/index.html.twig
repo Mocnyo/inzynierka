@@ -1,22 +1,61 @@
 {% extends '@App/layout.html.twig' %}
 
 {% block body %}
-    <div class="row">
+    <div class="row" xmlns:v-on="http://www.w3.org/1999/xhtml">
         <div class="col-sm-12">
             <div class="card shadow mb-4" id="workers">
-                <ul>
-                    <li>
-                        ${ user }
-                    </li>
-                    <li>
-                        asd
-                    </li>
-                    <li>
-                        asd
-                    </li>
+                <div class="container-fluid">
+                <ul class="list-group list-group-horizontal wid mt-2">
+                    <template v-for="item in teams">
+                        <li class="list-group-item">
+                            <a href="#" v-on:click="getUsers(item.id)"> ${ item.name } </a>
+                        </li>
+                    </template>
                 </ul>
-
+                </div>
                 <hr>
+                <div class="container-fluid">
+                    <div class="table-responsive">
+                        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered dataTable text-center" id="dataTable" width="100%"
+                                           cellspacing="0" role="grid" aria-describedby="dataTable_info"
+                                           style="width: 100%;">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" style="width: 30px;">
+                                                On
+                                            </th>
+                                            <th class="sorting" style="width: 227px;">Imię i nazwisko</th>
+                                            <th class="sorting" style="width: 105px;">Stanowisko</th>
+                                            <th class="sorting" style="width: 45px;">Email</th>
+                                            <th class="sorting" style="width: 97px;">Nr pokoju</th>
+                                            <th class="sorting" style="width: 88px;">Telefon</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <template v-for="user in users">
+                                        <tr role="row" class="odd text-center">
+                                            <td>
+                                                <a class="btn btn-success btn-circle btn-sm" v-if="getUserActive(user.last_activity_at)"></a>
+                                                <a class="btn btn-danger btn-circle btn-sm" v-else></a>
+                                            </td>
+                                            <td>${ user.full_name }</td>
+                                            <td>${ user.specialization }</td>
+                                            <td>${ user.email }</td>
+                                            <td>87</td>
+                                            <td>666-888-999</td>
+                                        </tr>
+                                        </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
