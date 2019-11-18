@@ -29,9 +29,23 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="specialization", type="string", length=255, nullable=true)
+     * @ORM\Column(name="position", type="string", length=255, nullable=true)
      */
-    protected $specialization;
+    protected $position;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="room", type="integer", nullable=true)
+     */
+    protected $room;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="phone", type="integer", nullable=true)
+     */
+    protected $phone;
 
     /**
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\AgreementTime", mappedBy="user")
@@ -62,6 +76,12 @@ class User extends BaseUser
      */
     protected $lastActivityAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Post", mappedBy="user")
+     * @JMS\Exclude()
+     */
+    protected $post;
+
     public function __construct()
     {
         parent::__construct();
@@ -82,22 +102,6 @@ class User extends BaseUser
     public function setFullName($fullName)
     {
         $this->fullName = $fullName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSpecialization()
-    {
-        return $this->specialization;
-    }
-
-    /**
-     * @param string $specialization
-     */
-    public function setSpecialization($specialization)
-    {
-        $this->specialization = $specialization;
     }
 
     /**
@@ -185,5 +189,69 @@ class User extends BaseUser
         $delay = new \DateTime('2 minutes ago');
 
         return ( $this->getLastActivityAt() > $delay);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPosition(): string
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param string $position
+     */
+    public function setPosition(string $position): void
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPhone(): int
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param int $phone
+     */
+    public function setPhone(int $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRoom(): int
+    {
+        return $this->room;
+    }
+
+    /**
+     * @param int $room
+     */
+    public function setRoom(int $room): void
+    {
+        $this->room = $room;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPost()
+    {
+        return $this->post;
+    }
+
+    /**
+     * @param mixed $post
+     */
+    public function setPost($post): void
+    {
+        $this->post = $post;
     }
 }

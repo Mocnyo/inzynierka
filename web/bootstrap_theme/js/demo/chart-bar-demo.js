@@ -3,8 +3,6 @@ Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,Bli
 Chart.defaults.global.defaultFontColor = '#858796';
 
 function number_format(number, decimals, dec_point, thousands_sep) {
-  // *     example: number_format(1234.56, 2, ',', ' ');
-  // *     return: '1 234,56'
   number = (number + '').replace(',', '').replace(' ', '');
   var n = !isFinite(+number) ? 0 : +number,
     prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
@@ -27,86 +25,132 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
-
-// Bar Chart Example
-var ctx = document.getElementById("myBarChart");
-var myBarChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: getDaysArray,
-    datasets: [{
-      label: "Revenue",
-      backgroundColor: "#4e73df",
-      hoverBackgroundColor: "#2e59d9",
-      borderColor: "#4e73df",
-      data: [4215, 5312, 6251, 7841, 9821, 14984],
-    }],
-  },
-  options: {
-    maintainAspectRatio: false,
-    layout: {
-      padding: {
-        left: 10,
-        right: 25,
-        top: 25,
-        bottom: 0
-      }
-    },
-    scales: {
-      xAxes: [{
-        time: {
-          unit: 'month'
-        },
-        gridLines: {
-          display: false,
-          drawBorder: false
-        },
-        ticks: {
-          maxTicksLimit: 6
-        },
-        maxBarThickness: 25,
-      }],
-      yAxes: [{
-        ticks: {
-          min: 0,
-          max: 12,
-          maxTicksLimit: 7,
-          padding: 7,
-          // Include a dollar sign in the ticks
-          callback: function(value, index, values) {
-            return number_format(value) + 'h';
+  let times = [];
+  let value = 0;
+  let currentDate = new Date();
+  let sum =0;
+  $.get(
+      "app_dev.php/api/time/timers",
+      function (data) {
+        data.forEach(function (entry) {
+          let stopDateTime = new Date(entry.stop_time);
+          let startDateTime = new Date(entry.start_time);
+          if (stopDateTime.getMonth() === currentDate.getMonth()) {
+            var time = entry.time.split(':').map(function (map) {
+              return parseInt(map, 10);
+            });
+            value = (time[0]) + (time[1] / 60);
+            if (times[stopDateTime.getDate() - 1] != null) {
+              times[stopDateTime.getDate() - 1] += value;
+            } else {
+              times[stopDateTime.getDate() - 1] = value;
+            }
           }
-        },
-        gridLines: {
-          color: "rgb(234, 236, 244)",
-          zeroLineColor: "rgb(234, 236, 244)",
-          drawBorder: false,
-          borderDash: [2],
-          zeroLineBorderDash: [2]
+        });
+
+        console.log(times);
+        for (let i = 0; i < times.length; i++) {
+          if (times[i] != undefined) {
+            sum += times[i];
+          }
         }
-      }],
-    },
-    legend: {
-      display: false
-    },
-    tooltips: {
-      titleMarginBottom: 10,
-      titleFontColor: '#6e707e',
-      titleFontSize: 14,
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
-      borderColor: '#dddfeb',
-      borderWidth: 1,
-      xPadding: 15,
-      yPadding: 15,
-      displayColors: false,
-      caretPadding: 10,
-      callbacks: {
-        label: function(tooltipItem, chart) {
-          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
-        }
+
+        var ctx = document.getElementById("myBarChart");
+        $('p[name="hours"]').text(parseInt(sum) + ' h');
+        var myBarChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: getDaysInMonth(),
+            datasets: [{
+              label: "Revenue",
+              backgroundColor: "#4e73df",
+              hoverBackgroundColor: "#2e59d9",
+              borderColor: "#4e73df",
+              data: times,
+            }],
+          },
+          options: {
+            maintainAspectRatio: false,
+            layout: {
+              padding: {
+                left: 10,
+                right: 25,
+                top: 25,
+                bottom: 0
+              }
+            },
+            scales: {
+              xAxes: [{
+                time: {
+                  unit: 'month'
+                },
+                gridLines: {
+                  display: false,
+                  drawBorder: false
+                },
+                ticks: {
+                  maxTicksLimit: 31
+                },
+                maxBarThickness: 25,
+              }],
+              yAxes: [{
+                ticks: {
+                  min: 0,
+                  max: 12,
+                  maxTicksLimit: 12,
+                  padding: 7,
+                  // Include a dollar sign in the ticks
+                  callback: function(value, index, values) {
+                    return number_format(value) + 'h';
+                  }
+                },
+                gridLines: {
+                  color: "rgb(234, 236, 244)",
+                  zeroLineColor: "rgb(234, 236, 244)",
+                  drawBorder: false,
+                  borderDash: [2],
+                  zeroLineBorderDash: [2]
+                }
+              }],
+            },
+            legend: {
+              display: false
+            },
+            tooltips: {
+              titleMarginBottom: 10,
+              titleFontColor: '#6e707e',
+              titleFontSize: 14,
+              backgroundColor: "rgb(255,255,255)",
+              bodyFontColor: "#858796",
+              borderColor: '#dddfeb',
+              borderWidth: 1,
+              xPadding: 15,
+              yPadding: 15,
+              displayColors: false,
+              caretPadding: 10,
+              callbacks: {
+                label: function(tooltipItem, chart) {
+                  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                  return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                }
+              }
+            },
+          }
+        });
       }
-    },
+  );
+
+
+function getDaysInMonth() {
+  let currentDate = new Date();
+  let month = currentDate.getMonth();
+  let year = currentDate.getFullYear();
+  let date = new Date(Date.UTC(year, month, 1));
+  let days = [];
+  while (date.getMonth() === month) {
+    let day = new Date(date);
+    days.push(day.getDate());
+    date.setDate(date.getDate() + 1);
   }
-});
+  return days;
+}

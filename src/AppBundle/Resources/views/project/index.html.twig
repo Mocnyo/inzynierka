@@ -8,22 +8,22 @@
                     <h6 class="m-0 font-weight-bold text-primary">Twoje projekty</h6>
                 </div>
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table text-center">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Username</th>
+                            <th>Nazwa</th>
+                            <th>Skrót</th>
+                            <th>Czas</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for project in projects %}
                         <tr>
                             <th scope="row">1</th>
-                            <td>{{ project.name }}</td>
-                            <td>{{ project.shortname }}</td>
-                            <td>{{ project.time }}</td>
+                            <td>{{ project.project.name }}</td>
+                            <td>{{ project.project.shortname }}</td>
+                            <td>{{ project.project.time }}</td>
                         </tr>
                         {% endfor %}
                         </tbody>
@@ -33,24 +33,55 @@
         </div>
         <div class="col-sm-6">
             <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Zaangażowanie w projektach</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Zadania przypisane tobie</h6>
                 </div>
-                <!-- Card Body -->
                 <div class="card-body">
-                    <div class="chart-pie pt-4">
-                        <div class="chartjs-size-monitor">
-                            <div class="chartjs-size-monitor-expand">
-                                <div class=""></div>
-                            </div>
-                            <div class="chartjs-size-monitor-shrink">
-                                <div class=""></div>
-                            </div>
-                        </div>
-                        <canvas id="myPieChart" style="display: block; width: 464px; height: 253px;" width="464"
-                                height="253" class="chartjs-render-monitor"></canvas>
-                    </div>
+                    <table class="table text-center">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nazwa</th>
+                            <th>Skrót</th>
+                            <th>Czas</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Wszystkie zadania</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table text-center">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nazwa</th>
+                            <th>Skrót</th>
+                            <th>Czas</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

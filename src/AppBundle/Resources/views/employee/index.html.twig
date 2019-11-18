@@ -39,13 +39,13 @@
                                         <tr role="row" class="odd text-center">
                                             <td>
                                                 <a class="btn btn-success btn-circle btn-sm" v-if="getUserActive(user.last_activity_at)"></a>
-                                                <a class="btn btn-danger btn-circle btn-sm" v-else></a>
+                                                <a class="btn btn-danger btn-circle btn-sm dot" v-else></a>
                                             </td>
                                             <td>${ user.full_name }</td>
-                                            <td>${ user.specialization }</td>
+                                            <td>${ user.position }</td>
                                             <td>${ user.email }</td>
-                                            <td>87</td>
-                                            <td>666-888-999</td>
+                                            <td>${ user.room }</td>
+                                            <td>${ user.phone }</td>
                                         </tr>
                                         </template>
                                         </tbody>

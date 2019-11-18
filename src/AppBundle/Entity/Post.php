@@ -35,10 +35,14 @@ class Post
      */
     private $description;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="post")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
+     */
+    private $user;
 
     /**
      * Get id
-     *
      * @return int
      */
     public function getId()
@@ -92,6 +96,22 @@ class Post
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
     }
 }
 

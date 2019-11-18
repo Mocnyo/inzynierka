@@ -75,8 +75,8 @@ var navbar = new Vue({
                     startTime: {
                         date: {
                             year: startDate.getFullYear(),
-                            month: startDate.getMonth(),
-                            day: startDate.getDay()
+                            month: startDate.getMonth()+1,
+                            day: startDate.getDate()
                         },
                         time: {
                             hour: startDate.getHours(),
@@ -87,8 +87,8 @@ var navbar = new Vue({
                     stopTime:{
                         date: {
                             year: stopDate.getFullYear(),
-                            month: stopDate.getMonth(),
-                            day: stopDate.getDay()
+                            month: stopDate.getMonth()+1,
+                            day: stopDate.getDate()
                         },
                         time: {
                             hour: stopDate.getHours(),
@@ -99,7 +99,6 @@ var navbar = new Vue({
                 }
             })
                 .then(function (response) {
-                    console.log(response);
                 })
                 .catch(function (error) {
                     console.log(error);

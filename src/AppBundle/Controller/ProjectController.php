@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Projects;
+use AppBundle\Entity\ProjectsUserAssignment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\User;
@@ -22,9 +23,9 @@ class ProjectController extends Controller
     {
         /**  @var User $user **/
         $user = $this->getUser();
-        $projects = $user->getUserAssignment();
+        $projectUserAssignmentRepository = $this->getDoctrine()->getRepository(ProjectsUserAssignment::class);
+        $projects = $projectUserAssignmentRepository->findBy(['user' => $user]);
 
-        $test = 10;
         return $this->render('@App/project/index.html.twig', [
             'projects' => $projects
         ]);
