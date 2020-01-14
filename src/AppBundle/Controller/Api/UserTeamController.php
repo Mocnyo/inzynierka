@@ -2,14 +2,12 @@
 
 namespace AppBundle\Controller\Api;
 
-use AppBundle\Entity\Teams;
-use AppBundle\Entity\UserTeams;
+use AppBundle\Entity\UserTeam;
 use Doctrine\Common\Persistence\ObjectRepository;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class UserTeamController
@@ -24,7 +22,7 @@ class UserTeamController extends FOSRestController
      */
     protected function getRepository(): ObjectRepository
     {
-        return $this->getDoctrine()->getRepository(UserTeams::class);
+        return $this->getDoctrine()->getRepository(UserTeam::class);
     }
 
 //    /**

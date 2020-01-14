@@ -48,24 +48,25 @@ class User extends BaseUser
     protected $phone;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\AgreementTime", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\AgreementTime", mappedBy="user", cascade={"persist"})
      */
     protected $agreementTime;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\UserTeams", mappedBy="user")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Team", mappedBy="user")
+     * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
      * @JMS\Exclude()
      */
-    protected $userTeams;
+    protected $team;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Times", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Time", mappedBy="user")
      * @JMS\Exclude()
      */
-    protected $times;
+    protected $time;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProjectsUserAssignment", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProjectUserAssignment", mappedBy="user")
      * @JMS\Exclude()
      */
     protected $userAssignment;
@@ -81,6 +82,12 @@ class User extends BaseUser
      * @JMS\Exclude()
      */
     protected $post;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Task", mappedBy="user")
+     * @JMS\Exclude()
+     */
+    protected $task;
 
     public function __construct()
     {
@@ -118,38 +125,6 @@ class User extends BaseUser
     public function setAgreementTime($agreementTime)
     {
         $this->agreementTime = $agreementTime;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUserTeams()
-    {
-        return $this->userTeams;
-    }
-
-    /**
-     * @param mixed $userTeams
-     */
-    public function setUserTeams($userTeams)
-    {
-        $this->userTeams = $userTeams;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTimes()
-    {
-        return $this->times;
-    }
-
-    /**
-     * @param mixed $times
-     */
-    public function setTimes($times): void
-    {
-        $this->times = $times;
     }
 
     /**
@@ -194,7 +169,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getPosition(): string
+    public function getPosition(): ?string
     {
         return $this->position;
     }
@@ -210,7 +185,7 @@ class User extends BaseUser
     /**
      * @return int
      */
-    public function getPhone(): int
+    public function getPhone(): ?int
     {
         return $this->phone;
     }
@@ -226,7 +201,7 @@ class User extends BaseUser
     /**
      * @return int
      */
-    public function getRoom(): int
+    public function getRoom(): ?int
     {
         return $this->room;
     }
@@ -253,5 +228,53 @@ class User extends BaseUser
     public function setPost($post): void
     {
         $this->post = $post;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * @param mixed $time
+     */
+    public function setTime($time): void
+    {
+        $this->time = $time;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTask()
+    {
+        return $this->task;
+    }
+
+    /**
+     * @param mixed $task
+     */
+    public function setTask($task): void
+    {
+        $this->task = $task;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTeam()
+    {
+        return $this->team;
+    }
+
+    /**
+     * @param mixed $team
+     */
+    public function setTeam($team): void
+    {
+        $this->team = $team;
     }
 }

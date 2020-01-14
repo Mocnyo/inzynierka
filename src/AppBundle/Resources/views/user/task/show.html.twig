@@ -1,0 +1,44 @@
+{% extends '@App/layout.html.twig' %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold float-left text-primary">Zadanie - {{ task.name }}</h6>
+                    <div class=" float-right">
+                        <a class="btn btn-secondary btn-sm" href="{{ path('projects') }}">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                            Powrót
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>{{ task.name }}</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>Nazwa zadania:</p>
+                            <p>Projekt</p>
+                            <p>Przypisany pracownik</p>
+                            <p>Załączniki</p>
+                            <p>Opis zadania</p>
+                        </div>
+                        <div class="col-sm-6 justify-content-center">
+                            <p>{{ task.name }}</p>
+                            <p>{{ task.project.name }}</p>
+                            <p>{{ task.user.fullName }}</p>
+                            <p><s>file.pdf</s></p>
+                            <p>{{ task.description }} + xxxxxxxxxxxxxxx
+                                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

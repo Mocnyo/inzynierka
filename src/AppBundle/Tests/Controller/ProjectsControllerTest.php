@@ -13,7 +13,7 @@ class ProjectsControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/projects/');
+        $crawler = $client->request('GET', '/projekty/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET //");
         $crawler = $client->click($crawler->selectLink('New')->link());
 

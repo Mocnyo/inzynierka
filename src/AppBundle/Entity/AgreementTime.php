@@ -24,19 +24,19 @@ class AgreementTime
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="datetime", nullable=true)
      */
     private $date;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_indefinite", type="boolean")
+     * @ORM\Column(name="is_indefinite", type="boolean", nullable=true)
      */
     private $isIndefinite;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", inversedBy="agreementTime")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="agreementTime")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;

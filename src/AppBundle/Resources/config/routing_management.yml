@@ -1,3 +1,31 @@
-index:
-  path: /projekty
-  defaults: { _controller: AppBundle:Project:indexManagement }
+management_projects:
+    path: /projekty
+    defaults: { _controller: AppBundle:Project:indexManagement }
+
+management_project_show:
+    path: /projekt/{id}
+    defaults: { _controller: AppBundle:Project:showManagement }
+    requirements:
+        id: '\d+'
+
+management_project_new:
+    path: /projekt/nowy
+    defaults: { _controller: AppBundle:Project:newManagement }
+
+management_project_edit:
+    path: /projekt/edycja/{id}
+    defaults: { _controller: AppBundle:Project:editManagement }
+    requirements:
+        id: '\d+'
+
+management_project_finish:
+    path: /projekt/finish/{id}
+    defaults: { _controller: AppBundle:Project:finishManagement }
+    requirements:
+        id: '\d+'
+
+management_project_employee_list:
+    path: /projekt/{id}/pracownicy
+    defaults: { _controller: AppBundle:Project:employeeList }
+    requirements:
+        id: '\d+'

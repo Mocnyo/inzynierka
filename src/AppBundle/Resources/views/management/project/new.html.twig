@@ -1,0 +1,36 @@
+{% extends '@App/layout.html.twig' %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold float-left text-primary">Nowy projekt</h6>
+                    <div class=" float-right">
+                        <a class="btn btn-secondary btn-sm" href="{{ path('management_projects') }}">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                            Powrót
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form) }}
+                    <div class="row justify-content-center">
+                        <div class="form-group col-sm-6">
+                            {{ form_row(form.name, {'attr': { 'class': 'form-control' }}) }}
+                            {{ form_row(form.shortName, {'attr': { 'class': 'form-control' }}) }}
+                            {{ form_row(form.status, {'attr': { 'class': 'form-control' }}) }}
+                            {{ form_row(form.time, {'attr': { 'class': 'form-control' }}) }}
+                            {{ form_row(form.team, {'attr': { 'class': 'form-control' }}) }}
+                            <br>
+                            <button type="submit" name="submit" value="save" class="btn btn-primary float-right">
+                                Zatwierdź <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

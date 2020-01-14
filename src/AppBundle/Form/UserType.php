@@ -4,8 +4,11 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Agreement;
 use AppBundle\Entity\AgreementTime;
+use AppBundle\Entity\Team;
 use AppBundle\Entity\Teams;
+use AppBundle\Entity\UserTeam;
 use AppBundle\Entity\UserTeams;
+use AppBundle\Repository\AgreementRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -28,12 +31,37 @@ class UserType extends AbstractType
     {
         $builder
             ->add('fullName', TextType::class, [
+                'label' => 'Imię i nazwisko',
                 'attr' => [
                     'class' => 'form-control'
                 ],
                 'required' => true
             ])
-            ->add('specialization',  TextType::class, [
+            ->add('position',  TextType::class, [
+                'label' => 'Stanowisko',
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'required' => true
+            ])
+            ->add('phone',  TextType::class, [
+                'label' => 'Nr kontatowy',
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'required' => true
+            ])
+            ->add('room',  TextType::class, [
+                'label' => 'Pokój',
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'required' => true
+            ])
+            ->add('team', EntityType::class, [
+                'label' => 'Dział',
+                'choice_label' => 'name',
+                'class' => Team::class,
                 'attr' => [
                     'class' => 'form-control'
                 ],
@@ -46,6 +74,7 @@ class UserType extends AbstractType
                 'required' => true
                 ))
             ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle',
+                'label' => 'Nazwa użytkownika',
                 'attr' => [
                     'class' => 'form-control'
                 ],
@@ -76,7 +105,17 @@ class UserType extends AbstractType
                     'Wyłączone' => 0,
                     'Włączone' => 1
                 ]
-            ]);
+            ])
+            ->add('agreementTime', AgreementTimeType::class, [
+                'label' => 'Warunki umowy'
+            ])
+            ->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event){
+                $data = $event->getData();
+                /** @var AgreementTime $agreementTime */
+                $agreementTime = $data->getAgreementTime($data);
+//                $agreementTime->setUser($this->);
+            })
+        ;
     }
     
     /**

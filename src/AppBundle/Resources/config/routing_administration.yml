@@ -1,3 +1,47 @@
-index:
-  path: /użytkownicy
+user:
+  path: /users
   defaults: { _controller: AppBundle:User:index }
+
+user_new:
+  path: /user/new
+  defaults: { _controller: AppBundle:User:new }
+
+user_show:
+  path: /user/{id}
+  defaults: { _controller: AppBundle:User:show}
+
+user_edit:
+  path: /user/{id}/edit
+  defaults: { _controller: AppBundle:User:edit }
+
+user_delete:
+  path: /user/delete/{id}
+  defaults: { _controller: AppBundle:User:deleteById}
+
+user_bulk_action:
+  path: /user/bulk-action
+  defaults: { _controller: AppBundle:User:bulk}
+
+team:
+  path: /teams
+  defaults: { _controller: AppBundle:Team:index }
+
+team_new:
+  path: /team/new
+  defaults: { _controller: AppBundle:Team:new }
+
+team_show:
+  path: /team/{id}
+  defaults: { _controller: AppBundle:Team:show }
+
+team_edit:
+  path: /team/{id}/edit
+  defaults: { _controller: AppBundle:Team:edit }
+
+team_delete:
+  path: /team/delete/{id}
+  defaults: { _controller: AppBundle:Team:deleteById }
+
+team_bulk_action:
+  path: /team/bulk-action
+  defaults: { _controller: AppBundle:Team:bulk }

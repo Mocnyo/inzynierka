@@ -1,0 +1,163 @@
+{% extends '@App/layout.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            {% for type, flashMessages in app.session.flashbag.all() %}
+                {% for flashMessage in flashMessages %}
+                    <div class="alert alert-{{ type }}">
+                        {{ flashMessage|raw }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold float-left text-primary">Szczegóły projektu</h6>
+                    <div class=" float-right">
+                        <a class="btn btn-dark btn-sm" href="{{ path('management_project_edit', {'id' : project.id} )}}">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                            Edytuj projekt
+                        </a>
+                        <a class="btn btn-secondary btn-sm" href="">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                            Raporty
+                        </a>
+                        {% if project.status != "ZAKOŃCZONY" %}
+                        <a class="btn btn-danger btn-sm" href="{{ path('management_project_finish', {'id': project.id}) }}">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                            Zamknij projekt
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>{{ project.name }}</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>Nazwa projektu</p>
+                            <p>Skrót</p>
+                            <p>Status</p>
+                            <p>Dział</p>
+                            <p>Kierownik</p>
+                            <p>Opis</p>
+                            <p>Załączniki</p>
+                        </div>
+                        <div class="col-sm-6 justify-content-center">
+                            <p>{{ project.name }}</p>
+                            <p>{{ project.shortName }}</p>
+                            <p>{{ project.status }}</p>
+                            <p>{{ project.team }}</p>
+                            <p><s>Imie i nazwisko</s></p>
+                            <p><s>Opis</s></p>
+                            <p><s>costam.pdf</s></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold float-left text-primary">Pracownicy w projekcie</h6>
+                    <div class=" float-right">
+                        <a class="btn btn-secondary btn-sm" href="{{ path('management_project_employee_list', {'id': project.id}) }}">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                            Edytuj listę
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table text-center">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Imię i nazwisko</th>
+                            <th>Stanowisko</th>
+                            <th>Email</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for userAssignment in project.userAssignment %}
+                        <tr>
+                            <th scope="row">1</th>
+
+                            <td>{{ userAssignment.user.fullName }}</td>
+                            <td>{{ userAssignment.user.position }}</td>
+                            <td>{{ userAssignment.user.email }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold float-left text-primary">Aktywne zadania</h6>
+                    <div class=" float-right">
+                        <a class="btn btn-secondary btn-sm" href="">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                            Dodaj zadanie
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table text-center">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nazwa</th>
+                            <th>Przypisany pracownik</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold float-left text-primary">Zakmnięte zadania</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table text-center">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nazwa</th>
+                            <th>Przypisany pracownik</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

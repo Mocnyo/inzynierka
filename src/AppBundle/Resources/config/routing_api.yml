@@ -17,3 +17,8 @@ api_user_team:
   resource: "@AppBundle/Controller/Api/UserTeamController.php"
   type: rest
   prefix: /user/team
+
+api_project:
+  resource: "@AppBundle/Controller/Api/ProjectController.php"
+  type: rest
+  prefix: /project

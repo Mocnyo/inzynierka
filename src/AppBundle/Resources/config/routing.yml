@@ -9,7 +9,7 @@ api_backend:
 
 management:
   resource: "routing_management.yml"
-  prefix: /kierownik
+  prefix: /management
 
 admin:
   resource: "routing_administration.yml"
@@ -25,7 +25,7 @@ timer:
 
 administration_config:
   path: /config
-  defaults: { _controller: AppBundle:Administration:index }
+  defaults: { _controller: AppBundle:Configuration:index }
 
 employee:
   path: /pracownicy
@@ -35,3 +35,32 @@ projects:
   path: /projekty
   defaults: { _controller: AppBundle:Project:index }
 
+specific_task:
+  path: /task/{id}
+  defaults: { _controller: AppBundle:Task:show }
+  requirements:
+    id: '\d+'
+
+post:
+  path: /post
+  defaults: { _controller: AppBundle:Wiki:index }
+
+post_show:
+  path: /post/{id}
+  defaults: { _controller: AppBundle:Wiki:show }
+
+post_new:
+  path: /post/new
+  defaults: { _controller: AppBundle:Wiki:new }
+
+post_edit:
+  path: /post/{id}/edit
+  defaults: { _controller: AppBundle:Wiki:edit }
+
+post_delete:
+  path: /post/delete/{id}
+  defaults: { _controller: AppBundle:Wiki:deleteById }
+
+post_bulk_action:
+  path: /post/bulk-action
+  defaults: { _controller: AppBundle:Wiki:bulk }

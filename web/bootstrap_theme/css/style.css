@@ -32,3 +32,21 @@
 .timer {
     font-size: 1.25em;
 }
+
+/*.project-icon {*/
+/*    animation: blinker 1s linear infinite;*/
+/*}*/
+
+/*@keyframes project-icon {*/
+/*    50% {*/
+/*        opacity: 0;*/
+/*    }*/
+/*}*/
+
+/*.project-items .dropdown-item{*/
+/*    width:250px !important;*/
+/*}*/
+
+.badge {
+    padding: 0.6em 0.6em !important;
+}

@@ -20,9 +20,9 @@ class UserFilterType extends AbstractType
                 ],
                 'label' => 'Imię i nazwisko'
             ])
-            ->add('userTeams', Filters\EntityFilterType::class, array(
-                    'class' => 'AppBundle\Entity\UserTeams',
-                    'choice_label' => 'id',
+            ->add('team', Filters\EntityFilterType::class, array(
+                    'class' => 'AppBundle\Entity\Team',
+                    'choice_label' => 'name',
                     'attr' => [
                         'class' => "form-control mb-4"
                     ],

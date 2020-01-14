@@ -2,7 +2,7 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Times;
+use AppBundle\Entity\Time;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,6 +21,7 @@ class TimerApiType extends AbstractType
             ->add('stopTime', DateTimeType::class, [
                 'with_seconds' => true
             ])
+            ->add('project')
         ;
     }
 
@@ -28,7 +29,7 @@ class TimerApiType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => Times::class,
+                'data_class' => Time::class,
                 'csrf_protection' => false
             ]
         );

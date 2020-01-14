@@ -3,6 +3,7 @@ import axios from 'axios';
 
 var navbar = new Vue({
     el: "#navbar",
+    delimiters: ['${', '}'],
     data: function () {
         return {
             state: "paused",
@@ -10,6 +11,9 @@ var navbar = new Vue({
             currentTime: Date.now(),
             interval: null,
             description: "",
+            projects: null,
+            project: null,
+            projectName: "empty"
         }
     },
     mounted: function () {
@@ -17,6 +21,7 @@ var navbar = new Vue({
             this.state = "started";
         }
         this.interval = setInterval(this.updateCurrentTime, 1000);
+        this.getProjects();
     },
     destroyed: function () {
         clearInterval(this.interval)
@@ -55,7 +60,7 @@ var navbar = new Vue({
         },
         pause: function () {
             this.$data.state = "paused";
-            this.postPost();
+            this.postTime();
             localStorage.clear();
         },
         resume: function () {
@@ -66,7 +71,7 @@ var navbar = new Vue({
                 this.currentTime = Date.now();
             }
         },
-        postPost: function () {
+        postTime: function () {
             var startDate = new Date(parseInt(this.startTime));
             var stopDate = new Date(this.currentTime);
             axios.post('app_dev.php/api/time/timers', {
@@ -95,11 +100,19 @@ var navbar = new Vue({
                             minute: stopDate.getMinutes(),
                             second: stopDate.getSeconds()
                         }
-                    }
+                    },
+                    project: this.project
                 }
             })
                 .then(function (response) {
                 })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        getProjects: function () {
+            axios.get('app_dev.php/api/project/projects')
+                .then(response => (this.projects = response.data))
                 .catch(function (error) {
                     console.log(error);
                 });
@@ -114,6 +127,12 @@ var navbar = new Vue({
         },
         startTime(newStartTime) {
             localStorage.startTime = newStartTime;
-        }
+        },
+        projectName(name) {
+            localStorage.projectName = name;
+        },
+        // projectDescription(desc) {
+        //     localStorage.description = desc;
+        // }
     }
 })

@@ -1,0 +1,38 @@
+{% extends '@App/layout.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            {% for type, flashMessages in app.session.flashbag.all() %}
+                {% for flashMessage in flashMessages %}
+                    <div class="alert alert-{{ type }}">
+                        {{ flashMessage|raw }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-sm-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold float-left text-primary">Lista pracowników</h6>
+                    <div class=" float-right">
+                        <a class="btn btn-secondary btn-sm" href="{{ path('management_project_show', {'id': project.id}) }}">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                            Powrót
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form) }}
+                    {{ form_widget(form.user) }}
+                    <button type="submit" name="submit" value="save" class="btn btn-primary float-right">
+                        Zatwierdź <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                    </button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

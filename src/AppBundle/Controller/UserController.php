@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\UserType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -14,28 +15,24 @@ use AppBundle\Entity\User;
 
 /**
  * User controller.
- *
- * @Route("/user")
  */
 class UserController extends Controller
 {
     /**
-     * Lists all User entities.
-     *
-     * @Route("/", name="user")
-     * @Method("GET")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $queryBuilder = $em->getRepository('AppBundle:User')->createQueryBuilder('e');
+        $queryBuilder = $em->getRepository(User::class)->createQueryBuilder('e');
 
         list($filterForm, $queryBuilder) = $this->filter($queryBuilder, $request);
         list($users, $pagerHtml) = $this->paginator($queryBuilder, $request);
 
         $totalOfRecordsString = $this->getTotalOfRecordsString($queryBuilder, $request);
 
-        return $this->render('@App/user/index.html.twig', array(
+        return $this->render('@App/administration/user/index.html.twig', array(
             'users' => $users,
             'pagerHtml' => $pagerHtml,
             'filterForm' => $filterForm->createView(),
@@ -89,7 +86,6 @@ class UserController extends Controller
         return array($filterForm, $queryBuilder);
     }
 
-
     /**
     * Get results from paginator and get paginator view.
     *
@@ -131,9 +127,7 @@ class UserController extends Controller
 
         return array($entities, $pagerHtml);
     }
-    
-    
-    
+
     /*
      * Calculates the total of records string
      */
@@ -150,20 +144,16 @@ class UserController extends Controller
         }
         return "Showing $startRecord - $endRecord of $totalOfRecords Records.";
     }
-    
-    
 
     /**
-     * Displays a form to create a new User entity.
-     *
-     * @Route("/new", name="user_new")
-     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
     
         $user = new User();
-        $form   = $this->createForm('AppBundle\Form\UserType', $user);
+        $form   = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -177,35 +167,29 @@ class UserController extends Controller
             $nextAction=  $request->get('submit') == 'save' ? 'user' : 'user_new';
             return $this->redirectToRoute($nextAction);
         }
-        return $this->render('@App/user/new.html.twig', array(
+        return $this->render('@App/administration/user/new.html.twig', array(
             'user' => $user,
             'form'   => $form->createView(),
         ));
     }
-    
 
     /**
-     * Finds and displays a User entity.
-     *
-     * @Route("/{id}", name="user_show")
-     * @Method("GET")
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(User $user)
     {
         $deleteForm = $this->createDeleteForm($user);
-        return $this->render('@App/user/show.html.twig', array(
+        return $this->render('@App/administration/user/show.html.twig', array(
             'user' => $user,
             'delete_form' => $deleteForm->createView(),
         ));
     }
-    
-    
 
     /**
-     * Displays a form to edit an existing User entity.
-     *
-     * @Route("/{id}/edit", name="user_edit")
-     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, User $user)
     {
@@ -221,7 +205,7 @@ class UserController extends Controller
             $this->get('session')->getFlashBag()->add('success', 'Edited Successfully!');
             return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
         }
-        return $this->render('@App/user/edit.html.twig', array(
+        return $this->render('@App/administration/user/edit.html.twig', array(
             'user' => $user,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -269,12 +253,10 @@ class UserController extends Controller
             ->getForm()
         ;
     }
-    
+
     /**
-     * Delete User by id
-     *
-     * @Route("/delete/{id}", name="user_by_id_delete")
-     * @Method("GET")
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteByIdAction(User $user){
         $em = $this->getDoctrine()->getManager();
@@ -290,13 +272,11 @@ class UserController extends Controller
         return $this->redirect($this->generateUrl('user'));
 
     }
-    
 
     /**
-    * Bulk Action
-    * @Route("/bulk-action/", name="user_bulk_action")
-    * @Method("POST")
-    */
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function bulkAction(Request $request)
     {
         $ids = $request->get("ids", array());
@@ -322,6 +302,4 @@ class UserController extends Controller
 
         return $this->redirect($this->generateUrl('user'));
     }
-    
-
 }

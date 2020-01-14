@@ -14,7 +14,7 @@ class EmployeeController extends Controller
     public function indexAction(Request $request)
     {
         $user = $this->getUser();
-        return $this->render('@App/employee/index.html.twig');
+        return $this->render('@App/user/employee/index.html.twig');
 //         return $user != null ? $this->redirectToRoute('fos_user_profile_show') : $this->redirectToRoute('fos_user_security_login');
     }
 }

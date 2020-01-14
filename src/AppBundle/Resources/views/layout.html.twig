@@ -134,19 +134,19 @@
         <hr class="sidebar-divider">
 
         <div class="sidebar-heading">
-            Menagment
+            Kierownictwo
         </div>
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePagesForManagment"
             aria-expanded="true" aria-controls="collapsePages">
                 <i class="fas fa-fw fa-user-cog"></i>
-                <span>Manager</span>
+                <span>Zarządzanie</span>
             </a>
             <div id="collapsePagesForManagment" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#">Projekty</a>
-                    <div class="collapse-divider"></div>
+                    <a class="collapse-item" href="{{ path('management_projects') }}">Projekty</a>
+                    <a class="collapse-item" href="#">Urlopy</a>
                     <a class="collapse-item" href="#">Raporty</a>
                 </div>
             </div>
@@ -164,8 +164,9 @@
             </a>
             <div id="collapsePagesForAdministration" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Użytkownicy:</h6>
-                    <a class="collapse-item" href="{{ path('index') }}">Pracownicy</a>
+                    <h6 class="collapse-header">Zespoły:</h6>
+                    <a class="collapse-item" href="{{ path('team') }}">Zespoły</a>
+                    <a class="collapse-item" href="{{ path('user') }}">Użytkownicy</a>
                     <div class="collapse-divider"></div>
                     <h6 class="collapse-header">System:</h6>
                     <a class="collapse-item" href="{{ path('administration_config') }}">Konfiguracja systemu</a>
@@ -199,10 +200,23 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <span class="nav-link">
-                                <i class="fas fa-box nav-color"></i>
-                            </span>
+{#                            <span class="nav-link">#}
+{#                                <i class="fas fa-box nav-color"></i>#}
+{#                            </span>#}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown nav-color" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-box nav-color project-icon" v-if="project == null"></i>
+                                <span class="badge badge-primary" v-else>${ projectName }</span>
+                            </a>
+
+                            <intup type="hidden" v-model="project" name="project"/>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-info project-items"
+                                 aria-labelledby="navbarDropdownMenuLink-4">
+                                <template v-for="item in projects">
+                                        <a class="dropdown-item" @click="project = item.id; projectName = item.name"> ${ item.name } </a>
+                                </template>
+                            </div>
                         </li>
                         <li class="nav-item">
                             <span class="nav-link nav-color timer" v-html="time">00:00:00</span>
@@ -219,7 +233,6 @@
                                 {{ app.user.fullName }} </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-info"
                                  aria-labelledby="navbarDropdownMenuLink-4">
-                                <a class="dropdown-item" href="#">My account</a>
                                 <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">Log out</a>
                             </div>
                         </li>

@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller\Api;
 
-use AppBundle\Entity\Teams;
+use AppBundle\Entity\Team;
 use Doctrine\Common\Persistence\ObjectRepository;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -23,7 +23,7 @@ class TeamController extends FOSRestController
      */
     protected function getRepository(): ObjectRepository
     {
-        return $this->getDoctrine()->getRepository(Teams::class);
+        return $this->getDoctrine()->getRepository(Team::class);
     }
 
     /**
@@ -61,10 +61,10 @@ class TeamController extends FOSRestController
      *   }
      * )
      * @param Request $request
-     * @param Teams $entity
+     * @param Team $entity
      * @return Response
      */
-    public function getAction(Request $request, Teams $entity)
+    public function getAction(Request $request, Team $entity)
     {
         return $this->handleView($this->view($entity, 200));
     }

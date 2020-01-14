@@ -15,7 +15,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $user = $this->getUser();
-        return $user != null ? $this->render('@App/dashboard/index.html.twig') : $this->redirectToRoute('fos_user_security_login');
+        return $user != null ? $this->render('@App/user/dashboard/index.html.twig', array('user' => $user)) : $this->redirectToRoute('fos_user_security_login');
     }
 
     public function getTimeWorked(User $user)

@@ -2,9 +2,8 @@
 
 namespace AppBundle\Controller\Api;
 
-use AppBundle\Entity\Times;
+use AppBundle\Entity\Time;
 use AppBundle\Form\TimerApiType;
-use AppBundle\Repository\TimesRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -21,11 +20,11 @@ use Symfony\Component\HttpFoundation\Response;
 class TimerController extends FOSRestController
 {
     /**
-     * @return ObjectRepository|TimesRepository
+     * @return ObjectRepository
      */
     protected function getRepository(): ObjectRepository
     {
-        return $this->getDoctrine()->getRepository(Times::class);
+        return $this->getDoctrine()->getRepository(Time::class);
     }
 
     /**
@@ -46,7 +45,7 @@ class TimerController extends FOSRestController
      */
     public function postAction(Request $request)
     {
-        $entity = new Times();
+        $entity = new Time();
         $form = $this->createForm(TimerApiType::class, $entity)->handleRequest($request);
 
         if(!$form->isValid() || !$form->isSubmitted()) {
@@ -83,7 +82,8 @@ class TimerController extends FOSRestController
      */
     public function cgetAction(Request $request)
     {
-        $userID = $this->getUser()->getId();
+//        $userID = $this->getUser()->getId();
+        $userID = 1;
         $times = $this->getRepository()->findBy(['user' => $userID]);
         return $this->handleView($this->view($times, 200));
     }
@@ -105,7 +105,7 @@ class TimerController extends FOSRestController
      * @param Times $entity
      * @return Response
      */
-    public function getAction(Request $request, Times $entity)
+    public function getAction(Request $request, Time $entity)
     {
         return $this->handleView($this->view($entity, 200));
     }
@@ -124,10 +124,10 @@ class TimerController extends FOSRestController
      *   }
      * )
      * @param Request $request
-     * @param Times $entity
+     * @param Time $entity
      * @return Response
      */
-    public function putAction(Request $request, Times $entity) {
+    public function putAction(Request $request, Time $entity) {
 
         $form = $this->createForm(TimerApiType::class, $entity)->handleRequest($request);
 
