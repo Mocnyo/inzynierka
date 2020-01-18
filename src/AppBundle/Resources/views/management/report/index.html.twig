@@ -1,0 +1,51 @@
+{% extends '@App/layout.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold float-left text-primary">Twój zespół</h6>
+                </div>
+                <div class="card-body" style="height: 700px; overflow: auto;">
+                    <h3> Panel generowania raportów</h3>
+                    <table class="table table-hover text-center">
+                        <thead>
+                        <tr>
+                            <th>Imię i nazwisko</th>
+                            <th>Stanowisko</th>
+                            <th>Email</th>
+                            <th>Nr kontaktowy</th>
+                            <th>Pokój</th>
+                            <th>Lista</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.fullName }}</td>
+                                <td>{{ user.position }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.phone }}</td>
+                                <td>{{ user.room }}</td>
+                                <td>
+                                    <a class="btn btn-secondary btn-sm"  href="{{ path('daily_user_report', { 'id': user.id }) }}">
+                                        Raport dzienny
+                                    </a>
+                                    <a class="btn btn-secondary btn-sm"  href="{{ path('weekly_user_report', { 'id': user.id }) }}">
+                                        Raport tygodniowy
+                                    </a>
+                                    <a class="btn btn-secondary btn-sm"  href="{{ path('monthly_user_report', { 'id': user.id }) }}">
+                                        Raport miesięczny
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

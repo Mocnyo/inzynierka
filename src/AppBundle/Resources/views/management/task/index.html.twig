@@ -24,48 +24,47 @@
                         </a>
                     </div>
                 </div>
-                <div class="card-body" style="height: 700px; overflow: auto;">
+                <div class="card-body">
                     <table class="table table-hover text-center">
                         <thead>
                         <tr>
+                            <th>#</th>
                             <th>Nazwa</th>
-                            <th>Skrót</th>
-                            <th>Status</th>
-                            <th>Kierownik</th>
-                            <th>Czas</th>
-                            <th>Działania</th>
+                            <th>Projekt</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for project in projects %}
-                            {% if project.status == 'ZAKOŃCZONY' %}
-                                <tr class="table-danger">
-                                    <td>{{ project.name }}</td>
-                                    <td>{{ project.shortname }}</td>
-                                    <td>{{ project.status }}</td>
-                                    <td>{{ project.owner.fullName }}</td>
-                                    <td>{{ project.time }}</td>
-                                    <td>
-                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                        <a class="btn btn-secondary btn-sm"  href="{{ path('management_project_show', {'id' : project.id}) }}">
-                                            Zarządzaj
-                                        </a></td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td>{{ project.name }}</td>
-                                    <td>{{ project.shortname }}</td>
-                                    <td>{{ project.status }}</td>
-                                    <td>{{ project.owner.fullName }}</td>
-                                    <td>{{ project.time }}</td>
-                                    <td>
-                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                        <a class="btn btn-secondary btn-sm"  href="{{ path('management_project_show', {'id' : project.id}) }}">
-                                            Zarządzaj
-                                        </a></td>
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
+{#                        {% for project in projects %}#}
+{#                            {% if project.status == 'ZAKOŃCZONY' %}#}
+{#                                <tr class="table-danger">#}
+{#                                    <th scope="row">1</th>#}
+{#                                    <td>{{ project.name }}</td>#}
+{#                                    <td>{{ project.shortname }}</td>#}
+{#                                    <td>{{ project.status }}</td>#}
+{#                                    <td><s>Andrzej</s></td>#}
+{#                                    <td>{{ project.time }}</td>#}
+{#                                    <td>#}
+{#                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>#}
+{#                                        <a class="btn btn-secondary btn-sm"  href="{{ path('management_project_show', {'id' : project.id}) }}">#}
+{#                                            Zarządzaj#}
+{#                                        </a></td>#}
+{#                                </tr>#}
+{#                            {% else %}#}
+{#                                <tr>#}
+{#                                    <th scope="row">1</th>#}
+{#                                    <td>{{ project.name }}</td>#}
+{#                                    <td>{{ project.shortname }}</td>#}
+{#                                    <td>{{ project.status }}</td>#}
+{#                                    <td><s>Andrzej</s></td>#}
+{#                                    <td>{{ project.time }}</td>#}
+{#                                    <td>#}
+{#                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>#}
+{#                                        <a class="btn btn-secondary btn-sm"  href="{{ path('management_project_show', {'id' : project.id}) }}">#}
+{#                                            Zarządzaj#}
+{#                                        </a></td>#}
+{#                                </tr>#}
+{#                            {% endif %}#}
+{#                        {% endfor %}#}
                         </tbody>
                     </table>
                 </div>

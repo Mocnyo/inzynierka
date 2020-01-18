@@ -24,7 +24,7 @@
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 defaultView: 'dayGridMonth',
-                editable: true,
+                editable: false,
                 eventSources: [
                     {
                         url: "app_dev.php/fc-load-events",
@@ -33,14 +33,14 @@
                             filters: JSON.stringify({})
                         },
                         failure: () => {
-                            // alert("There was an error while fetching FullCalendar!");
+                            alert("There was an error while fetching FullCalendar!");
                         },
                     },
                 ],
                 header: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                    right: 'dayGridMonth',
                 },
                 plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
                 timeZone: 'UTC',

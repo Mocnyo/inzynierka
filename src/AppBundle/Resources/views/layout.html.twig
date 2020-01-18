@@ -120,10 +120,17 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('urlop_calendar') }}">
+            <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePagesForVacations"
+               aria-expanded="true" aria-controls="collapsePages">
                 <i class="far fa-fw fa-calendar-alt"></i>
                 <span>Urlopy</span>
             </a>
+            <div id="collapsePagesForVacations" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ path('vacation_calendar') }}">Kalendarz</a>
+                    <a class="collapse-item" href="{{ path('vacations') }}">Moje urlopy</a>
+                </div>
+            </div>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ path('post') }}">
@@ -146,8 +153,8 @@
             <div id="collapsePagesForManagment" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="{{ path('management_projects') }}">Projekty</a>
-                    <a class="collapse-item" href="#">Urlopy</a>
-                    <a class="collapse-item" href="#">Raporty</a>
+                    <a class="collapse-item" href="{{ path('calendar') }}">Urlopy</a>
+                    <a class="collapse-item" href="{{ path('report') }}">Raporty</a>
                 </div>
             </div>
         </li>

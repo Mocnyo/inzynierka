@@ -3465,23 +3465,23 @@
         },
         {
             "name": "tattali/calendar-bundle",
-            "version": "v1.1.6",
+            "version": "v1.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tattali/CalendarBundle.git",
-                "reference": "a4378ad9d90e9e562c891729a8e2d70e81b0caaa"
+                "reference": "c2310a9509a105cb6046acd78c388a68fdbdafba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tattali/CalendarBundle/zipball/a4378ad9d90e9e562c891729a8e2d70e81b0caaa",
-                "reference": "a4378ad9d90e9e562c891729a8e2d70e81b0caaa",
+                "url": "https://api.github.com/repos/tattali/CalendarBundle/zipball/c2310a9509a105cb6046acd78c388a68fdbdafba",
+                "reference": "c2310a9509a105cb6046acd78c388a68fdbdafba",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1",
-                "symfony/dependency-injection": "^3.4 || ^4.0",
-                "symfony/event-dispatcher": "^3.4 || ^4.0",
-                "symfony/framework-bundle": "^3.4 || ^4.0"
+                "symfony/dependency-injection": "^3.4 || ^4.0 || ^5.0",
+                "symfony/event-dispatcher": "^3.4 || ^4.0 || ^5.0",
+                "symfony/framework-bundle": "^3.4 || ^4.0 || ^5.0"
             },
             "require-dev": {
                 "phpspec/prophecy": "^1.8",
@@ -3519,7 +3519,7 @@
                 "symfony",
                 "symfony calendar"
             ],
-            "time": "2019-10-20T22:33:11+00:00"
+            "time": "2019-12-15T17:00:27+00:00"
         },
         {
             "name": "twig/twig",

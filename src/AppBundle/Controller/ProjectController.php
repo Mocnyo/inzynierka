@@ -11,6 +11,7 @@ use AppBundle\Form\ProjectType;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProjectController extends Controller
 {
@@ -22,9 +23,8 @@ class ProjectController extends Controller
     {
         /**  @var User $user * */
         $user = $this->getUser();
-        $projectUserAssignmentRepository = $this->getDoctrine()->getRepository(ProjectUserAssignment::class);
-        $projects = $projectUserAssignmentRepository->findBy(['user' => $user]);
-
+        $projectRepository = $this->getDoctrine()->getRepository(Project::class);
+        $projects = $projectRepository->findBy(['user' => $user]);
         $tasks = $user->getTask();
 
         return $this->render('@App/user/project/index.html.twig', [
@@ -42,8 +42,7 @@ class ProjectController extends Controller
         /**  @var User $user * */
         $user = $this->getUser();
         /** @var UserTeam $team */
-        $userTeam = $user->getUserTeam();
-        $team = $userTeam->getTeam();
+        $team = $user->getTeam();
         $projectRepository = $this->getDoctrine()->getRepository(Project::class);
         $projects = $projectRepository->findBy(['team' => $team]);
 
@@ -73,9 +72,11 @@ class ProjectController extends Controller
         $project = new Project();
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
+        $project->setTime('00:00:00');
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $project->setOwner($this->getUser());
             $em->persist($project);
             $em->flush();
 
@@ -137,15 +138,12 @@ class ProjectController extends Controller
      */
     public function employeeListAction(Request $request, Project $project)
     {
-        $projectAssignment = new ProjectUserAssignment();
-        $form = $this->createForm(EmployeeType::class, $projectAssignment);
-        $projectAssignment->setProject($project);
-        $form->setData($projectAssignment);
+        $form = $this->createForm(EmployeeType::class, $project);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($projectAssignment);
+            $em->persist($project);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('success', 'Edited Successfully!');
@@ -155,5 +153,30 @@ class ProjectController extends Controller
             'project' => $project,
             'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * @param Project $project
+     * @return Response
+     */
+    public function generateReportAction(Project $project) {
+        $snappy = $this->get('knp_snappy.pdf');
+        $dateTime = new \DateTime();
+
+        $html = $this->renderView('@App/management/report/project.html.twig', array(
+            'project' => $project,
+            'dateTime' => $dateTime
+        ));
+
+        $filename = $project->getName();
+
+        return new Response(
+            $snappy->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'inline; filename="'.$filename.'.pdf"'
+            )
+        );
     }
 }

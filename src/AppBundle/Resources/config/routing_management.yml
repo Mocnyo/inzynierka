@@ -1,31 +1,95 @@
 management_projects:
-    path: /projekty
+    path: /projects
     defaults: { _controller: AppBundle:Project:indexManagement }
 
 management_project_show:
-    path: /projekt/{id}
+    path: /project/{id}
     defaults: { _controller: AppBundle:Project:showManagement }
     requirements:
         id: '\d+'
 
 management_project_new:
-    path: /projekt/nowy
+    path: /project/new
     defaults: { _controller: AppBundle:Project:newManagement }
 
 management_project_edit:
-    path: /projekt/edycja/{id}
+    path: /project/edit/{id}
     defaults: { _controller: AppBundle:Project:editManagement }
     requirements:
         id: '\d+'
 
 management_project_finish:
-    path: /projekt/finish/{id}
+    path: /project/finish/{id}
     defaults: { _controller: AppBundle:Project:finishManagement }
     requirements:
         id: '\d+'
 
 management_project_employee_list:
-    path: /projekt/{id}/pracownicy
+    path: /projekt/{id}/workers
     defaults: { _controller: AppBundle:Project:employeeList }
     requirements:
         id: '\d+'
+
+project_report:
+    path: /project/{id}/generate
+    defaults: { _controller: AppBundle:Project:generateReport}
+
+task:
+    path: /project/{id}/tasks
+    defaults: { _controller: AppBundle:Task:index }
+
+task_new:
+    path: /projekt/{id}/task/new
+    defaults: { _controller: AppBundle:Task:new}
+
+task_edit:
+    path: /project/{project}/task/{task}/edit
+    defaults: { _controller: AppBundle:Task:edit}
+
+task_close:
+    path: /project{project}/task/{task}/close
+    defaults: { _controller: AppBundle:Task:close }
+
+task_delete:
+    path: /project{project}/task/{task}/delete
+    defaults: { _controller: AppBundle:Task:delete }
+
+report:
+    path: /reports
+    defaults: { _controller: AppBundle:Employee:reportIndex }
+
+daily_user_report:
+    path: /report/daily/{id}
+    defaults: { _controller: AppBundle:Employee:generateDailyReport }
+
+weekly_user_report:
+    path: /report/weekly/{id}
+    defaults: { _controller: AppBundle:Employee:generateWeeklyReport }
+
+monthly_user_report:
+    path: /report/monthly/{id}
+    defaults: { _controller: AppBundle:Employee:generateMonthlyReport }
+
+calendar:
+    path: /calendar
+    defaults: { _controller: AppBundle:Vacation:index }
+
+calendar_new:
+    path: /calendar/new
+    defaults: { _controller: AppBundle:Vacation:new }
+
+calendar_edit:
+    path: /calendar/{id}/edit
+    defaults: { _controller: AppBundle:Vacation:edit }
+
+calendar_delete:
+    path: /calendar/delete/{id}
+    defaults: { _controller: AppBundle:Vacation:deleteById }
+
+calendar_bulk:
+    path: /calendar/bulk-action
+    defaults: { _controller: AppBundle:Vacation:bulk }
+
+calendar_accept:
+    path: /calendar/{id}/accept
+    defaults: { _controller: AppBundle:Vacation:accept }

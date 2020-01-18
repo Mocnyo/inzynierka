@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Enum\TaskStatusEnum;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,8 +37,8 @@ class Task
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="task")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="task")
+     * @ORM\JoinTable(name="task_user")
      */
     private $user;
 
@@ -46,6 +47,13 @@ class Task
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
      */
     private $project;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=255)
+     */
+    private $status = TaskStatusEnum::NEW;
 
     /**
      * @var string
@@ -183,6 +191,22 @@ class Task
     public function getAttachment()
     {
         return $this->attachment;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
     }
 }
 

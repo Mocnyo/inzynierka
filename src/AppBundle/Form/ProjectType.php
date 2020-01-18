@@ -2,7 +2,10 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Team;
 use AppBundle\Enum\ProjectStatusEnum;
+use AppBundle\Repository\TeamRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,8 +31,8 @@ class ProjectType extends AbstractType
                     'ZAKOŃCZONY' => ProjectStatusEnum::FINISHED
                 ]
             ])
-            ->add('time')
             ->add('team')
+            ->add('description')
         ;
     }
     

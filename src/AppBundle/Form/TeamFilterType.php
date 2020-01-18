@@ -15,15 +15,6 @@ class TeamFilterType extends AbstractType
         $builder
             ->add('id', Filters\NumberFilterType::class)
             ->add('name', Filters\TextFilterType::class)
-        
-            ->add('userTeam', Filters\EntityFilterType::class, array(
-                    'class' => 'AppBundle\Entity\UserTeam',
-                    'choice_label' => 'id',
-            )) 
-            ->add('project', Filters\EntityFilterType::class, array(
-                    'class' => 'AppBundle\Entity\Project',
-                    'choice_label' => 'name',
-            )) 
         ;
         $builder->setMethod("GET");
 

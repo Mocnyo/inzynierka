@@ -6,11 +6,14 @@ use AppBundle\Entity\Agreement;
 use AppBundle\Entity\AgreementTime;
 use AppBundle\Entity\Team;
 use AppBundle\Entity\Teams;
+use AppBundle\Entity\User;
 use AppBundle\Entity\UserTeam;
 use AppBundle\Entity\UserTeams;
 use AppBundle\Repository\AgreementRepository;
+use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -109,12 +112,25 @@ class UserType extends AbstractType
             ->add('agreementTime', AgreementTimeType::class, [
                 'label' => 'Warunki umowy'
             ])
-            ->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event){
-                $data = $event->getData();
-                /** @var AgreementTime $agreementTime */
-                $agreementTime = $data->getAgreementTime($data);
-//                $agreementTime->setUser($this->);
-            })
+//            ->add('agreementTime', AgreementTimeType::class, [
+//                'label' => 'Warunki umowy',
+//                'entry_type' => AgreementTimeType::class,
+//                'allow_add' => true
+//                'label' => 'Warunki umowy',
+//                'data_class' => AgreementTime::class
+//            ])
+            ->add('roles', ChoiceType::class, [
+                'label' => 'Rola w systemie',
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'multiple' => true,
+                'choices' => [
+                    'Użytkownik' => UserInterface::ROLE_DEFAULT,
+                    'Kierownik' => 'ROLE_ADMIN',
+                    'Administrator' => UserInterface::ROLE_SUPER_ADMIN
+                ]
+            ])
         ;
     }
     
@@ -124,7 +140,7 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\User'
+            'data_class' => User::class
         ));
     }
 }

@@ -31,7 +31,7 @@ class Team
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", inversedBy="team")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="team")
      * @JMS\Exclude()
      */
     private $user;
@@ -61,7 +61,7 @@ class Team
      *
      * @param string $name
      *
-     * @return Teams
+     * @return Team
      */
     public function setName($name)
     {

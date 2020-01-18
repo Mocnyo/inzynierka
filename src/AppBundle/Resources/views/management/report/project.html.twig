@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h2>Raport projektu - {{ project.shortName }}</h2>
+<p>{{ dateTime|date('Y-m-d H:i:s') }}</p>
+<h3>Informacje o projekcie</h3>
+<table>
+    <tr>
+
+    </tr>
+    <tr>
+        <td>Nazwa</td>
+        <td>{{ project.name }}</td>
+    </tr>
+    <tr>
+        <td>Skrót</td>
+        <td>{{ project.shortName }}</td>
+    </tr>
+    <tr>
+        <td>Status</td>
+        <td>{{ project.status }}</td>
+    </tr>
+    <tr>
+        <td>Czas</td>
+        <td>{{ project.time }}</td>
+    </tr>
+    <tr>
+        <td>Dział</td>
+        <td>{{ project.team }}</td>
+    </tr>
+</table>
+
+<h3>Przypisani pracownicy</h3>
+<table>
+    <tr>
+        <td>Imię i nazwisko</td>
+        <td>Stanowisko</td>
+        <td>Email</td>
+        <td>Nr kontaktowy</td>
+        <td>Dział</td>
+    </tr>
+    {% for user in project.user %}
+    <tr>
+        <td>{{ user.fullName }}</td>
+        <td>{{ user.position }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phone }}</td>
+        <td>{{ user.team }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h3>Zadania</h3>
+<table>
+    <tr>
+        <td>Nazwa zadania</td>
+        <td>Status</td>
+        <td>Przypisany pracownik</td>
+    </tr>
+    {% for task in project.tasks %}
+        <tr>
+            <td>{{ task.name }}</td>
+            <td>{{ task.status }}</td>
+            {% for user in task.user %}
+                <td>{{ user.fullName }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
+
+<h3>Zaraportowane czasy</h3>
+<table>
+    <tr>
+        <td>Nazwa zadania</td>
+        <td>Rozpoczęcie zadania</td>
+        <td>Zakończenie zadania</td>
+        <td>Czas</td>
+        <td>Pracownik</td>
+    </tr>
+    {% for time in project.times %}
+        <tr>
+            <td>{{ time.descriptionTask }}</td>
+            <td>{{ time.startTime|date('Y-m-d H:i:s')  }}</td>
+            <td>{{ time.stopTime|date('Y-m-d H:i:s')  }}</td>
+            <td>{{ time.time }}</td>
+            <td>{{ time.user.fullName }}</td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

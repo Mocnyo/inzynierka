@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
@@ -53,7 +54,7 @@ class User extends BaseUser
     protected $agreementTime;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Team", mappedBy="user")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Team", inversedBy="user")
      * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
      * @JMS\Exclude()
      */
@@ -66,10 +67,9 @@ class User extends BaseUser
     protected $time;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProjectUserAssignment", mappedBy="user")
-     * @JMS\Exclude()
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Project", mappedBy="user")
      */
-    protected $userAssignment;
+    private $project;
 
     /**
      * @var \DateTime
@@ -84,15 +84,36 @@ class User extends BaseUser
     protected $post;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Task", mappedBy="user")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Task", mappedBy="user")
      * @JMS\Exclude()
      */
     protected $task;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Vacation", mappedBy="user")
+     * @JMS\Exclude()
+     */
+    protected $vacation;
+
+    /**
+     * @ORM\Column(name="vacation_time", type="integer", nullable=false)
+     */
+    protected $vacationTime;
+
+    /**
+     * @ORM\Column(name="vacation_available", type="integer", nullable=false)
+     */
+    protected $vacationAvailable;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Project", mappedBy="owner")
+     * @JMS\Exclude()
+     */
+    protected $projectOwner;
+
     public function __construct()
     {
         parent::__construct();
-        // your own logic
     }
 
     /**
@@ -125,22 +146,6 @@ class User extends BaseUser
     public function setAgreementTime($agreementTime)
     {
         $this->agreementTime = $agreementTime;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUserAssignment()
-    {
-        return $this->userAssignment;
-    }
-
-    /**
-     * @param mixed $userAssignment
-     */
-    public function setUserAssignment($userAssignment): void
-    {
-        $this->userAssignment = $userAssignment;
     }
 
     /**
@@ -277,4 +282,86 @@ class User extends BaseUser
     {
         $this->team = $team;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    /**
+     * @param mixed $project
+     */
+    public function setProject($project): void
+    {
+        $this->project = $project;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVacation()
+    {
+        return $this->vacation;
+    }
+
+    /**
+     * @param mixed $vacation
+     */
+    public function setVacation($vacation): void
+    {
+        $this->vacation = $vacation;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVacationTime()
+    {
+        return $this->vacationTime;
+    }
+
+    /**
+     * @param mixed $vacation_time
+     */
+    public function setVacationTime($vacation_time): void
+    {
+        $this->vacationTime = $vacation_time;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVacationAvailable()
+    {
+        return $this->vacationAvailable;
+    }
+
+    /**
+     * @param mixed $vacation_available
+     */
+    public function setVacationAvailable($vacation_available): void
+    {
+        $this->vacationAvailable = $vacation_available;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectOwner()
+    {
+        return $this->projectOwner;
+    }
+
+    /**
+     * @param mixed $projectOwner
+     */
+    public function setProjectOwner($projectOwner): void
+    {
+        $this->projectOwner = $projectOwner;
+    }
+
+
 }

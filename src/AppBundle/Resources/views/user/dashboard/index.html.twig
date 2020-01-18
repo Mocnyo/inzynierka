@@ -26,9 +26,9 @@
                             <p>{{ app.user.fullName }}</p>
                             <p>{{ app.user.position }}</p>
                             <p name="hours"></p>
-                            <p>{{ app.user.userTeam.team.name }}</p>
-                            <p><s>20 dni</s></p>
-                            <p>{{ app.user.agreementTime.agreement.name }} ({{ app.user.agreementTime.date | date("m/d/Y")  }})</p>
+                            <p>{{ app.user.team }}</p>
+                            <p>{{ app.user.vacationAvailable }} dni</p>
+{#                            <p>{{ app.user.agreementTime.agreement.name }} ({{ app.user.agreementTime.date | date("m/d/Y")  }})</p>#}
                         </div>
                     </div>
                 </div>
@@ -45,19 +45,17 @@
                     <table class="table table-hover text-center">
                         <thead>
                         <tr>
-                            <th>#</th>
                             <th>Skrót</th>
                             <th>Status</th>
                             <th>Kierownik</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for assignment in user.userAssignment %}
+                        {% for project in user.project %}
                             <tr>
-                                <th scope="row">1</th>
-                                <td>{{ assignment.project.shortName }}</td>
-                                <td>{{ assignment.project.status }}</td>
-                                <td><s>Andrzej Kierownik</s></td>
+                                <td>{{ project.shortName }}</td>
+                                <td>{{ project.status }}</td>
+                                <td>{{ project.owner.fullName }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

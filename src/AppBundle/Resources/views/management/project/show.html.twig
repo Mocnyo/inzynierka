@@ -18,23 +18,27 @@
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold float-left text-primary">Szczegóły projektu</h6>
                     <div class=" float-right">
-                        <a class="btn btn-dark btn-sm" href="{{ path('management_project_edit', {'id' : project.id} )}}">
+                        {% if project.status != "ZAKOŃCZONY" %}
+                            <a class="btn btn-dark btn-sm"
+                               href="{{ path('management_project_edit', {'id' : project.id} ) }}">
+                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                Edytuj projekt
+                            </a>
+                        {% endif %}
+                        <a class="btn btn-secondary btn-sm" href="{{ path('project_report', { 'id': project.id }) }}">
                             <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                            Edytuj projekt
-                        </a>
-                        <a class="btn btn-secondary btn-sm" href="">
-                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                            Raporty
+                            Pobierz raport
                         </a>
                         {% if project.status != "ZAKOŃCZONY" %}
-                        <a class="btn btn-danger btn-sm" href="{{ path('management_project_finish', {'id': project.id}) }}">
-                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                            Zamknij projekt
-                        </a>
+                            <a class="btn btn-danger btn-sm"
+                               href="{{ path('management_project_finish', {'id': project.id}) }}">
+                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                Zamknij projekt
+                            </a>
                         {% endif %}
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="height: 370px; overflow: auto;">
                     <div class="row">
                         <div class="col-sm-12">
                             <h3>{{ project.name }}</h3>
@@ -68,31 +72,31 @@
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold float-left text-primary">Pracownicy w projekcie</h6>
                     <div class=" float-right">
-                        <a class="btn btn-secondary btn-sm" href="{{ path('management_project_employee_list', {'id': project.id}) }}">
-                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                            Edytuj listę
-                        </a>
+                        {% if project.status != "ZAKOŃCZONY" %}
+                            <a class="btn btn-secondary btn-sm"
+                               href="{{ path('management_project_employee_list', {'id': project.id}) }}">
+                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                Edytuj listę
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="height: 380px; overflow: auto;">
                     <table class="table text-center">
                         <thead>
                         <tr>
-                            <th>#</th>
                             <th>Imię i nazwisko</th>
                             <th>Stanowisko</th>
                             <th>Email</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for userAssignment in project.userAssignment %}
-                        <tr>
-                            <th scope="row">1</th>
-
-                            <td>{{ userAssignment.user.fullName }}</td>
-                            <td>{{ userAssignment.user.position }}</td>
-                            <td>{{ userAssignment.user.email }}</td>
-                        </tr>
+                        {% for user in project.user %}
+                            <tr>
+                                <td>{{ user.fullName }}</td>
+                                <td>{{ user.position }}</td>
+                                <td>{{ user.email }}</td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>
@@ -103,30 +107,53 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold float-left text-primary">Aktywne zadania</h6>
-                    <div class=" float-right">
-                        <a class="btn btn-secondary btn-sm" href="">
-                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                            Dodaj zadanie
-                        </a>
+                    <div class="float-right">
+                        {% if project.status != "ZAKOŃCZONY" %}
+                            <a class="btn btn-secondary btn-sm" href="{{ path('task_new', {'id': project.id }) }}">
+                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                Dodaj
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="height: 270px; overflow: auto;">
                     <table class="table text-center">
                         <thead>
                         <tr>
-                            <th>#</th>
                             <th>Nazwa</th>
                             <th>Przypisany pracownik</th>
                             <th>Status</th>
+                            <th>Lista</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                        </tr>
+                        {% for task in project.tasks %}
+                            {% if project.status != "ZAKOŃCZONY" %}
+                            {% if task.status != "ZAKOŃCZONY" %}
+                                <tr>
+                                    <td>{{ task.name }}</td>
+                                    <td>{% for user in task.user %}
+                                            {{ user.fullName }} <br>
+                                        {% endfor %}
+                                    </td>
+                                    <td>{{ task.status }}</td>
+                                    <td>
+
+                                        <a class="btn btn-secondary btn-sm"
+                                           href="{{ path('task_edit', {'project': project.id,'task': task.id}) }}">
+                                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                            Edytuj
+                                        </a>
+                                        <a class="btn btn-danger btn-sm"
+                                           href="{{ path('task_close', {'project': project.id, 'task': task.id}) }}">
+                                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                            Zamknij zadanie
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -137,7 +164,7 @@
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold float-left text-primary">Zakmnięte zadania</h6>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="height: 280px; overflow: auto;">
                     <table class="table text-center">
                         <thead>
                         <tr>
@@ -148,12 +175,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                        </tr>
+                        {% for task in project.tasks %}
+                            {% if task.status == "ZAKOŃCZONY" %}
+                                <tr>
+                                    <td>{{ task.name }}</td>
+                                    <td>{% for user in task.user %}
+                                            {{ user.fullName }} <br>
+                                        {% endfor %}
+                                    </td>
+                                    <td>{{ task.status }}</td>
+                                    <td>
+                                        <a class="btn btn-danger btn-sm"
+                                           href="{{ path('task_delete', {'project': project.id,'task': task.id}) }}">
+                                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                            Usuń
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>

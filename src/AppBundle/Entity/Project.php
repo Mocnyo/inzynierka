@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Enum\ProjectStatusEnum;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
@@ -36,14 +37,27 @@ class Project
     private $shortName;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProjectUserAssignment", mappedBy="project")
+     * @var string
+     * @ORM\Column(name="description", type="text")
+     */
+    private $description;
+
+//    /**
+//     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProjectUserAssignment", mappedBy="project")
+//     * @JMS\Exclude()
+//     */
+//    private $userAssignment;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="project")
+     * @ORM\JoinTable(name="project_user")
      * @JMS\Exclude()
      */
-    private $userAssignment;
+    private $user;
 
     /**
      * @var string
-     * @ORM\Column(name="time", type="string", length=22)
+     * @ORM\Column(name="time", type="string", length=22, nullable=true)
      */
     private $time;
 
@@ -71,6 +85,13 @@ class Project
      * @JMS\Exclude()
      */
     protected $team;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="projectOwner")
+     * @ORM\JoinColumn(name="owner_id")
+     * @JMS\Exclude()
+     */
+    protected $owner;
 
     public function __toString()
     {
@@ -172,7 +193,7 @@ class Project
      */
     public function getTasks()
     {
-        return $this->tasks;
+        return $this->task;
     }
 
     /**
@@ -199,6 +220,11 @@ class Project
         $this->team = $team;
     }
 
+    public function __construct()
+    {
+        $this->user = new ArrayCollection();
+    }
+
     /**
      * @return string
      */
@@ -213,6 +239,86 @@ class Project
     public function setStatus(string $status): void
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTask()
+    {
+        return $this->task;
+    }
+
+    /**
+     * @param mixed $task
+     */
+    public function setTask($task): void
+    {
+        $this->task = $task;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTimes()
+    {
+        return $this->times;
+    }
+
+    /**
+     * @param mixed $times
+     */
+    public function setTimes($times): void
+    {
+        $this->times = $times;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param mixed $owner
+     */
+    public function setOwner($owner): void
+    {
+        $this->owner = $owner;
     }
 }
 

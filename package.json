@@ -85,6 +85,7 @@
     "vue-apexcharts": "^1.4.0",
     "vue-axios": "^2.1.4",
     "vue-localstorage": "^0.6.2",
+    "vue-moment": "^4.1.0",
     "vue-tables-2": "^1.4.70",
     "webpack-merge": "^4.2.1",
     "wow.js": "^1.2.2"

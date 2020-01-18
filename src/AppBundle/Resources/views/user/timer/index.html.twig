@@ -11,10 +11,12 @@
                             <p>${ item.description_task }</p>
                         </div>
                         <div class="col-sm-1">
-                                <p>${ item.project  } </p>
+                            <p class="badge badge-primary">${ item.project.name  } </p>
                         </div>
                         <div class="col-sm-2">
-                            <p>${ item.start_time } - ${ item.stop_time }</p>
+                            <p>${ new Date(item.start_time)} - ${ item.stop_time }</p>
+
+                            <p></p>
                         </div>
                         <div class="col-sm-1">
                             <p>${ item.time }</p>

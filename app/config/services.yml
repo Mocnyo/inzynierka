@@ -9,7 +9,7 @@ services:
         # automatically injects dependencies in your services
         autowire: true
         # automatically registers your services as commands, event subscribers, etc.
-        autoconfigure: false
+        autoconfigure: true
         # this means you cannot fetch services directly from the container via $container->get()
         # if you need to do this, you can override this setting on individual services
         public: false
@@ -31,9 +31,18 @@ services:
 
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
-    #     arguments:
+    #     arguments:`
     #         $someArgument: 'some_value'
     AppBundle\EventSubscriber\CalendarSubscriber:
+        arguments:
+#            - '@app.vacataion.repository'
+            - '@router'
+            - '@doctrine.orm.entity_manager'
+
+    app.vacataion.repository:
+        class: AppBundle\Repository\VacationRepository
+#        arguments:
+#            - '@fos_user.doctrine_registry'
 
     AppBundle\EventListener\ActivityListener:
         tags:

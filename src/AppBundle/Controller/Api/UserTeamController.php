@@ -2,7 +2,8 @@
 
 namespace AppBundle\Controller\Api;
 
-use AppBundle\Entity\UserTeam;
+use AppBundle\Entity\Team;
+use AppBundle\Entity\User;
 use Doctrine\Common\Persistence\ObjectRepository;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -22,7 +23,7 @@ class UserTeamController extends FOSRestController
      */
     protected function getRepository(): ObjectRepository
     {
-        return $this->getDoctrine()->getRepository(UserTeam::class);
+        return $this->getDoctrine()->getRepository(User::class);
     }
 
 //    /**
@@ -65,11 +66,12 @@ class UserTeamController extends FOSRestController
      */
      public function getUsersByTeamAction(Request $request, $teamID)
      {
-         $userTeams = $this->getRepository()->findBy(['teams' => $teamID]);
+         $userTeams = $this->getRepository()->findBy(['team' => $teamID]);
          $users = [];
          foreach ($userTeams as $userTeam) {
              $users[] = $userTeam->getUser();
          }
+
          return $this->handleView($this->view($users, 200));
      }
 

@@ -1,0 +1,111 @@
+{% extends '@App/layout.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - leave index
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            {% for type, flashMessages in app.session.flashbag.all() %}
+                {% for flashMessage in flashMessages %}
+                    <div class="alert alert-{{ type }}">
+                        {{ flashMessage|raw }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold float-left text-primary">Aktywne urlopy</h6>
+                </div>
+                <div class="card-body" style="height: 350px; overflow: auto;">
+                    <table class="table table-hover text-center">
+                        <thead>
+                        <tr>
+                            <th>Pracownik</th>
+                            <th>Czas rozpoczęcia</th>
+                            <th>Czas zakończenia</th>
+                            <th>Tytuł</th>
+                            <th>Zaakceptowany</th>
+                            <th>Lista</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for vacation in vacations %}
+                            {% if vacation.isAccepted == 1 and vacation.endAt|date('Y-m-d') > currentDate|date('Y-m-d') %}
+                            <tr>
+                                <td>{{ vacation.user.fullName }}</td>
+                                <td>{{ vacation.beginAt|date('Y-m-d') }}</td>
+                                <td>{{ vacation.endAt|date('Y-m-d') }}</td>
+                                <td>{{ vacation.title }}</td>
+                                <td>
+                                    Tak
+                                </td>
+                                <td>
+                                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                    <a class="btn btn-secondary btn-sm"  href="{{ path('calendar_edit', { 'id': vacation.id }) }}">
+                                        Edytuj
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold float-left text-primary">Urlopy do weryfikacji</h6>
+                </div>
+                <div class="card-body" style="height: 350px; overflow: auto;">
+                    <table class="table table-hover text-center">
+                        <thead>
+                        <tr>
+                            <th>Pracownik</th>
+                            <th>Czas rozpoczęcia</th>
+                            <th>Czas zakończenia</th>
+                            <th>Tytuł</th>
+                            <th>Zaakceptowany</th>
+                            <th>Lista</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for vacation in vacations %}
+                            {% if vacation.isAccepted == 0 and vacation.beginAt|date('Y-m-d') > currentDate|date('Y-m-d') %}
+                            <tr>
+                                <td>{{ vacation.user.fullName }}</td>
+                                <td>{{ vacation.beginAt|date('Y-m-d') }}</td>
+                                <td>{{ vacation.endAt|date('Y-m-d') }}</td>
+                                <td>{{ vacation.title }}</td>
+                                <td>Nie</td>
+                                <td>
+                                    <a class="btn btn-secondary btn-sm"  href="{{ path('calendar_accept', {'id': vacation.id}) }}">
+                                        Zaakceptuj
+                                    </a>
+                                    <a class="btn btn-secondary btn-sm"  href="{{ path('calendar_edit', { 'id': vacation.id }) }}">
+                                        Edytuj
+                                    </a>
+                                    <a class="btn btn-secondary btn-sm"  href="{{ path('calendar_delete', {'id': vacation.id}) }}">
+                                        Usuń
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

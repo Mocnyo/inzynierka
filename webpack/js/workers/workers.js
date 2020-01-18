@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import axios from 'axios';
 
-var times = new Vue({
+var teams = new Vue({
     delimiters: ['${', '}'],
     el: "#workers",
     data: function () {
         return {
             users: null,
             teams: null,
-            teamID: 2
+            teamID: 7
         }
     },
     mounted: function () {

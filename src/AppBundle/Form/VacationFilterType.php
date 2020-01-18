@@ -8,8 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Lexik\Bundle\FormFilterBundle\Filter\Form\Type as Filters;
 
-
-class LeaveFilterType extends AbstractType
+class VacationFilterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -18,6 +17,7 @@ class LeaveFilterType extends AbstractType
             ->add('beginAt', Filters\DateTimeFilterType::class)
             ->add('endAt', Filters\DateTimeFilterType::class)
             ->add('title', Filters\TextFilterType::class)
+            ->add('isAccepted', Filters\BooleanFilterType::class)
         
         ;
         $builder->setMethod("GET");

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\PostType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -155,7 +156,7 @@ class WikiController extends Controller
     {
     
         $post = new Post();
-        $form   = $this->createForm('AppBundle\Form\PostType', $post);
+        $form   = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         $post->setUser($this->getUser());

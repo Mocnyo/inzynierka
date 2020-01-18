@@ -19,6 +19,9 @@ var times = new Vue({
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+        format: function (value) {
+
         }
     }
-})
+});

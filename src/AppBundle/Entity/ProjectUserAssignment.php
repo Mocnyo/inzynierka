@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,8 +29,10 @@ class ProjectUserAssignment
     private $project;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="userAssignment")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="userAssignment")
+     * @ORM\JoinColumn(name="user_id")
+     * @ORM\JoinTable(name="user_project")
+     *
      */
     private $user;
 

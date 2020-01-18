@@ -9,8 +9,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AgreementTimeType extends AbstractType
@@ -23,8 +21,7 @@ class AgreementTimeType extends AbstractType
             'class' => Agreement::class,
             'attr' => [
                 'class' => 'form-control'
-            ],
-        ])
+            ]])
             ->add('isIndefinite', CheckboxType::class, [
                 'attr' => [
                     'class' => 'form-check form-check-inline mt-5 mb-5 ml-3'

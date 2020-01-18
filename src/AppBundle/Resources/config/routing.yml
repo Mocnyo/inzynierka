@@ -32,7 +32,7 @@ employee:
   defaults: { _controller: AppBundle:Employee:index }
 
 projects:
-  path: /projekty
+  path: /projects
   defaults: { _controller: AppBundle:Project:index }
 
 specific_task:
@@ -64,3 +64,23 @@ post_delete:
 post_bulk_action:
   path: /post/bulk-action
   defaults: { _controller: AppBundle:Wiki:bulk }
+
+vacation_calendar:
+  path: /calendar
+  defaults: { _controller: AppBundle:Vacation:calendar }
+
+vacations:
+  path: /calendar/my-vacations
+  defaults: { _controller: AppBundle:Vacation:userIndex }
+
+vacation_new:
+  path: /calendar/new
+  defaults: { _controller: AppBundle:Vacation:new }
+
+vacation_edit:
+  path: /calendar/{id}/edit
+  defaults: { _controller: AppBundle:Vacation:edit }
+
+vacation_delete:
+  path: /calendar/{id}/delete
+  defaults: { _controller: AppBundle:Vacation:deleteById }
