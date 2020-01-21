@@ -16,6 +16,8 @@
     <link href="{{ asset('bootstrap_theme/css/style.css') }}" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="{{ asset('bootstrap_theme/css/sb-admin-2.css') }}" rel="stylesheet">
+    <link href="{{ asset('dist/vendors~._node_modules_a.css') }}"/>
+    <link href="{{ asset('dist/vendors~._node_modules_p.css') }}"/>
 
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
@@ -125,7 +127,8 @@
                 <i class="far fa-fw fa-calendar-alt"></i>
                 <span>Urlopy</span>
             </a>
-            <div id="collapsePagesForVacations" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div id="collapsePagesForVacations" class="collapse" aria-labelledby="headingPages"
+                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="{{ path('vacation_calendar') }}">Kalendarz</a>
                     <a class="collapse-item" href="{{ path('vacations') }}">Moje urlopy</a>
@@ -138,48 +141,60 @@
                 <span>WTRS - Wiki</span>
             </a>
         </li>
-        <hr class="sidebar-divider">
 
-        <div class="sidebar-heading">
-            Kierownictwo
-        </div>
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePagesForManagment"
-            aria-expanded="true" aria-controls="collapsePages">
-                <i class="fas fa-fw fa-user-cog"></i>
-                <span>Zarządzanie</span>
-            </a>
-            <div id="collapsePagesForManagment" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="{{ path('management_projects') }}">Projekty</a>
-                    <a class="collapse-item" href="{{ path('calendar') }}">Urlopy</a>
-                    <a class="collapse-item" href="{{ path('report') }}">Raporty</a>
+        {% for role in app.user.roles %}
+            {% if role == "ROLE_ADMIN" %}
+                <hr class="sidebar-divider">
+                <div class="sidebar-heading">
+                    Kierownictwo
                 </div>
-            </div>
-        </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="" data-toggle="collapse"
+                       data-target="#collapsePagesForManagment"
+                       aria-expanded="true" aria-controls="collapsePages">
+                        <i class="fas fa-fw fa-user-cog"></i>
+                        <span>Zarządzanie</span>
+                    </a>
+                    <div id="collapsePagesForManagment" class="collapse" aria-labelledby="headingPages"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{ path('management_projects') }}">Projekty</a>
+                            <a class="collapse-item" href="{{ path('calendar') }}">Urlopy</a>
+                            <a class="collapse-item" href="{{ path('report') }}">Raporty</a>
+                        </div>
+                    </div>
+                </li>
 
-        <div class="sidebar-heading">
-            Administrator
-        </div>
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePagesForAdministration"
-               aria-expanded="true" aria-controls="collapsePages">
-                <i class="fas fa-fw fa-tools"></i>
-                <span>Administrator</span>
-            </a>
-            <div id="collapsePagesForAdministration" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Zespoły:</h6>
-                    <a class="collapse-item" href="{{ path('team') }}">Zespoły</a>
-                    <a class="collapse-item" href="{{ path('user') }}">Użytkownicy</a>
-                    <div class="collapse-divider"></div>
-                    <h6 class="collapse-header">System:</h6>
-                    <a class="collapse-item" href="{{ path('administration_config') }}">Konfiguracja systemu</a>
+            {% endif %}
+        {% endfor %}
+        {% for role in app.user.roles %}
+            {% if role == "ROLE_SUPER_ADMIN" %}
+                <div class="sidebar-heading">
+                    Administrator
                 </div>
-            </div>
-        </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="" data-toggle="collapse"
+                       data-target="#collapsePagesForAdministration"
+                       aria-expanded="true" aria-controls="collapsePages">
+                        <i class="fas fa-fw fa-tools"></i>
+                        <span>Administrator</span>
+                    </a>
+                    <div id="collapsePagesForAdministration" class="collapse" aria-labelledby="headingPages"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Zespoły:</h6>
+                            <a class="collapse-item" href="{{ path('team') }}">Zespoły</a>
+                            <a class="collapse-item" href="{{ path('user') }}">Użytkownicy</a>
+                            <div class="collapse-divider"></div>
+                            <h6 class="collapse-header">System:</h6>
+                            <a class="collapse-item" href="{{ path('administration_config') }}">Konfiguracja systemu</a>
+                        </div>
+                    </div>
+                </li>
+            {% endif %}
+        {% endfor %}
+
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
@@ -207,9 +222,9 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                     <ul class="navbar-nav ml-auto">
-{#                            <span class="nav-link">#}
-{#                                <i class="fas fa-box nav-color"></i>#}
-{#                            </span>#}
+                        {#                            <span class="nav-link">#}
+                        {#                                <i class="fas fa-box nav-color"></i>#}
+                        {#                            </span>#}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown nav-color" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
@@ -221,7 +236,8 @@
                             <div class="dropdown-menu dropdown-menu-right dropdown-info project-items"
                                  aria-labelledby="navbarDropdownMenuLink-4">
                                 <template v-for="item in projects">
-                                        <a class="dropdown-item" @click="project = item.id; projectName = item.name"> ${ item.name } </a>
+                                    <a class="dropdown-item" @click="project = item.id; projectName = item.name"> ${
+                                        item.name } </a>
                                 </template>
                             </div>
                         </li>
@@ -230,12 +246,14 @@
                         </li>
                         <li class="nav-item">
                             <span class="nav-link">
-                                <i class="fas fa-play-circle timeButton nav-color" @click="reset"  v-if="state == 'paused'"></i>
+                                <i class="fas fa-play-circle timeButton nav-color" @click="reset"
+                                   v-if="state == 'paused'"></i>
                                 <i class="fas fa-stop-circle timeButton nav-color" @click="pause" v-else></i>
                             </span>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle nav-color" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+                            <a class="nav-link dropdown-toggle nav-color" id="navbarDropdownMenuLink-4"
+                               data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 {{ app.user.fullName }} </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-info"
@@ -281,6 +299,11 @@
 <!-- dist -->
 <script src="{{ asset('dist/js/vendors~._node_modules_a.bundle.js') }}"></script>
 <script src="{{ asset('dist/js/vendors~._node_modules_p.bundle.js') }}"></script>
+<script src="{{ asset('dist/js/vendors~._node_modules_v.bundle.js') }}"></script>
+<script src="{{ asset('dist/js/vendors~._node_modules_vue-ctk-date-time-picker_dist_vue-ctk-date-time-picker.common.js~e30ad414.bundle.js') }}"></script>
+<script src="{{ asset('dist/js/vendors~._node_modules_luxon_build_cjs-browser_luxon.js~131554dc.bundle.js') }}"></script>
+<script src="{{ asset('dist/js/vendors~._node_modules_moment_locale_a.bundle.js') }}"></script>
+<script src="{{ asset('dist/js/vendors~._node_modules_moment_moment.js~c1dfd128.bundle.js') }}"></script>
 <script src="{{ asset('dist/js/bundle.js') }}"></script>
 
 <script src="{{ asset('bundles/petkoparacrudgenerator/js/jquery.min.js') }}"></script>

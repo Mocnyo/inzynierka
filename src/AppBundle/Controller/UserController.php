@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\AgreementTime;
 use AppBundle\Form\UserType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -42,9 +44,9 @@ class UserController extends Controller
     }
 
     /**
-    * Create filter form and process filter request.
-    *
-    */
+     * Create filter form and process filter request.
+     *
+     */
     protected function filter($queryBuilder, Request $request)
     {
         $session = $request->getSession();
@@ -71,13 +73,13 @@ class UserController extends Controller
             // Get filter from session
             if ($session->has('UserControllerFilter')) {
                 $filterData = $session->get('UserControllerFilter');
-                
+
                 foreach ($filterData as $key => $filter) { //fix for entityFilterType that is loaded from session
                     if (is_object($filter)) {
                         $filterData[$key] = $queryBuilder->getEntityManager()->merge($filter);
                     }
                 }
-                
+
                 $filterForm = $this->createForm('AppBundle\Form\UserFilterType', $filterData);
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
             }
@@ -87,31 +89,30 @@ class UserController extends Controller
     }
 
     /**
-    * Get results from paginator and get paginator view.
-    *
-    */
+     * Get results from paginator and get paginator view.
+     *
+     */
     protected function paginator($queryBuilder, Request $request)
     {
         //sorting
-        $sortCol = $queryBuilder->getRootAlias().'.'.$request->get('pcg_sort_col', 'id');
+        $sortCol = $queryBuilder->getRootAlias() . '.' . $request->get('pcg_sort_col', 'id');
         $queryBuilder->orderBy($sortCol, $request->get('pcg_sort_order', 'desc'));
         // Paginator
         $adapter = new DoctrineORMAdapter($queryBuilder);
         $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($request->get('pcg_show' , 10));
+        $pagerfanta->setMaxPerPage($request->get('pcg_show', 10));
 
         try {
             $pagerfanta->setCurrentPage($request->get('pcg_page', 1));
         } catch (\Pagerfanta\Exception\OutOfRangeCurrentPageException $ex) {
             $pagerfanta->setCurrentPage(1);
         }
-        
+
         $entities = $pagerfanta->getCurrentPageResults();
 
         // Paginator - route generator
         $me = $this;
-        $routeGenerator = function($page) use ($me, $request)
-        {
+        $routeGenerator = function ($page) use ($me, $request) {
             $requestParams = $request->query->all();
             $requestParams['pcg_page'] = $page;
             return $me->generateUrl('user', $requestParams);
@@ -131,7 +132,8 @@ class UserController extends Controller
     /*
      * Calculates the total of records string
      */
-    protected function getTotalOfRecordsString($queryBuilder, $request) {
+    protected function getTotalOfRecordsString($queryBuilder, $request)
+    {
         $totalOfRecords = $queryBuilder->select('COUNT(e.id)')->getQuery()->getSingleScalarResult();
         $show = $request->get('pcg_show', 10);
         $page = $request->get('pcg_page', 1);
@@ -151,25 +153,32 @@ class UserController extends Controller
      */
     public function newAction(Request $request)
     {
-    
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $data = $form->getData();
+            /** @var AgreementTime $agreement */
+            $agreement = $data->getAgreementTime();
+            $agreement->setCreatedAt(new \DateTime());
+            $agreement->setUser($user);
+            $vacationAvailable = $this->countAvailableVacation($user);
+            $user->setVacationAvailable($vacationAvailable);
             $em->persist($user);
             $em->flush();
-            
+
             $editLink = $this->generateUrl('user_edit', array('id' => $user->getId()));
-            $this->get('session')->getFlashBag()->add('success', "<a href='$editLink'>New user was created successfully.</a>" );
-            
-            $nextAction=  $request->get('submit') == 'save' ? 'user' : 'user_new';
+            $this->get('session')->getFlashBag()->add('success', "<a href='$editLink'>New user was created successfully.</a>");
+
+            $nextAction = $request->get('submit') == 'save' ? 'user' : 'user_new';
             return $this->redirectToRoute($nextAction);
         }
+
         return $this->render('@App/administration/user/new.html.twig', array(
             'user' => $user,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ));
     }
 
@@ -180,6 +189,7 @@ class UserController extends Controller
     public function showAction(User $user)
     {
         $deleteForm = $this->createDeleteForm($user);
+
         return $this->render('@App/administration/user/show.html.twig', array(
             'user' => $user,
             'delete_form' => $deleteForm->createView(),
@@ -201,7 +211,7 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            
+
             $this->get('session')->getFlashBag()->add('success', 'Edited Successfully!');
             return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
         }
@@ -211,8 +221,7 @@ class UserController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
-    
-    
+
 
     /**
      * Deletes a User entity.
@@ -222,7 +231,7 @@ class UserController extends Controller
      */
     public function deleteAction(Request $request, User $user)
     {
-    
+
         $form = $this->createDeleteForm($user);
         $form->handleRequest($request);
 
@@ -234,10 +243,10 @@ class UserController extends Controller
         } else {
             $this->get('session')->getFlashBag()->add('error', 'Problem with deletion of the User');
         }
-        
+
         return $this->redirectToRoute('user');
     }
-    
+
     /**
      * Creates a form to delete a User entity.
      *
@@ -250,17 +259,17 @@ class UserController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('user_delete', array('id' => $user->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 
     /**
      * @param User $user
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteByIdAction(User $user){
+    public function deleteByIdAction(User $user)
+    {
         $em = $this->getDoctrine()->getManager();
-        
+
         try {
             $em->remove($user);
             $em->flush();
@@ -295,11 +304,30 @@ class UserController extends Controller
 
                 $this->get('session')->getFlashBag()->add('success', 'users was deleted successfully!');
 
-            } catch (Exception $ex) {
+            } catch (\Exception $ex) {
                 $this->get('session')->getFlashBag()->add('error', 'Problem with deletion of the users ');
             }
         }
 
         return $this->redirect($this->generateUrl('user'));
+    }
+
+    public function countAvailableVacation(User $user)
+    {
+        $days20 = 1.66;
+        $days26 = 2.16;
+        /** @var AgreementTime $agreementTime */
+        $agreementTime = $user->getAgreementTime();
+        $createdAt = $agreementTime->getCreatedAt();
+        $month = (int)$createdAt->format('m') - 1;
+
+        $duration = 12 - $month;
+
+        if ( $user->getVacationTime() == 20) {
+            return (int)$duration*$days20;
+        } else {
+            return (int)$duration*$days26;
+        }
+
     }
 }

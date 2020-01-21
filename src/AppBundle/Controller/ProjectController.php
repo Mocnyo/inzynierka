@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Project;
-use AppBundle\Entity\ProjectUserAssignment;
 use AppBundle\Entity\UserTeam;
 use AppBundle\Enum\ProjectStatusEnum;
 use AppBundle\Form\EmployeeType;
@@ -24,7 +23,8 @@ class ProjectController extends Controller
         /**  @var User $user * */
         $user = $this->getUser();
         $projectRepository = $this->getDoctrine()->getRepository(Project::class);
-        $projects = $projectRepository->findBy(['user' => $user]);
+        $projects = $projectRepository->getProjectByUser($user->getId());
+
         $tasks = $user->getTask();
 
         return $this->render('@App/user/project/index.html.twig', [
@@ -55,7 +55,7 @@ class ProjectController extends Controller
      * @param Project $project
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showManagementAction(Project $project)
+    public function showAction(Project $project)
     {
         return $this->render('@App/management/project/show.html.twig', array(
             'project' => $project,

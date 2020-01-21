@@ -41,9 +41,11 @@ services:
 
     app.vacataion.repository:
         class: AppBundle\Repository\VacationRepository
-#        arguments:
-#            - '@fos_user.doctrine_registry'
 
     AppBundle\EventListener\ActivityListener:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.controller', method: onCoreController }
+
+    AppBundle\Command\ProjectTimeCommand:
+        arguments:
+            - '@doctrine.orm.entity_manager'

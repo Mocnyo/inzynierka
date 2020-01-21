@@ -47,7 +47,7 @@ class Time
     private $time;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Project", inversedBy="time")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Project", inversedBy="times")
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
      */
     private $project;

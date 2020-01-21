@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,7 +37,7 @@ class AgreementTime
     private $isIndefinite;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="agreementTime")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", inversedBy="agreementTime")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
@@ -47,6 +47,12 @@ class AgreementTime
      * @ORM\JoinColumn(name="agreement_id", referencedColumnName="id")
      */
     private $agreement;
+
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    private $createdAt;
 
     /**
      * Get id
@@ -136,6 +142,22 @@ class AgreementTime
     public function setAgreement($agreement)
     {
         $this->agreement = $agreement;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt): void
+    {
+        $this->createdAt = $createdAt;
     }
 }
 

@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller\Api;
 
-use AppBundle\Entity\Team;
 use AppBundle\Entity\User;
 use Doctrine\Common\Persistence\ObjectRepository;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -47,33 +46,6 @@ class UserTeamController extends FOSRestController
 //        return $this->handleView($this->view($teams, 200));
 //    }
 
-    /**
-     * Get user
-     * @ApiDoc  (
-     *   description="Get one time item",
-     *   section="Users",
-     *   resource = true,
-     *   description = "Gets a Type for a given id",
-     *   output = "",
-     *   statusCodes = {
-     *     200 = "Returned when successful",
-     *     404 = "Returned when the page is not found"
-     *   }
-     * )
-     * @param Request $request
-     * @param $teamID
-     * @return int
-     */
-     public function getUsersByTeamAction(Request $request, $teamID)
-     {
-         $userTeams = $this->getRepository()->findBy(['team' => $teamID]);
-         $users = [];
-         foreach ($userTeams as $userTeam) {
-             $users[] = $userTeam->getUser();
-         }
-
-         return $this->handleView($this->view($users, 200));
-     }
 
 //    /**
 //     * Get user

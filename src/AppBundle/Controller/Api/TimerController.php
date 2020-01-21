@@ -48,11 +48,11 @@ class TimerController extends FOSRestController
         $entity = new Time();
         $form = $this->createForm(TimerApiType::class, $entity)->handleRequest($request);
 
-        if(!$form->isValid() || !$form->isSubmitted()) {
+        if (!$form->isValid() || !$form->isSubmitted()) {
             return $this->handleView($this->view($form->getErrors(true), 400));
         }
 
-        /** @var Times $data */
+        /** @var Time $data */
         $data = $form->getData();
         $dateDiff = $data->getStopTime()->diff($data->getStartTime(), true);
 
@@ -102,7 +102,7 @@ class TimerController extends FOSRestController
      *   }
      * )
      * @param Request $request
-     * @param Times $entity
+     * @param Time $entity
      * @return Response
      */
     public function getAction(Request $request, Time $entity)
@@ -127,11 +127,12 @@ class TimerController extends FOSRestController
      * @param Time $entity
      * @return Response
      */
-    public function putAction(Request $request, Time $entity) {
+    public function putAction(Request $request, Time $entity)
+    {
+        $form = $this->createForm(TimerApiType::class, $entity, ['method' => 'PUT']);
+        $form->handleRequest($request);
 
-        $form = $this->createForm(TimerApiType::class, $entity)->handleRequest($request);
-
-        if(!$form->isValid() || !$form->isSubmitted()) {
+        if (!$form->isValid() || !$form->isSubmitted()) {
             return $this->handleView($this->view($form->getErrors(true), 400));
         }
 

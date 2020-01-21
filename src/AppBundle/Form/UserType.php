@@ -110,15 +110,8 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('agreementTime', AgreementTimeType::class, [
-                'label' => 'Warunki umowy'
+                'label' => 'Warunki umowy',
             ])
-//            ->add('agreementTime', AgreementTimeType::class, [
-//                'label' => 'Warunki umowy',
-//                'entry_type' => AgreementTimeType::class,
-//                'allow_add' => true
-//                'label' => 'Warunki umowy',
-//                'data_class' => AgreementTime::class
-//            ])
             ->add('roles', ChoiceType::class, [
                 'label' => 'Rola w systemie',
                 'attr' => [
@@ -130,6 +123,13 @@ class UserType extends AbstractType
                     'Kierownik' => 'ROLE_ADMIN',
                     'Administrator' => UserInterface::ROLE_SUPER_ADMIN
                 ]
+            ])
+            ->add('vacationTime', TextType::class, [
+                'label' => 'Dni urlopu',
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'required' => true
             ])
         ;
     }

@@ -2,16 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Post;
 use AppBundle\Form\PostType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\View\TwitterBootstrap3View;
-
-use AppBundle\Entity\Post;
 
 /**
  * Class WikiController
@@ -26,7 +23,7 @@ class WikiController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $queryBuilder = $em->getRepository('AppBundle:Post')->createQueryBuilder('e');
+        $queryBuilder = $em->getRepository(Post::class)->createQueryBuilder('e');
 
         list($filterForm, $queryBuilder) = $this->filter($queryBuilder, $request);
         list($posts, $pagerHtml) = $this->paginator($queryBuilder, $request);
@@ -42,9 +39,10 @@ class WikiController extends Controller
     }
 
     /**
-    * Create filter form and process filter request.
-    *
-    */
+     * @param $queryBuilder
+     * @param Request $request
+     * @return array
+     */
     protected function filter($queryBuilder, Request $request)
     {
         $session = $request->getSession();
@@ -88,9 +86,10 @@ class WikiController extends Controller
 
 
     /**
-    * Get results from paginator and get paginator view.
-    *
-    */
+     * @param $queryBuilder
+     * @param Request $request
+     * @return array
+     */
     protected function paginator($queryBuilder, Request $request)
     {
         //sorting
@@ -128,11 +127,11 @@ class WikiController extends Controller
 
         return array($entities, $pagerHtml);
     }
-    
-    
-    
-    /*
-     * Calculates the total of records string
+
+    /**
+     * @param $queryBuilder
+     * @param $request
+     * @return string
      */
     protected function getTotalOfRecordsString($queryBuilder, $request) {
         $totalOfRecords = $queryBuilder->select('COUNT(e.id)')->getQuery()->getSingleScalarResult();
@@ -154,11 +153,9 @@ class WikiController extends Controller
      */
     public function newAction(Request $request)
     {
-    
         $post = new Post();
-        $form   = $this->createForm(PostType::class, $post);
+        $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
-
         $post->setUser($this->getUser());
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -172,6 +169,7 @@ class WikiController extends Controller
             $nextAction=  $request->get('submit') == 'save' ? 'post' : 'post_new';
             return $this->redirectToRoute($nextAction);
         }
+
         return $this->render('@App/user/wiki/new.html.twig', array(
             'post' => $post,
             'form'   => $form->createView(),
@@ -185,6 +183,7 @@ class WikiController extends Controller
     public function showAction(Post $post)
     {
         $deleteForm = $this->createDeleteForm($post);
+
         return $this->render('@App/user/wiki/show.html.twig', array(
             'post' => $post,
             'delete_form' => $deleteForm->createView(),
@@ -218,33 +217,8 @@ class WikiController extends Controller
     }
 
     /**
-     * @param Request $request
      * @param Post $post
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function deleteAction(Request $request, Post $post)
-    {
-        $form = $this->createDeleteForm($post);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($post);
-            $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'The Post was deleted successfully');
-        } else {
-            $this->get('session')->getFlashBag()->add('error', 'Problem with deletion of the Post');
-        }
-        
-        return $this->redirectToRoute('post');
-    }
-    
-    /**
-     * Creates a form to delete a Post entity.
-     *
-     * @param Post $post The Post entity
-     *
-     * @return \Symfony\Component\Form\Form The form
+     * @return \Symfony\Component\Form\FormInterface
      */
     private function createDeleteForm(Post $post)
     {

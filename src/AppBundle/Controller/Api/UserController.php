@@ -69,4 +69,51 @@ class UserController extends FOSRestController
     {
         return $this->handleView($this->view($entity, 200));
     }
+
+    /**
+     * Get user
+     * @ApiDoc  (
+     *   description="Get one time item",
+     *   section="Users",
+     *   resource = true,
+     *   description = "Gets a Type for a given id",
+     *   output = "",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the page is not found"
+     *   }
+     * )
+     * @param Request $request
+     * @param User $user
+     * @return mixed
+     */
+    public function getProjects(Request $request, User $user)
+    {
+        return $user->getProject();
+    }
+
+    /**
+     * Get user
+     * @ApiDoc  (
+     *   description="Get one time item",
+     *   section="Users",
+     *   resource = true,
+     *   description = "Gets a Type for a given id",
+     *   output = "",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the page is not found"
+     *   }
+     * )
+     * @param Request $request
+     * @param $teamID
+     * @return int
+     */
+    public function getUsersByTeamAction(Request $request, $teamID)
+    {
+        $users = $this->getRepository()->findBy(['team' => $teamID]);
+
+        return $this->handleView($this->view($users, 200));
+    }
+
 }

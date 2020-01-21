@@ -49,7 +49,7 @@ class User extends BaseUser
     protected $phone;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\AgreementTime", mappedBy="user", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\AgreementTime", mappedBy="user", cascade={"persist"})
      */
     protected $agreementTime;
 
@@ -98,10 +98,10 @@ class User extends BaseUser
     /**
      * @ORM\Column(name="vacation_time", type="integer", nullable=false)
      */
-    protected $vacationTime;
+    protected $vacationTime = 20;
 
     /**
-     * @ORM\Column(name="vacation_available", type="integer", nullable=false)
+     * @ORM\Column(name="vacation_available", type="integer", nullable=true)
      */
     protected $vacationAvailable;
 

@@ -5,24 +5,45 @@
         <div class="col-sm-12">
             <div class="card shadow mb-4" id="times">
                 <div class="card-body">
-                    <div class="row">
-                        <template v-for="item in data">
-                        <div class="col-sm-8">
-                            <p>${ item.description_task }</p>
+                    <template v-for="item in data">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" class="taskdescinput" @change="handleInput(item.id, item.description_task, item.start_time, item.stop_time, item.project.id)"
+                                       v-model="item.description_task"/>
+                            </div>
+                            <div class="col-sm-2 text-center">
+                                <li class="nav-item dropdown" style="list-style:none">
+                                    <a class="nav-link dropdown nav-color" id="navbarDropdownMenuLink-4"
+                                       data-toggle="dropdown"
+                                       aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-box nav-color project-icon"
+                                           v-if="item.project.name == null"></i>
+                                        <span class="badge badge-primary" v-else>${ item.project.name }</span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-info project-items"
+                                         aria-labelledby="navbarDropdownMenuLink-4">
+                                        <template v-for="project in projects">
+                                            <a class="dropdown-item" @click="item.project.id = project.id, item.project.name = project.name">
+                                                ${ project.name } </a>
+                                        </template>
+                                    </div>
+                                    <input type="hidden" @change="test()" :value="item.project.name"/>
+                                </li>
+                                {#                            <p class="badge badge-primary">${ item.project.name } </p>#}
+                            </div>
+                            <div class="col-sm-2 text-center">
+                                <p>
+                                    <datetime v-model="date"></datetime>
+                                    ${ new Date(item.start_time).getHours() }:${ new Date(item.start_time).getMinutes()
+                                    }:${ new Date(item.start_time).getSeconds() }
+                                    - ${ new Date(item.stop_time).getHours() }:${ new Date(item.stop_time).getMinutes()
+                                    }:${ new Date(item.stop_time).getSeconds() }</p>
+                            </div>
+                            <div class="col-sm-1 text-right">
+                                <p>${ item.time }</p>
+                            </div>
                         </div>
-                        <div class="col-sm-1">
-                            <p class="badge badge-primary">${ item.project.name  } </p>
-                        </div>
-                        <div class="col-sm-2">
-                            <p>${ new Date(item.start_time)} - ${ item.stop_time }</p>
-
-                            <p></p>
-                        </div>
-                        <div class="col-sm-1">
-                            <p>${ item.time }</p>
-                        </div>
-                        </template>
-                    </div>
+                    </template>
                 </div>
             </div>
         </div>

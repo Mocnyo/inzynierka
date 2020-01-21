@@ -17,7 +17,7 @@ var teams = new Vue({
     },
     methods: {
         getUsers: function (teamID) {
-            axios.get('app_dev.php/api/user/team/users/'+ teamID +'/team/users/by/team')
+            axios.get('app_dev.php/api/user/users/'+ teamID +'/users/by/team')
                 .then(response => (this.users = response.data))
                 .catch(function (error) {
                     console.log(error);

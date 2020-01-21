@@ -18,24 +18,29 @@
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold float-left text-primary">Szczegóły projektu</h6>
                     <div class=" float-right">
-                        {% if project.status != "ZAKOŃCZONY" %}
-                            <a class="btn btn-dark btn-sm"
-                               href="{{ path('management_project_edit', {'id' : project.id} ) }}">
-                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                Edytuj projekt
-                            </a>
-                        {% endif %}
-                        <a class="btn btn-secondary btn-sm" href="{{ path('project_report', { 'id': project.id }) }}">
-                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                            Pobierz raport
-                        </a>
-                        {% if project.status != "ZAKOŃCZONY" %}
-                            <a class="btn btn-danger btn-sm"
-                               href="{{ path('management_project_finish', {'id': project.id}) }}">
-                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                Zamknij projekt
-                            </a>
-                        {% endif %}
+                        {% for role in app.user.roles %}
+                            {% if role == "ROLE_ADMIN" %}
+                                {% if project.status != "ZAKOŃCZONY" %}
+                                    <a class="btn btn-dark btn-sm"
+                                       href="{{ path('management_project_edit', {'id' : project.id} ) }}">
+                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                        Edytuj projekt
+                                    </a>
+                                {% endif %}
+                                <a class="btn btn-secondary btn-sm"
+                                   href="{{ path('project_report', { 'id': project.id }) }}">
+                                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                    Pobierz raport
+                                </a>
+                                {% if project.status != "ZAKOŃCZONY" %}
+                                    <a class="btn btn-danger btn-sm"
+                                       href="{{ path('management_project_finish', {'id': project.id}) }}">
+                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                        Zamknij projekt
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="card-body" style="height: 370px; overflow: auto;">
@@ -72,13 +77,17 @@
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold float-left text-primary">Pracownicy w projekcie</h6>
                     <div class=" float-right">
-                        {% if project.status != "ZAKOŃCZONY" %}
-                            <a class="btn btn-secondary btn-sm"
-                               href="{{ path('management_project_employee_list', {'id': project.id}) }}">
-                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                Edytuj listę
-                            </a>
-                        {% endif %}
+                        {% for role in app.user.roles %}
+                            {% if role == "ROLE_ADMIN" %}
+                                {% if project.status != "ZAKOŃCZONY" %}
+                                    <a class="btn btn-secondary btn-sm"
+                                       href="{{ path('management_project_employee_list', {'id': project.id}) }}">
+                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                        Edytuj listę
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="card-body" style="height: 380px; overflow: auto;">
@@ -108,12 +117,17 @@
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold float-left text-primary">Aktywne zadania</h6>
                     <div class="float-right">
-                        {% if project.status != "ZAKOŃCZONY" %}
-                            <a class="btn btn-secondary btn-sm" href="{{ path('task_new', {'id': project.id }) }}">
-                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                Dodaj
-                            </a>
-                        {% endif %}
+                        {% for role in app.user.roles %}
+                            {% if role == "ROLE_ADMIN" %}
+                                {% if project.status != "ZAKOŃCZONY" %}
+                                    <a class="btn btn-secondary btn-sm"
+                                       href="{{ path('task_new', {'id': project.id }) }}">
+                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                        Dodaj
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="card-body" style="height: 270px; overflow: auto;">
@@ -123,34 +137,44 @@
                             <th>Nazwa</th>
                             <th>Przypisany pracownik</th>
                             <th>Status</th>
-                            <th>Lista</th>
+                            {% for role in app.user.roles %}
+                                {% if role == "ROLE_ADMIN" %}
+                                    <th>Lista</th>
+                                {% endif %}
+                            {% endfor %}
                         </tr>
                         </thead>
                         <tbody>
                         {% for task in project.tasks %}
                             {% if project.status != "ZAKOŃCZONY" %}
-                            {% if task.status != "ZAKOŃCZONY" %}
-                                <tr>
-                                    <td>{{ task.name }}</td>
-                                    <td>{% for user in task.user %}
-                                            {{ user.fullName }} <br>
-                                        {% endfor %}
-                                    </td>
-                                    <td>{{ task.status }}</td>
-                                    <td>
+                                {% if task.status != "ZAKOŃCZONY" %}
+                                    <tr>
+                                        <td>{{ task.name }}</td>
+                                        <td>{% for user in task.user %}
+                                                {{ user.fullName }} <br>
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{ task.status }}</td>
+                                        {% for role in app.user.roles %}
+                                            {% if role == "ROLE_ADMIN" %}
+                                                <td>
 
-                                        <a class="btn btn-secondary btn-sm"
-                                           href="{{ path('task_edit', {'project': project.id,'task': task.id}) }}">
-                                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                            Edytuj
-                                        </a>
-                                        <a class="btn btn-danger btn-sm"
-                                           href="{{ path('task_close', {'project': project.id, 'task': task.id}) }}">
-                                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                            Zamknij zadanie
-                                        </a>
-                                    </td>
-                                </tr>
+                                                    <a class="btn btn-secondary btn-sm"
+                                                       href="{{ path('task_edit', {'project': project.id,'task': task.id}) }}">
+                                                        <span class="glyphicon glyphicon-list"
+                                                              aria-hidden="true"></span>
+                                                        Edytuj
+                                                    </a>
+                                                    <a class="btn btn-danger btn-sm"
+                                                       href="{{ path('task_close', {'project': project.id, 'task': task.id}) }}">
+                                                        <span class="glyphicon glyphicon-list"
+                                                              aria-hidden="true"></span>
+                                                        Zamknij zadanie
+                                                    </a>
+                                                </td>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tr>
                                 {% endif %}
                             {% endif %}
                         {% endfor %}

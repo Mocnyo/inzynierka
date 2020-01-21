@@ -9,6 +9,17 @@
     border-color: brown;
 }
 
+.taskdescinput {
+    width: 100%;
+    padding: 2px 2px;
+    margin: 4px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background: #C9CACB;
+}
+
 .displayInput {
     outline: 0;
     border-width: 0 0 2px;

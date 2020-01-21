@@ -35,6 +35,10 @@ projects:
   path: /projects
   defaults: { _controller: AppBundle:Project:index }
 
+project_show:
+  path: /project/{id}
+  defaults: { _controller: AppBundle:Project:show }
+
 specific_task:
   path: /task/{id}
   defaults: { _controller: AppBundle:Task:show }
@@ -42,27 +46,27 @@ specific_task:
     id: '\d+'
 
 post:
-  path: /post
+  path: /wiki
   defaults: { _controller: AppBundle:Wiki:index }
 
-post_show:
-  path: /post/{id}
-  defaults: { _controller: AppBundle:Wiki:show }
-
 post_new:
-  path: /post/new
+  path: /wiki/post/new
   defaults: { _controller: AppBundle:Wiki:new }
 
+post_show:
+  path: /wiki/post/{id}
+  defaults: { _controller: AppBundle:Wiki:show }
+
 post_edit:
-  path: /post/{id}/edit
+  path: /wiki/post/{id}/edit
   defaults: { _controller: AppBundle:Wiki:edit }
 
 post_delete:
-  path: /post/delete/{id}
+  path: /wiki/post/delete/{id}
   defaults: { _controller: AppBundle:Wiki:deleteById }
 
 post_bulk_action:
-  path: /post/bulk-action
+  path: /wiki/post/bulk-action
   defaults: { _controller: AppBundle:Wiki:bulk }
 
 vacation_calendar:

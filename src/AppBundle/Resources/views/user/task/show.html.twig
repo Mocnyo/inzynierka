@@ -15,11 +15,6 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-12">
-                            <h3>{{ task.name }}</h3>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-6">
                             <p>Nazwa zadania:</p>
                             <p>Projekt</p>
@@ -30,11 +25,13 @@
                         <div class="col-sm-6 justify-content-center">
                             <p>{{ task.name }}</p>
                             <p>{{ task.project.name }}</p>
-                            <p>{{ task.user.fullName }}</p>
-                            <p><s>file.pdf</s></p>
-                            <p>{{ task.description }} + xxxxxxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            <p>
+                            {% for user in task.user %}
+                                {{ user.fullName }}
+                            {% endfor %}
                             </p>
+                            <p><s>file.pdf</s></p>
+                            <p>{{ task.description }}</p>
                         </div>
                     </div>
                 </div>

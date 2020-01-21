@@ -7,28 +7,32 @@
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Twoje projekty</h6>
                 </div>
-                <div class="card-body">
-                    <table class="table text-center">
+                <div class="card-body" style="height: 350px; overflow: auto;">
+                    <table class="table table-striped table-hover table-bordered text-center">
                         <thead>
                         <tr>
-                            <th>#</th>
                             <th>Nazwa</th>
                             <th>Skrót</th>
                             <th>Status</th>
                             <th>Kierownik</th>
                             <th>Czas</th>
+                            <th>Działania</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for project in projects %}
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>{{ project.project.name }}</td>
-                            <td>{{ project.project.shortname }}</td>
-                            <td>{{ project.project.status }}</td>
-                            <td><s>Andrzej Kierownik</s></td>
-                            <td>{{ project.project.time }}</td>
-                        </tr>
+                            <tr>
+                                <td>{{ project.name }}</td>
+                                <td>{{ project.shortname }}</td>
+                                <td>{{ project.status }}</td>
+                                <td>{{ project.owner.fullName }}</td>
+                                <td>{{ project.time }}</td>
+                                <td>
+                                    <a class="btn btn-secondary btn-sm" href="{{ path('project_show', { 'id': project.id}) }}">
+                                        Pokaż
+                                    </a>
+                                </td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>
@@ -40,11 +44,10 @@
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Zadania przypisane tobie</h6>
                 </div>
-                <div class="card-body">
-                    <table class="table text-center">
+                <div class="card-body" style="height: 350px; overflow: auto;">
+                    <table class="table table-striped table-hover table-bordered text-center">
                         <thead>
                         <tr>
-                            <th>#</th>
                             <th>Nazwa</th>
                             <th>Projekt</th>
                             <th>Działania</th>
@@ -52,17 +55,17 @@
                         </thead>
                         <tbody>
                         {% for task in tasks %}
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>{{ task.name }}</td>
-                            <td>{{ task.project.name }}</td>
-                            <td>
-                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                <a class="btn btn-secondary btn-sm"  href="{{ path('specific_task', {'id': task.id}) }}">
-                                    Pokaż
-                                </a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>{{ task.name }}</td>
+                                <td>{{ task.project.name }}</td>
+                                <td>
+                                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                    <a class="btn btn-secondary btn-sm"
+                                       href="{{ path('specific_task', {'id': task.id}) }}">
+                                        Pokaż
+                                    </a>
+                                </td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>
@@ -72,25 +75,33 @@
         <div class="col-sm-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Wszystkie zadania</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Zadania w twoich projektach</h6>
                 </div>
-                <div class="card-body">
-                    <table class="table text-center">
+                <div class="card-body" style="height: 350px; overflow: auto;">
+                    <table class="table table-striped table-hover table-bordered text-center">
                         <thead>
                         <tr>
-                            <th>#</th>
                             <th>Nazwa</th>
-                            <th>Skrót</th>
+                            <th>Projekt</th>
                             <th>Czas</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                            </tr>
+                        {% for project in projects %}
+                            {% for task in project.task %}
+                                <tr>
+                                    <td>{{ task.name }}</td>
+                                    <td>{{ task.project.name }}</td>
+                                    <td>
+                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                        <a class="btn btn-secondary btn-sm"
+                                           href="{{ path('specific_task', {'id': task.id}) }}">
+                                            Pokaż
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
