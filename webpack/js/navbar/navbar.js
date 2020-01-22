@@ -13,7 +13,8 @@ var navbar = new Vue({
             description: "",
             projects: null,
             project: null,
-            projectName: "empty"
+            projectName: "empty",
+            tasks: null,
         }
     },
     mounted: function () {
@@ -116,6 +117,13 @@ var navbar = new Vue({
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+        getTasksByProject: function ($projectId) {
+            axios.get('app_dev.php/api/project/projects/'+ $projectId +'/tasks')
+                .then(response => (this.tasks = response.data))
+                .catch(function (error) {
+                    console.log(error);
+                })
         }
     },
     watch: {

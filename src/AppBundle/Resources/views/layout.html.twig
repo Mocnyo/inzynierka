@@ -16,7 +16,6 @@
     <link href="{{ asset('bootstrap_theme/css/style.css') }}" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="{{ asset('bootstrap_theme/css/sb-admin-2.css') }}" rel="stylesheet">
-    <link href="{{ asset('dist/vendors~._node_modules_a.css') }}"/>
     <link href="{{ asset('dist/vendors~._node_modules_p.css') }}"/>
 
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -170,7 +169,7 @@
         {% for role in app.user.roles %}
             {% if role == "ROLE_SUPER_ADMIN" %}
                 <div class="sidebar-heading">
-                    Administrator
+                    Administracja
                 </div>
 
                 <li class="nav-item">
@@ -178,13 +177,13 @@
                        data-target="#collapsePagesForAdministration"
                        aria-expanded="true" aria-controls="collapsePages">
                         <i class="fas fa-fw fa-tools"></i>
-                        <span>Administrator</span>
+                        <span>Administracja</span>
                     </a>
                     <div id="collapsePagesForAdministration" class="collapse" aria-labelledby="headingPages"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Zespoły:</h6>
-                            <a class="collapse-item" href="{{ path('team') }}">Zespoły</a>
+                            <h6 class="collapse-header">Użytkownicy:</h6>
+                            <a class="collapse-item" href="{{ path('team') }}">Działy</a>
                             <a class="collapse-item" href="{{ path('user') }}">Użytkownicy</a>
                             <div class="collapse-divider"></div>
                             <h6 class="collapse-header">System:</h6>
@@ -213,7 +212,12 @@
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" id="navbar">
-                <input type="text" class="myinput" v-model="description" placeholder="Nad czym będziesz pracować?"/>
+                <input type="text" class="myinput" v-model="description" list="tasks" placeholder="Nad czym będziesz pracować?"/>
+                <datalist id="tasks">
+                    <template v-for="task in tasks">
+                    <option>${ task.name }</option>
+                    </template>
+                </datalist>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent-4"
                         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
@@ -222,9 +226,6 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                     <ul class="navbar-nav ml-auto">
-                        {#                            <span class="nav-link">#}
-                        {#                                <i class="fas fa-box nav-color"></i>#}
-                        {#                            </span>#}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown nav-color" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
@@ -236,7 +237,7 @@
                             <div class="dropdown-menu dropdown-menu-right dropdown-info project-items"
                                  aria-labelledby="navbarDropdownMenuLink-4">
                                 <template v-for="item in projects">
-                                    <a class="dropdown-item" @click="project = item.id; projectName = item.name"> ${
+                                    <a class="dropdown-item" @click="project = item.id; projectName = item.name; getTasksByProject(item.id)"> ${
                                         item.name } </a>
                                 </template>
                             </div>
@@ -297,14 +298,10 @@
 </div>
 {% block javascript %}
 <!-- dist -->
+<script src="{{ asset('dist/js/bundle.js') }}"></script>
 <script src="{{ asset('dist/js/vendors~._node_modules_a.bundle.js') }}"></script>
 <script src="{{ asset('dist/js/vendors~._node_modules_p.bundle.js') }}"></script>
-<script src="{{ asset('dist/js/vendors~._node_modules_v.bundle.js') }}"></script>
-<script src="{{ asset('dist/js/vendors~._node_modules_vue-ctk-date-time-picker_dist_vue-ctk-date-time-picker.common.js~e30ad414.bundle.js') }}"></script>
 <script src="{{ asset('dist/js/vendors~._node_modules_luxon_build_cjs-browser_luxon.js~131554dc.bundle.js') }}"></script>
-<script src="{{ asset('dist/js/vendors~._node_modules_moment_locale_a.bundle.js') }}"></script>
-<script src="{{ asset('dist/js/vendors~._node_modules_moment_moment.js~c1dfd128.bundle.js') }}"></script>
-<script src="{{ asset('dist/js/bundle.js') }}"></script>
 
 <script src="{{ asset('bundles/petkoparacrudgenerator/js/jquery.min.js') }}"></script>
 <script src="{{ asset('bundles/petkoparacrudgenerator/js/bootstrap.min.js') }}"></script>

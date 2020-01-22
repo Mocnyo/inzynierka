@@ -69,4 +69,27 @@ class ProjectController extends FOSRestController
     {
         return $this->handleView($this->view($entity, 200));
     }
+
+    /**
+     * Get Tasks
+     * @ApiDoc  (
+     *   description="Get one time item",
+     *   section="Users",
+     *   resource = true,
+     *   description = "Gets a Type for a given id",
+     *   output = "",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the page is not found"
+     *   }
+     * )
+     * @param Request $request
+     * @param Project $project
+     * @return Response
+     */
+    public function getTasksAction(Request $request, Project $project)
+    {
+        $tasks = $project->getTasks();
+        return $this->handleView($this->view($tasks, 200));
+    }
 }

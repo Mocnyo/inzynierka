@@ -57,16 +57,14 @@
                             <p>Dział</p>
                             <p>Kierownik</p>
                             <p>Opis</p>
-                            <p>Załączniki</p>
                         </div>
                         <div class="col-sm-6 justify-content-center">
                             <p>{{ project.name }}</p>
                             <p>{{ project.shortName }}</p>
                             <p>{{ project.status }}</p>
                             <p>{{ project.team }}</p>
-                            <p><s>Imie i nazwisko</s></p>
-                            <p><s>Opis</s></p>
-                            <p><s>costam.pdf</s></p>
+                            <p>{{ project.owner.fullName }}</p>
+                            <p>{{ project.description }}</p>
                         </div>
                     </div>
                 </div>

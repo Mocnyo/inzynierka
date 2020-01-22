@@ -42,12 +42,6 @@ class Project
      */
     private $description;
 
-//    /**
-//     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProjectUserAssignment", mappedBy="project")
-//     * @JMS\Exclude()
-//     */
-//    private $userAssignment;
-
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="project")
      * @ORM\JoinTable(name="project_user")
@@ -92,6 +86,11 @@ class Project
      * @JMS\Exclude()
      */
     protected $owner;
+
+    public function __construct()
+    {
+        $this->user = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -156,21 +155,21 @@ class Project
         return $this->shortName;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUserAssignment()
-    {
-        return $this->userAssignment;
-    }
-
-    /**
-     * @param mixed $userAssignment
-     */
-    public function setUserAssignment($userAssignment): void
-    {
-        $this->userAssignment = $userAssignment;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getUserAssignment()
+//    {
+//        return $this->userAssignment;
+//    }
+//
+//    /**
+//     * @param mixed $userAssignment
+//     */
+//    public function setUserAssignment($userAssignment): void
+//    {
+//        $this->userAssignment = $userAssignment;
+//    }
 
     /**
      * @return string
@@ -218,11 +217,6 @@ class Project
     public function setTeam($team): void
     {
         $this->team = $team;
-    }
-
-    public function __construct()
-    {
-        $this->user = new ArrayCollection();
     }
 
     /**
@@ -321,4 +315,3 @@ class Project
         $this->owner = $owner;
     }
 }
-

@@ -1,8 +1,11 @@
 import Vue from 'vue';
 import axios from 'axios';
 import debounce from 'lodash.debounce';
-import { Datetime} from "vue-datetime";
-import 'vue-datetime/dist/vue-datetime.css'
+import { Datetime } from "vue-datetime";
+import 'vue-datetime/dist/vue-datetime.css';
+import { Settings } from 'luxon';
+
+Settings.defaultLocale = 'pl';
 
 var times = new Vue({
     delimiters: ['${', '}'],
@@ -10,7 +13,8 @@ var times = new Vue({
     data: function () {
         return {
             data: null,
-            projects: null
+            projects: null,
+            date: null
         }
     },
     mounted: function () {
@@ -18,7 +22,7 @@ var times = new Vue({
         this.getProjects();
     },
     components: {
-        datetime: Datetime
+        datetime: Datetime,
     },
     methods: {
         getTimes: function () {
@@ -75,8 +79,5 @@ var times = new Vue({
                     console.log(error);
                 });
         }),
-        test: debounce(function () {
-            console.log('asdas');
-        })
     }
 });
