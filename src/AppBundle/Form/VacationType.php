@@ -10,6 +10,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class VacationType extends AbstractType
@@ -35,7 +38,22 @@ class VacationType extends AbstractType
                 'widget' => 'single_text',
                 'label' => 'Zakończenie urlopu'
             ])
-            ->add('title');
+            ->add('title')
+            ->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+                $form = $event->getForm();
+                /** @var Vacation $data */
+                $data = $event->getData();
+                /** @var User $user */
+                $user = $data->getUser();
+
+                $interval = date_diff($data->getBeginAt(),$data->getEndAt());
+                $days = $interval->format('%d');
+
+                if ($user->getVacationAvailable() < (int)$days) {
+                    $form->get('endAt')->addError(new FormError('Nie masz tyle urlopu'));
+                }
+            })
+        ;
             if (in_array('ROLE_ADMIN', $options['role'])) {
                 $builder
                     ->add('isAccepted', ChoiceType::class, [
@@ -51,6 +69,7 @@ class VacationType extends AbstractType
                         'choice_label' => 'fullName'
                     ]);
             }
+
     }
     
     /**

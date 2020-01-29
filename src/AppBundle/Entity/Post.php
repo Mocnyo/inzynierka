@@ -24,9 +24,9 @@ class Post
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255)
      */
-    private $name;
+    private $title;
 
     /**
      * @var string
@@ -51,27 +51,19 @@ class Post
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Post
+     * @return string
      */
-    public function setName($name)
+    public function getTitle(): string
     {
-        $this->name = $name;
-
-        return $this;
+        return $this->title;
     }
 
     /**
-     * Get name
-     *
-     * @return string
+     * @param string $title
      */
-    public function getName()
+    public function setTitle(string $title): void
     {
-        return $this->name;
+        $this->title = $title;
     }
 
     /**

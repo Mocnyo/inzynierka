@@ -4,6 +4,9 @@
     <style>
         .vdatetime-input {
             width: 46px;
+            height: 30px;
+            flex: 0 1 auto;
+            color: #7b7b7b;
         }
         .vdatetime-fade-enter-active,
         .vdatetime-fade-leave-active {
@@ -367,7 +370,7 @@
                                     <div class="dropdown-menu dropdown-menu-right dropdown-info project-items"
                                          aria-labelledby="navbarDropdownMenuLink-4">
                                         <template v-for="project in projects">
-                                            <a class="dropdown-item" @click="item.project.id = project.id, item.project.name = project.name">
+                                            <a class="dropdown-item" @click="item.project.id = project.id, item.project.name = project.name, handleInput(item.id, item.description_task, item.start_time, item.stop_time, project.id)">
                                                 ${ project.name } </a>
                                         </template>
                                     </div>
@@ -376,10 +379,10 @@
                             </div>
                             <div class="col-sm-2 text-center d-inline-block">
                                 <p class="d-inline-block">
-                                    <datetime v-on:change="handleInput(item.id, item.description_task, item.start_time, item.stop_time, item.project.id)" v-model="item.start_time" type="datetime" format="TIME_24_SIMPLE"/>
+                                    <datetime v-on:close="handleInput(item.id, item.description_task, item.start_time, item.stop_time, item.project.id)" v-model="item.start_time" type="datetime" format="TIME_24_SIMPLE"/>
                                 </p> -
                                 <p class="d-inline-block">
-                                    <datetime v-model="item.stop_time" type="datetime" format="TIME_24_SIMPLE"/>
+                                    <datetime v-on:close="handleInput(item.id, item.description_task, item.start_time, item.stop_time, item.project.id)" v-model="item.stop_time" type="datetime" format="TIME_24_SIMPLE"/>
                                 </p>
                             </div>
                             <div class="col-sm-1 text-right">

@@ -36,7 +36,7 @@
                             <div class="col-sm-8">
                                 {{ form_start(edit_form) }}
                                 {{ form_row(edit_form.name, {'attr': { 'class': 'form-control' }}) }}
-                                {{ form_end(edit_form) }}
+
                             </div>
                         </div>
                         <hr/>
@@ -44,6 +44,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Aktualizuj
                             </button>
+                            {{ form_end(edit_form) }}
                             <form action="{{ path('team_delete', { 'id': team.id }) }}" method="post"
                                   style="display: inline-block">
                                 <input type="hidden" name="_method" value="DELETE"/>

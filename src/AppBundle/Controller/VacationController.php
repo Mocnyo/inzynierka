@@ -185,6 +185,14 @@ class VacationController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $interval = date_diff($vacation->getBeginAt(),$vacation->getEndAt());
             $days = $interval->format('%d');
+            $dateRangeInterval = new \DateInterval('P1D');
+            $dateRange = new \DatePeriod($vacation->getBeginAt(),$dateRangeInterval, $vacation->getEndAt());
+            $days++;
+            foreach ($dateRange as $item) {
+                if ($item->format('l') === 'Sunday' || $item->format('l') === 'Saturday') {
+                    (int)$days--;
+                }
+            }
             /** @var User $user */
             $user = $vacation->getUser();
             $vacationAvailable = $user->getVacationAvailable() - (int)$days;
@@ -197,7 +205,6 @@ class VacationController extends Controller
             $em->flush();
 
             $editLink = $this->generateUrl('calendar_edit', array('id' => $vacation->getId()));
-            $this->get('session')->getFlashBag()->add('success', "<a href='$editLink'>New leave was created successfully.</a>" );
 
             $nextAction=  $request->get('submit') == 'save' ? 'vacations' : 'vacations';
             return $this->redirectToRoute($nextAction);
