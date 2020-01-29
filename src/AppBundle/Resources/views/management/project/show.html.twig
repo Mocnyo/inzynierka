@@ -135,6 +135,7 @@
                             <th>Nazwa</th>
                             <th>Przypisany pracownik</th>
                             <th>Status</th>
+                            <th>Czas</th>
                             {% for role in app.user.roles %}
                                 {% if role == "ROLE_ADMIN" %}
                                     <th>Lista</th>
@@ -153,6 +154,7 @@
                                             {% endfor %}
                                         </td>
                                         <td>{{ task.status }}</td>
+                                        <td>{{ task.time }}</td>
                                         {% for role in app.user.roles %}
                                             {% if role == "ROLE_ADMIN" %}
                                                 <td>
@@ -190,10 +192,11 @@
                     <table class="table text-center">
                         <thead>
                         <tr>
-                            <th>#</th>
                             <th>Nazwa</th>
                             <th>Przypisany pracownik</th>
                             <th>Status</th>
+                            <th>Czas</th>
+                            <th>Lista</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -206,6 +209,7 @@
                                         {% endfor %}
                                     </td>
                                     <td>{{ task.status }}</td>
+                                    <td>{{ task.time }}</td>
                                     <td>
                                         <a class="btn btn-danger btn-sm"
                                            href="{{ path('task_delete', {'project': project.id,'task': task.id}) }}">

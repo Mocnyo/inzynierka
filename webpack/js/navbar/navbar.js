@@ -138,9 +138,6 @@ var navbar = new Vue({
         },
         projectName(name) {
             localStorage.projectName = name;
-        },
-        // projectDescription(desc) {
-        //     localStorage.description = desc;
-        // }
+        }
     }
 })

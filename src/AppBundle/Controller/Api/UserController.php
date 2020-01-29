@@ -112,7 +112,6 @@ class UserController extends FOSRestController
     public function getUsersByTeamAction(Request $request, $teamID)
     {
         $users = $this->getRepository()->findBy(['team' => $teamID]);
-
         return $this->handleView($this->view($users, 200));
     }
 

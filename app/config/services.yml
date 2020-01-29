@@ -49,3 +49,7 @@ services:
     AppBundle\Command\ProjectTimeCommand:
         arguments:
             - '@doctrine.orm.entity_manager'
+
+    AppBundle\Command\TaskTimeCommand:
+        arguments:
+            - '@doctrine.orm.entity_manager'

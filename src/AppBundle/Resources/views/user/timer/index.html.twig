@@ -354,7 +354,7 @@
                 <div class="card-body">
                     <template v-for="(item, index) in data">
                         <div class="row">
-                            <div class="col-sm-7">
+                            <div class="col-sm-6">
                                 <input type="text" class="taskdescinput" @change="handleInput(item.id, item.description_task, item.start_time, item.stop_time, item.project.id)"
                                        v-model="item.description_task"/>
                             </div>
@@ -374,7 +374,6 @@
                                                 ${ project.name } </a>
                                         </template>
                                     </div>
-                                    <input type="hidden" @change="test()" :value="item.project.name"/>
                                 </li>
                             </div>
                             <div class="col-sm-2 text-center d-inline-block">
@@ -387,6 +386,20 @@
                             </div>
                             <div class="col-sm-1 text-right">
                                 <p>${ item.time }</p>
+                            </div>
+                            <div class="col-sm-1 text-right">
+                                <li class="nav-item dropdown" style="list-style:none">
+                                    <a class="nav-link dropdown nav-color" id="navbarDropdownMenuLink-4"
+                                       data-toggle="dropdown"
+                                       aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-trash-alt nav-color project-icon"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-info project-items"
+                                         aria-labelledby="navbarDropdownMenuLink-4">
+                                            <a class="dropdown-item" @click="deleteTime(item.id)">
+                                                Usuń </a>
+                                    </div>
+                                </li>
                             </div>
                         </div>
                     </template>

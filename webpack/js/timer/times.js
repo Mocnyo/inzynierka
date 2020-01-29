@@ -26,11 +26,29 @@ var times = new Vue({
     },
     methods: {
         getTimes: function () {
+            let self = this;
             axios.get('app_dev.php/api/time/timers')
-                .then(response => (this.data = response.data))
+                .then(function (response) {
+                    response.data.forEach( function (entry) {
+                        let startTime = entry.start_time;
+                        let stopTime = entry.stop_time;
+                        startTime = startTime.slice(0,-6);
+                        stopTime = stopTime.slice(0,-6);
+                        startTime += "+01:00";
+                        stopTime += "+01:00";
+                        entry.start_time = startTime;
+                        entry.stop_time = stopTime;
+                    });
+                    self.data = response.data;
+                })
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+        deleteTime: function (timeId) {
+          axios.delete('app_dev.php/api/time/timers/' + timeId)
+              .then(console.log('success'))
+              .catch(console.log('error'));
         },
         getProjects: function () {
             axios.get('app_dev.php/api/project/projects')

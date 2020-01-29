@@ -62,6 +62,11 @@ class Task
      */
     private $attachment;
 
+    /**
+     * @var string
+     * @ORM\Column(name="time", type="string", length=22, nullable=true)
+     */
+    private $time;
 
     /**
      * Get id
@@ -78,7 +83,7 @@ class Task
      *
      * @param string $name
      *
-     * @return tasks
+     * @return task
      */
     public function setName($name)
     {
@@ -174,7 +179,7 @@ class Task
      *
      * @param string $attachment
      *
-     * @return tasks
+     * @return task
      */
     public function setAttachment($attachment)
     {
@@ -207,6 +212,22 @@ class Task
     public function setStatus(string $status): void
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTime(): string
+    {
+        return $this->time;
+    }
+
+    /**
+     * @param string $time
+     */
+    public function setTime(string $time): void
+    {
+        $this->time = $time;
     }
 }
 

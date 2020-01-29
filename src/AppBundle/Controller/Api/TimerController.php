@@ -146,4 +146,15 @@ class TimerController extends FOSRestController
 
         return $this->handleView($this->view($form, 200));
     }
+
+    /**
+     * @param Request $request
+     * @param Time $entity
+     */
+    public function deleteAction(Request $request, Time $entity)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($entity);
+        $em->flush();
+    }
 }

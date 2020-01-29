@@ -155,22 +155,6 @@ class Project
         return $this->shortName;
     }
 
-//    /**
-//     * @return mixed
-//     */
-//    public function getUserAssignment()
-//    {
-//        return $this->userAssignment;
-//    }
-//
-//    /**
-//     * @param mixed $userAssignment
-//     */
-//    public function setUserAssignment($userAssignment): void
-//    {
-//        $this->userAssignment = $userAssignment;
-//    }
-
     /**
      * @return string
      */

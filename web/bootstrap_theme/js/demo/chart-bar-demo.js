@@ -48,7 +48,6 @@ function number_format(number, decimals, dec_point, thousands_sep) {
           }
         });
 
-        console.log(times);
         for (let i = 0; i < times.length; i++) {
           if (times[i] != undefined) {
             sum += times[i];
@@ -130,8 +129,8 @@ function number_format(number, decimals, dec_point, thousands_sep) {
               caretPadding: 10,
               callbacks: {
                 label: function(tooltipItem, chart) {
-                  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                  return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                  // var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                  return 'Godzin: ' + number_format(tooltipItem.yLabel) + 'h';
                 }
               }
             },
