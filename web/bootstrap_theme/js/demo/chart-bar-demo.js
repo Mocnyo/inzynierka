@@ -34,15 +34,18 @@ function number_format(number, decimals, dec_point, thousands_sep) {
       function (data) {
         data.forEach(function (entry) {
           let stopDateTime = new Date(entry.stop_time);
+          if ( stopDateTime.getHours() <= 1) {
+            stopDateTime.setHours(stopDateTime.getHours() - 1);
+          }
           if (stopDateTime.getMonth() === currentDate.getMonth()) {
             var time = entry.time.split(':').map(function (map) {
               return parseInt(map, 10);
             });
             value = (time[0]) + (time[1] / 60);
-            if (times[stopDateTime.getDate() - 1] != null) {
-              times[stopDateTime.getDate() - 2] += value;
+            if (times[stopDateTime.getDate() -1] != null) {
+              times[stopDateTime.getDate() -1] += value;
             } else {
-              times[stopDateTime.getDate() - 2] = value;
+              times[stopDateTime.getDate() -1] = value;
             }
           }
         });
